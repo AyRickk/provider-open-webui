@@ -1,0 +1,305 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "tool",
+  "scenario": "history",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_history",
+          "name": "Capture History",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    },
+    {
+      "step": "update-no-change",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_history/update",
+        "body": {
+          "id": "capture_history",
+          "name": "Capture History",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ],
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-no-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    },
+    {
+      "step": "update-change",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_history/update",
+        "body": {
+          "id": "capture_history",
+          "name": "Capture History v2",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History v2",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ],
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    },
+    {
+      "step": "valves-update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_history/valves/update",
+        "body": {
+          "priority": 3
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 3
+        }
+      }
+    },
+    {
+      "step": "history-after-valves",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    },
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_history/access/update",
+        "body": {
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History v2",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ],
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000007",
+              "resource_type": "tool",
+              "resource_id": "capture_history",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-access",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    }
+  ]
+}

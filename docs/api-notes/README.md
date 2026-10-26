@@ -6,7 +6,7 @@ Observed behavior of the Open WebUI API on the supported versions. Observed beha
 - OpenAPI snapshots: [`openapi/v0.11.4.json`](openapi/v0.11.4.json) (485 paths) and [`openapi/v0.12.4.json`](openapi/v0.12.4.json) (533 paths), keys sorted. Regenerate with `mise run owui:openapi <version>` against a running instance.
 - Throwaway instances: `mise run owui:up <version>` / `mise run owui:down <version>`, see `hack/openwebui/`.
 
-- Fixtures: `test/fixtures/openwebui/v<version>/<resource>/<scenario>.json`, captured with `mise run owui:capture <resource> <version>` (see `hack/capture/`). Re-running a capture regenerates byte-identical fixtures; check with `git diff --exit-code -- test/fixtures`.
+- Fixtures: `test/fixtures/openwebui/v<version>/<resource>/<scenario>.json`, captured with `mise run owui:capture <resource> <version>` (see `hack/capture/`). Re-running a capture regenerates byte-identical fixtures; check with `git diff --exit-code -- test/fixtures`. A step holding a `check` instead of a request and response is a fact the scenario verified at capture time but cannot show without leaking it (e.g. that a secret reads back unmasked).
 
 ## Resources
 
@@ -15,6 +15,7 @@ One page per resource, each with the same sections: endpoints, payloads, server-
 - [Group](group.md)
 - [Model](model.md)
 - [Function](function.md)
+- [Tool](tool.md)
 - [Access grants](access-grants.md): sharing for every shareable resource (model, prompt, tool, knowledge)
 
 ## Cross-cutting

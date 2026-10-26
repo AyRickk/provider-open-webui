@@ -38,6 +38,6 @@ def sort_lists:
 
 redact
 | number_uuids
-| map(.response.body |= sort_lists)
+| map(if has("response") then .response.body |= sort_lists else . end)
 | reduce .[] as $x ({}; .[$x.scenario] += [$x | del(.scenario)])
 | with_entries(.value = {openwebui_version: $version, resource: $resource, scenario: .key, steps: .value})
