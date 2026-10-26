@@ -14,6 +14,7 @@ One page per resource, each with the same sections: endpoints, payloads, server-
 
 - [Group](group.md)
 - [Model](model.md)
+- [Function](function.md)
 - [Access grants](access-grants.md): sharing for every shareable resource (model, prompt, tool, knowledge)
 
 ## Cross-cutting

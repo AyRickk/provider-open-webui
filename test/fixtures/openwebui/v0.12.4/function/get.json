@@ -1,0 +1,166 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "function",
+  "scenario": "get",
+  "steps": [
+    {
+      "step": "get-capture_filter",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000001",
+          "id": "capture_filter",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Filter",
+          "type": "filter",
+          "content": "\"\"\"\ntitle: Capture Filter\ndescription: Filter used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = 0\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Filter",
+              "description": "Filter used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-capture_pipe",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_pipe",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000003",
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Pipe",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-capture_action",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_action",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000004",
+          "id": "capture_action",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Action",
+          "type": "action",
+          "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Action"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-capture_toggle_filter",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_toggle_filter",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000005",
+          "id": "capture_toggle_filter",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Toggle Filter",
+          "type": "filter",
+          "content": "\"\"\"\ntitle: Capture Filter\ndescription: Filter used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel\n\n\nclass Filter:\n    toggle = True\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = 0\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Filter",
+              "description": "Filter used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "toggle": true
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-capture_upper",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_upper",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "id": "capture_upper",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Upper",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    }
+  ]
+}
