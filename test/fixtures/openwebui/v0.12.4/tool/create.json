@@ -1,0 +1,262 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "tool",
+  "scenario": "create",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_tool",
+          "name": "Capture Tool",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000003",
+          "id": "capture_tool",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Tool",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "create-with-access-grants",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_shared",
+          "name": "Capture Shared",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Shared tool"
+          },
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read"
+            },
+            {
+              "principal_type": "user",
+              "principal_id": "*",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000004",
+          "id": "capture_shared",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Shared",
+          "meta": {
+            "i18n": null,
+            "description": "Shared tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000005",
+              "resource_type": "tool",
+              "resource_id": "capture_shared",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000006",
+              "resource_type": "tool",
+              "resource_id": "capture_shared",
+              "principal_type": "user",
+              "principal_id": "*",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "create-syntax-error",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_broken",
+          "name": "Broken",
+          "content": "class Tools:\n    def broken(self) -> str\n        return \"missing colon\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error creating tool]"
+        }
+      }
+    },
+    {
+      "step": "create-no-class",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_no_class",
+          "name": "No class",
+          "content": "def helper():\n    return 1\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error creating tool]"
+        }
+      }
+    },
+    {
+      "step": "create-duplicate-id",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_tool",
+          "name": "Same id",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "Uh-oh! This id is already registered. Please choose another id string."
+        }
+      }
+    },
+    {
+      "step": "create-uppercase-id",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "Capture_Upper",
+          "name": "Upper",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000007",
+          "id": "capture_upper",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Upper",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "create-invalid-id",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture-dash",
+          "name": "Dash",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "Only alphanumeric characters and underscores are allowed in the id"
+        }
+      }
+    },
+    {
+      "step": "create-leading-digit-id",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "1capture",
+          "name": "Digit",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "Only alphanumeric characters and underscores are allowed in the id"
+        }
+      }
+    }
+  ]
+}

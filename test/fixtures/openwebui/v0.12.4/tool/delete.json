@@ -1,0 +1,359 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "tool",
+  "scenario": "delete",
+  "steps": [
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/tools/id/capture_upper/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "list-after-delete",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "version_id": "00000000-0000-4000-8000-000000000008",
+            "id": "capture_crlf",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture crlf",
+            "meta": {
+              "i18n": null,
+              "description": "Captured tool",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000018",
+            "id": "capture_history",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture History v2",
+            "meta": {
+              "i18n": null,
+              "description": "Captured tool",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [
+              {
+                "id": "00000000-0000-4000-8000-000000000019",
+                "resource_type": "tool",
+                "resource_id": "capture_history",
+                "principal_type": "group",
+                "principal_id": "00000000-0000-4000-8000-000000000001",
+                "permission": "read",
+                "created_at": 1700000000
+              }
+            ],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000011",
+            "id": "capture_import_rewrite",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture import-rewrite",
+            "meta": {
+              "i18n": null,
+              "description": "Captured tool",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000012",
+            "id": "capture_no_trailing_newline",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture no-trailing-newline",
+            "meta": {
+              "i18n": null,
+              "description": "Captured tool",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000004",
+            "id": "capture_shared",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Shared",
+            "meta": {
+              "i18n": null,
+              "description": "Shared tool",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000015",
+            "id": "capture_tool",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Tool Renamed",
+            "meta": {
+              "i18n": null,
+              "description": "Changed description",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000010",
+            "id": "capture_trailing_spaces",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture trailing-spaces",
+            "meta": {
+              "i18n": null,
+              "description": "Captured tool",
+              "manifest": {
+                "title": "Capture Tool",
+                "description": "Toolkit used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "has_user_valves": true
+            },
+            "access_grants": [],
+            "updated_at": 1700000000,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            },
+            "content": null,
+            "specs": [
+              {
+                "name": "get_capture_value",
+                "description": "Return a fixed value for a name.",
+                "parameters": {
+                  "properties": {
+                    "name": {
+                      "description": "The name to look up.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object"
+                }
+              }
+            ],
+            "has_user_valves": true
+          }
+        ]
+      }
+    }
+  ]
+}

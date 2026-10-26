@@ -1,0 +1,123 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "tool",
+  "scenario": "get-missing",
+  "steps": [
+    {
+      "step": "get-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_upper",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "update-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_upper/update",
+        "body": {
+          "id": "capture_upper",
+          "name": "Upper",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "delete-deleted",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/tools/id/capture_upper/delete",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "valves-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_upper/valves",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "valves-update-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_upper/valves/update",
+        "body": {
+          "priority": 1
+        }
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "update-access-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_upper/access/update",
+        "body": {
+          "access_grants": []
+        }
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-after-update-access-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_upper",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    }
+  ]
+}

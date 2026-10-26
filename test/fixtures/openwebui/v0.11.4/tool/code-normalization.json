@@ -1,0 +1,466 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "tool",
+  "scenario": "code-normalization",
+  "steps": [
+    {
+      "step": "create-crlf",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_crlf",
+          "name": "Capture crlf",
+          "content": "\"\"\"\r\ntitle: Capture Tool\r\ndescription: Toolkit used by the capture scenarios\r\nversion: 1.0.0\r\n\"\"\"\r\nfrom pydantic import BaseModel, Field\r\n\r\n\r\nclass Tools:\r\n    class Valves(BaseModel):\r\n        api_key: str = \"\"\r\n        priority: int = Field(default=0, description=\"Order among tools\")\r\n\r\n    class UserValves(BaseModel):\r\n        nickname: str = \"\"\r\n\r\n    def __init__(self):\r\n        self.valves = self.Valves()\r\n\r\n    def get_capture_value(self, name: str) -> str:\r\n        \"\"\"\r\n        Return a fixed value for a name.\r\n        :param name: The name to look up.\r\n        \"\"\"\r\n        return f\"capture-{name}\"\r\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_crlf",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture crlf",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-crlf",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_crlf",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_crlf",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture crlf",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true,
+          "content": "\"\"\"\r\ntitle: Capture Tool\r\ndescription: Toolkit used by the capture scenarios\r\nversion: 1.0.0\r\n\"\"\"\r\nfrom pydantic import BaseModel, Field\r\n\r\n\r\nclass Tools:\r\n    class Valves(BaseModel):\r\n        api_key: str = \"\"\r\n        priority: int = Field(default=0, description=\"Order among tools\")\r\n\r\n    class UserValves(BaseModel):\r\n        nickname: str = \"\"\r\n\r\n    def __init__(self):\r\n        self.valves = self.Valves()\r\n\r\n    def get_capture_value(self, name: str) -> str:\r\n        \"\"\"\r\n        Return a fixed value for a name.\r\n        :param name: The name to look up.\r\n        \"\"\"\r\n        return f\"capture-{name}\"\r\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "create-no-trailing-newline",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_no_trailing_newline",
+          "name": "Capture no-trailing-newline",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_no_trailing_newline",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture no-trailing-newline",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-no-trailing-newline",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_no_trailing_newline",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_no_trailing_newline",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture no-trailing-newline",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true,
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "create-trailing-spaces",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_trailing_spaces",
+          "name": "Capture trailing-spaces",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0   \n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_trailing_spaces",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture trailing-spaces",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-trailing-spaces",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_trailing_spaces",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_trailing_spaces",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture trailing-spaces",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true,
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0   \n\"\"\"\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "create-import-rewrite",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_import_rewrite",
+          "name": "Capture import-rewrite",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\n# from utils import nothing\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_import_rewrite",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture import-rewrite",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-import-rewrite",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_import_rewrite",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_import_rewrite",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture import-rewrite",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true,
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\n# from open_webui.utils import nothing\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "update-import-rewrite",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_no_trailing_newline/update",
+        "body": {
+          "id": "capture_no_trailing_newline",
+          "name": "Capture no-trailing-newline",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\n# from utils import nothing\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "meta": {
+            "description": "Captured tool"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_no_trailing_newline",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture no-trailing-newline",
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\n# from open_webui.utils import nothing\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ],
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-update-import-rewrite",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_no_trailing_newline",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_no_trailing_newline",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture no-trailing-newline",
+          "meta": {
+            "i18n": null,
+            "description": "Captured tool",
+            "manifest": {
+              "title": "Capture Tool",
+              "description": "Toolkit used by the capture scenarios",
+              "version": "1.0.0"
+            },
+            "has_user_valves": true
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true,
+          "content": "\"\"\"\ntitle: Capture Tool\ndescription: Toolkit used by the capture scenarios\nversion: 1.0.0\n\"\"\"\n# from open_webui.utils import nothing\nfrom pydantic import BaseModel, Field\n\n\nclass Tools:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = Field(default=0, description=\"Order among tools\")\n\n    class UserValves(BaseModel):\n        nickname: str = \"\"\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def get_capture_value(self, name: str) -> str:\n        \"\"\"\n        Return a fixed value for a name.\n        :param name: The name to look up.\n        \"\"\"\n        return f\"capture-{name}\"\n",
+          "specs": [
+            {
+              "name": "get_capture_value",
+              "description": "Return a fixed value for a name.",
+              "parameters": {
+                "properties": {
+                  "name": {
+                    "description": "The name to look up.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -63,6 +63,7 @@ The server executes the code and looks for a class, in this order: `Pipe` → `p
 - **The type is detected again on every update.** Replacing a pipe's code with an action changes `type` to `action` (`*/update#get-after-type-change`), so a code change can turn a function a model references as a filter into something else.
 - Code without any of those classes is refused with 400, on create (`*/create#create-no-class`) and on update, where the stored function is left unchanged (`*/update#get-after-no-class`).
 - The code runs on the server at create and update; frontmatter `requirements` are `pip install`ed *(source)*.
+- The code is stored after `replace_imports`, which rewrites `from utils`, `from apps`, `from main` and `from config` to `from open_webui.…` anywhere in the text *(source)*; observed on tools, see [tool.md](tool.md#code).
 
 ## Toggles
 

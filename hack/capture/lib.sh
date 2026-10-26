@@ -39,3 +39,10 @@ capture_call() {
   cat "$resp_file"
   rm -f "$resp_file"
 }
+
+# capture_check <step> <claim> <true|false> records a fact the scenario verified at capture time
+# but cannot show in a fixture without leaking it, e.g. that a secret reads back unmasked.
+capture_check() {
+  jq -nc --arg scenario "$CAPTURE_SCENARIO" --arg step "$1" --arg claim "$2" --argjson holds "$3" \
+    '{scenario: $scenario, step: $step, check: {claim: $claim, holds: $holds}}' >>"$CAPTURE_RAW"
+}
