@@ -1,0 +1,715 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "prompt",
+  "scenario": "update",
+  "steps": [
+    {
+      "step": "update-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-summary",
+          "name": "Capture Summary Renamed",
+          "content": "Summarize: {{CLIPBOARD}}",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Summarize: {{CLIPBOARD}}",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000018",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-name",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Summarize: {{CLIPBOARD}}",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000018",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-content",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-summary",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000019",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-content",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000019",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-tags",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-summary",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "tags": [
+            "capture",
+            "changed"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000020",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-tags",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000020",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-command",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-summary-v2",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "tags": [
+            "capture",
+            "changed"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary-v2",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000021",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-command",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary-v2",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000021",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-command-to-taken",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-other",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "tags": [
+            "capture",
+            "changed"
+          ]
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "Uh-oh! This command is already registered. Please choose another command string."
+        }
+      }
+    },
+    {
+      "step": "get-after-command-to-taken",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary-v2",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000021",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "history-before-not-production",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000004",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture Summary",
+              "content": "Summarize: {{CLIPBOARD}}",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000018",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000004",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Summarize: {{CLIPBOARD}}",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000019",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000018",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Changed content",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000020",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000019",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Changed content",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture",
+                "changed"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000021",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000020",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Changed content",
+              "command": "capture-summary-v2",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture",
+                "changed"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "update-not-production",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-summary-v3",
+          "name": "Draft name",
+          "content": "Draft content",
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_production": false
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary-v3",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000021",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-not-production",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary-v3",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary Renamed",
+          "content": "Changed content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture",
+            "changed"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000021",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "history-after-not-production",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000004",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture Summary",
+              "content": "Summarize: {{CLIPBOARD}}",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000018",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000004",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Summarize: {{CLIPBOARD}}",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000019",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000018",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Changed content",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000020",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000019",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Changed content",
+              "command": "capture-summary",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture",
+                "changed"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000021",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000020",
+            "snapshot": {
+              "name": "Capture Summary Renamed",
+              "content": "Changed content",
+              "command": "capture-summary-v2",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture",
+                "changed"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000022",
+            "prompt_id": "00000000-0000-4000-8000-000000000003",
+            "parent_id": "00000000-0000-4000-8000-000000000021",
+            "snapshot": {
+              "name": "Draft name",
+              "content": "Draft content",
+              "command": "capture-summary-v3",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture",
+                "changed"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

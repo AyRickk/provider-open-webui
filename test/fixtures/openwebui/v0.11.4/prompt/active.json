@@ -1,0 +1,417 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "prompt",
+  "scenario": "active",
+  "steps": [
+    {
+      "step": "state-initial",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "toggle-1",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "state-after-toggle-1",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "list-while-inactive",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000003",
+            "command": "capture-summary-v3",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Summary Renamed",
+            "content": "Changed content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture",
+              "changed"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000021",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000007",
+            "command": "/capture-summary",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Same command with a slash",
+            "content": "Other content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000008",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000009",
+            "command": "capture-slashed",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Slashed without the slash",
+            "content": "Other content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000010",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000011",
+            "command": "Capture-Summary",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Same command, other case",
+            "content": "Other content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000012",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000013",
+            "command": "capture-other",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Summary",
+            "content": "Same name, other command",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000014",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000015",
+            "command": "capture-shared",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Shared",
+            "content": "Shared prompt",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000016",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": [
+              {
+                "id": "00000000-0000-4000-8000-000000000017",
+                "resource_type": "prompt",
+                "resource_id": "00000000-0000-4000-8000-000000000015",
+                "principal_type": "group",
+                "principal_id": "00000000-0000-4000-8000-000000000001",
+                "permission": "read",
+                "created_at": 1700000000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": "list-paginated-while-inactive",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/list?query=capture-slashed",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000005",
+              "command": "/capture-slashed",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "Slashed",
+              "content": "Slashed command",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "is_active": false,
+              "version_id": "00000000-0000-4000-8000-000000000006",
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "access_grants": [],
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000009",
+              "command": "capture-slashed",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "Slashed without the slash",
+              "content": "Other content",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "is_active": true,
+              "version_id": "00000000-0000-4000-8000-000000000010",
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "access_grants": [],
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "write_access": true
+            }
+          ],
+          "total": 2
+        }
+      }
+    },
+    {
+      "step": "update-while-inactive",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005/update",
+        "body": {
+          "command": "/capture-slashed",
+          "name": "Slashed",
+          "content": "Slashed command, changed while inactive",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command, changed while inactive",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000023",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "state-after-update-while-inactive",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command, changed while inactive",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000023",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "toggle-2",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command, changed while inactive",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000023",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "state-after-toggle-2",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000005",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command, changed while inactive",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000023",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

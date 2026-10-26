@@ -1,0 +1,298 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "prompt",
+  "scenario": "create",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-summary",
+          "name": "Capture Summary",
+          "content": "Summarize: {{CLIPBOARD}}",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "command": "capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary",
+          "content": "Summarize: {{CLIPBOARD}}",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000004",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "create-leading-slash",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "/capture-slashed",
+          "name": "Slashed",
+          "content": "Slashed command",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "command": "/capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed",
+          "content": "Slashed command",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "create-duplicate-command",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-summary",
+          "name": "Same command",
+          "content": "Other content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "Uh-oh! This command is already registered. Please choose another command string."
+        }
+      }
+    },
+    {
+      "step": "create-duplicate-command-with-slash",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "/capture-summary",
+          "name": "Same command with a slash",
+          "content": "Other content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000007",
+          "command": "/capture-summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Same command with a slash",
+          "content": "Other content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000008",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "create-slashed-command-without-slash",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-slashed",
+          "name": "Slashed without the slash",
+          "content": "Other content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000009",
+          "command": "capture-slashed",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Slashed without the slash",
+          "content": "Other content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000010",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "create-command-other-case",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "Capture-Summary",
+          "name": "Same command, other case",
+          "content": "Other content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000011",
+          "command": "Capture-Summary",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Same command, other case",
+          "content": "Other content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000012",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "create-duplicate-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-other",
+          "name": "Capture Summary",
+          "content": "Same name, other command",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "command": "capture-other",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Summary",
+          "content": "Same name, other command",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000014",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "create-with-access-grants",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-shared",
+          "name": "Capture Shared",
+          "content": "Shared prompt",
+          "tags": [
+            "capture"
+          ],
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000015",
+          "command": "capture-shared",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture Shared",
+          "content": "Shared prompt",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000016",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000017",
+              "resource_type": "prompt",
+              "resource_id": "00000000-0000-4000-8000-000000000015",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

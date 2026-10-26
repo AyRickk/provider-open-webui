@@ -1,0 +1,106 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "prompt",
+  "scenario": "get-missing",
+  "steps": [
+    {
+      "step": "get-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "update-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "command": "capture-summary",
+          "name": "x",
+          "content": "x",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "delete-deleted",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/delete",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "toggle-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "update-access-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/access/update",
+        "body": {
+          "access_grants": []
+        }
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-after-update-access-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    }
+  ]
+}
