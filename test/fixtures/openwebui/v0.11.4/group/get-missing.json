@@ -1,0 +1,215 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "group",
+  "scenario": "get-missing",
+  "steps": [
+    {
+      "step": "get-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-deleted-info",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/info",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-deleted-export",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/export",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-deleted-preview",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/preview",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-deleted-members",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/members",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    },
+    {
+      "step": "update-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "name": "missing",
+          "description": "missing"
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error updating group]"
+        }
+      }
+    },
+    {
+      "step": "delete-deleted",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "get-never-existed",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/missing-group-id",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-never-existed-info",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/missing-group-id/info",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-never-existed-export",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/missing-group-id/export",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-never-existed-preview",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/missing-group-id/preview",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-never-existed-members",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/missing-group-id/members",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "body": "<non-JSON body>"
+      }
+    },
+    {
+      "step": "update-never-existed",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/id/missing-group-id/update",
+        "body": {
+          "name": "missing",
+          "description": "missing"
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error updating group]"
+        }
+      }
+    },
+    {
+      "step": "delete-never-existed",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/groups/id/missing-group-id/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,403 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "group",
+  "scenario": "permission-set",
+  "steps": [
+    {
+      "step": "default-permissions",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/users/default/permissions",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "workspace": {
+            "models": false,
+            "knowledge": false,
+            "prompts": false,
+            "tools": false,
+            "skills": false,
+            "models_import": false,
+            "models_export": false,
+            "models_hidden": false,
+            "prompts_import": false,
+            "prompts_export": false,
+            "tools_import": false,
+            "tools_export": false,
+            "skills_import": false,
+            "skills_export": false
+          },
+          "sharing": {
+            "models": false,
+            "public_models": false,
+            "knowledge": false,
+            "public_knowledge": false,
+            "prompts": false,
+            "public_prompts": false,
+            "tools": false,
+            "public_tools": false,
+            "skills": false,
+            "public_skills": false,
+            "notes": false,
+            "public_notes": false,
+            "folders": false,
+            "public_chats": false,
+            "open_chats": false,
+            "public_calendars": false
+          },
+          "access_grants": {
+            "allow_users": true,
+            "allow_groups": true
+          },
+          "chat": {
+            "controls": true,
+            "valves": true,
+            "system_prompt": true,
+            "params": true,
+            "file_upload": true,
+            "web_upload": true,
+            "delete": true,
+            "delete_message": true,
+            "continue_response": true,
+            "regenerate_response": true,
+            "rate_response": true,
+            "edit": true,
+            "share": true,
+            "export": true,
+            "import": true,
+            "stt": true,
+            "tts": true,
+            "call": true,
+            "multiple_models": true,
+            "temporary": true,
+            "temporary_enforced": false
+          },
+          "features": {
+            "api_keys": false,
+            "notes": true,
+            "channels": true,
+            "encrypted_channels": false,
+            "folders": true,
+            "direct_tool_servers": false,
+            "web_search": true,
+            "image_generation": true,
+            "code_interpreter": true,
+            "memories": true,
+            "automations": false,
+            "calendar": true,
+            "webhooks": false
+          },
+          "settings": {
+            "interface": true
+          }
+        }
+      }
+    },
+    {
+      "step": "default-permissions-defaults",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/users/default/permissions/defaults",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "workspace": {
+            "models": false,
+            "knowledge": false,
+            "prompts": false,
+            "tools": false,
+            "skills": false,
+            "models_import": false,
+            "models_export": false,
+            "models_hidden": false,
+            "prompts_import": false,
+            "prompts_export": false,
+            "tools_import": false,
+            "tools_export": false,
+            "skills_import": false,
+            "skills_export": false
+          },
+          "sharing": {
+            "models": false,
+            "public_models": false,
+            "knowledge": false,
+            "public_knowledge": false,
+            "prompts": false,
+            "public_prompts": false,
+            "tools": false,
+            "public_tools": false,
+            "skills": false,
+            "public_skills": false,
+            "notes": false,
+            "public_notes": false,
+            "folders": false,
+            "public_chats": false,
+            "open_chats": false,
+            "public_calendars": false
+          },
+          "access_grants": {
+            "allow_users": true,
+            "allow_groups": true
+          },
+          "chat": {
+            "controls": true,
+            "valves": true,
+            "system_prompt": true,
+            "params": true,
+            "file_upload": true,
+            "web_upload": true,
+            "delete": true,
+            "delete_message": true,
+            "continue_response": true,
+            "regenerate_response": true,
+            "rate_response": true,
+            "edit": true,
+            "share": true,
+            "export": true,
+            "import": true,
+            "stt": true,
+            "tts": true,
+            "call": true,
+            "multiple_models": true,
+            "temporary": true,
+            "temporary_enforced": false
+          },
+          "features": {
+            "api_keys": false,
+            "notes": true,
+            "channels": true,
+            "encrypted_channels": false,
+            "folders": true,
+            "direct_tool_servers": false,
+            "web_search": true,
+            "image_generation": true,
+            "code_interpreter": true,
+            "memories": true,
+            "automations": false,
+            "calendar": true,
+            "webhooks": false
+          },
+          "settings": {
+            "interface": true
+          }
+        }
+      }
+    },
+    {
+      "step": "preview",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/preview",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "group": {
+            "id": "00000000-0000-4000-8000-000000000003",
+            "name": "capture-engineering"
+          },
+          "default_models": {
+            "local": null,
+            "effective": [],
+            "source_group_id": null
+          },
+          "models": {
+            "items": [],
+            "total": 0
+          },
+          "knowledge": {
+            "items": [],
+            "total": 0
+          },
+          "tools": {
+            "items": [],
+            "total": 0
+          },
+          "permissions": {
+            "workspace": {
+              "models": true,
+              "not_a_real_key": true
+            },
+            "not_a_real_category": {
+              "anything": false
+            }
+          },
+          "inherited_permissions": {
+            "workspace": {
+              "models": false,
+              "knowledge": false,
+              "prompts": false,
+              "tools": false,
+              "skills": false,
+              "models_import": false,
+              "models_export": false,
+              "models_hidden": false,
+              "prompts_import": false,
+              "prompts_export": false,
+              "tools_import": false,
+              "tools_export": false,
+              "skills_import": false,
+              "skills_export": false
+            },
+            "sharing": {
+              "models": false,
+              "public_models": false,
+              "knowledge": false,
+              "public_knowledge": false,
+              "prompts": false,
+              "public_prompts": false,
+              "tools": false,
+              "public_tools": false,
+              "skills": false,
+              "public_skills": false,
+              "notes": false,
+              "public_notes": false,
+              "folders": false,
+              "public_chats": false,
+              "open_chats": false,
+              "public_calendars": false
+            },
+            "access_grants": {
+              "allow_users": true,
+              "allow_groups": true
+            },
+            "chat": {
+              "controls": true,
+              "valves": true,
+              "system_prompt": true,
+              "params": true,
+              "file_upload": true,
+              "web_upload": true,
+              "delete": true,
+              "delete_message": true,
+              "continue_response": true,
+              "regenerate_response": true,
+              "rate_response": true,
+              "edit": true,
+              "share": true,
+              "export": true,
+              "import": true,
+              "stt": true,
+              "tts": true,
+              "call": true,
+              "multiple_models": true,
+              "temporary": true,
+              "temporary_enforced": false
+            },
+            "features": {
+              "api_keys": false,
+              "notes": true,
+              "folders": true,
+              "channels": true,
+              "encrypted_channels": false,
+              "direct_tool_servers": false,
+              "web_search": true,
+              "image_generation": true,
+              "code_interpreter": true,
+              "memories": true,
+              "automations": false,
+              "calendar": true,
+              "webhooks": false
+            },
+            "settings": {
+              "interface": true
+            }
+          },
+          "effective_permissions": {
+            "workspace": {
+              "models": true,
+              "knowledge": false,
+              "prompts": false,
+              "tools": false,
+              "skills": false,
+              "models_import": false,
+              "models_export": false,
+              "models_hidden": false,
+              "prompts_import": false,
+              "prompts_export": false,
+              "tools_import": false,
+              "tools_export": false,
+              "skills_import": false,
+              "skills_export": false,
+              "not_a_real_key": true
+            },
+            "sharing": {
+              "models": false,
+              "public_models": false,
+              "knowledge": false,
+              "public_knowledge": false,
+              "prompts": false,
+              "public_prompts": false,
+              "tools": false,
+              "public_tools": false,
+              "skills": false,
+              "public_skills": false,
+              "notes": false,
+              "public_notes": false,
+              "folders": false,
+              "public_chats": false,
+              "open_chats": false,
+              "public_calendars": false
+            },
+            "access_grants": {
+              "allow_users": true,
+              "allow_groups": true
+            },
+            "chat": {
+              "controls": true,
+              "valves": true,
+              "system_prompt": true,
+              "params": true,
+              "file_upload": true,
+              "web_upload": true,
+              "delete": true,
+              "delete_message": true,
+              "continue_response": true,
+              "regenerate_response": true,
+              "rate_response": true,
+              "edit": true,
+              "share": true,
+              "export": true,
+              "import": true,
+              "stt": true,
+              "tts": true,
+              "call": true,
+              "multiple_models": true,
+              "temporary": true,
+              "temporary_enforced": false
+            },
+            "features": {
+              "api_keys": false,
+              "notes": true,
+              "folders": true,
+              "channels": true,
+              "encrypted_channels": false,
+              "direct_tool_servers": false,
+              "web_search": true,
+              "image_generation": true,
+              "code_interpreter": true,
+              "memories": true,
+              "automations": false,
+              "calendar": true,
+              "webhooks": false
+            },
+            "settings": {
+              "interface": true
+            },
+            "not_a_real_category": {
+              "anything": false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

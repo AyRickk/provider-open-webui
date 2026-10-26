@@ -1,0 +1,79 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "group",
+  "scenario": "update-permissions",
+  "steps": [
+    {
+      "step": "update-permissions",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "name": "capture-engineering",
+          "description": "Engineering, updated",
+          "permissions": {
+            "workspace": {
+              "models": false
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-engineering",
+          "description": "Engineering, updated",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": {
+            "workspace": {
+              "models": false
+            }
+          },
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "get-after-update",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-engineering",
+          "description": "Engineering, updated",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": {
+            "workspace": {
+              "models": false
+            }
+          },
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    }
+  ]
+}
