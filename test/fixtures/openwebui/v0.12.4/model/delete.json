@@ -1,0 +1,178 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "model",
+  "scenario": "delete",
+  "steps": [
+    {
+      "step": "delete",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/delete",
+        "body": {
+          "id": "capture-assistant"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "list-after-delete",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/all",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "version_id": "00000000-0000-4000-8000-000000000034",
+            "id": "capture-history",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "base_model_id": "capture-base",
+            "name": "Capture Assistant",
+            "params": {
+              "system": "You are a capture assistant.",
+              "temperature": 0.9,
+              "top_p": 0.9,
+              "max_tokens": 512
+            },
+            "meta": {
+              "profile_image_url": null,
+              "background_image_url": null,
+              "description": "Assistant defined as code",
+              "i18n": null,
+              "capabilities": {
+                "vision": false,
+                "citations": true
+              },
+              "knowledge": [],
+              "voice": null,
+              "voice_avatar": null,
+              "tags": [
+                {
+                  "name": "capture"
+                }
+              ],
+              "suggestion_prompts": [
+                {
+                  "content": "Summarize this document"
+                }
+              ],
+              "toolIds": [],
+              "filterIds": [],
+              "actionIds": [],
+              "hidden": false
+            },
+            "access_grants": [
+              {
+                "id": "00000000-0000-4000-8000-000000000035",
+                "resource_type": "model",
+                "resource_id": "capture-history",
+                "principal_type": "group",
+                "principal_id": "00000000-0000-4000-8000-000000000001",
+                "permission": "read",
+                "created_at": 1700000000
+              }
+            ],
+            "is_active": true,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000008",
+            "id": "capture-shared",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "base_model_id": "capture-base",
+            "name": "Capture Assistant",
+            "params": {
+              "system": "You are a capture assistant.",
+              "temperature": 0.2,
+              "top_p": 0.9,
+              "max_tokens": 512
+            },
+            "meta": {
+              "profile_image_url": null,
+              "background_image_url": null,
+              "description": "Assistant defined as code",
+              "i18n": null,
+              "capabilities": {
+                "vision": false,
+                "citations": true
+              },
+              "knowledge": [],
+              "voice": null,
+              "voice_avatar": null,
+              "tags": [
+                {
+                  "name": "capture"
+                }
+              ],
+              "suggestion_prompts": [
+                {
+                  "content": "Summarize this document"
+                }
+              ],
+              "toolIds": [],
+              "filterIds": [],
+              "actionIds": [],
+              "hidden": false
+            },
+            "access_grants": [],
+            "is_active": true,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000007",
+            "id": "capture-unexposed",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "base_model_id": "not-exposed-anywhere",
+            "name": "Capture Assistant",
+            "params": {
+              "system": "You are a capture assistant.",
+              "temperature": 0.2,
+              "top_p": 0.9,
+              "max_tokens": 512
+            },
+            "meta": {
+              "profile_image_url": null,
+              "background_image_url": null,
+              "description": "Assistant defined as code",
+              "i18n": null,
+              "capabilities": {
+                "vision": false,
+                "citations": true
+              },
+              "knowledge": [],
+              "voice": null,
+              "voice_avatar": null,
+              "tags": [
+                {
+                  "name": "capture"
+                }
+              ],
+              "suggestion_prompts": [
+                {
+                  "content": "Summarize this document"
+                }
+              ],
+              "toolIds": [],
+              "filterIds": [],
+              "actionIds": [],
+              "hidden": false
+            },
+            "access_grants": [],
+            "is_active": true,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          }
+        ]
+      }
+    }
+  ]
+}

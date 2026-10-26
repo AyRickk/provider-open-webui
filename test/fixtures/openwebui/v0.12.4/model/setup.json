@@ -1,0 +1,154 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "model",
+  "scenario": "setup",
+  "steps": [
+    {
+      "step": "setup-connection",
+      "request": {
+        "method": "POST",
+        "path": "/openai/config/update",
+        "body": {
+          "ENABLE_OPENAI_API": true,
+          "OPENAI_API_BASE_URLS": [
+            "http://owui-0-12-4-upstream:8000/v1"
+          ],
+          "OPENAI_API_KEYS": [
+            "<redacted>"
+          ],
+          "OPENAI_API_CONFIGS": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "ENABLE_OPENAI_API": true,
+          "OPENAI_API_BASE_URLS": [
+            "http://owui-0-12-4-upstream:8000/v1"
+          ],
+          "OPENAI_API_KEYS": [
+            "<redacted>"
+          ],
+          "OPENAI_API_CONFIGS": {}
+        }
+      }
+    },
+    {
+      "step": "setup-group-readers",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/create",
+        "body": {
+          "name": "capture-readers",
+          "description": "Readers"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "parent_group_id": null,
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-readers",
+          "description": "Readers",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "setup-group-writers",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/create",
+        "body": {
+          "name": "capture-writers",
+          "description": "Writers"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "parent_group_id": null,
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-writers",
+          "description": "Writers",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "setup-user",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/auths/add",
+        "body": {
+          "name": "Capture Reader",
+          "email": "reader@example.com",
+          "password": "<redacted>",
+          "role": "user"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "name": "Capture Reader",
+          "role": "user",
+          "email": "reader@example.com",
+          "profile_image_url": "/api/v1/users/00000000-0000-4000-8000-000000000004/profile/image",
+          "token": "<redacted>",
+          "token_type": "Bearer"
+        }
+      }
+    },
+    {
+      "step": "setup-knowledge",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-kb",
+          "description": "Knowledge base to reference"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000005",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb",
+          "description": "Knowledge base to reference",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    }
+  ]
+}
