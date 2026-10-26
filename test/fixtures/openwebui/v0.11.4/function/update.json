@@ -1,0 +1,318 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "function",
+  "scenario": "update",
+  "steps": [
+    {
+      "step": "update-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_pipe/update",
+        "body": {
+          "id": "capture_pipe",
+          "name": "Capture Pipe Renamed",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-name",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_pipe",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "update-code",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_pipe/update",
+        "body": {
+          "id": "capture_pipe",
+          "name": "Capture Pipe Renamed",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"changed\"\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"changed\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-code",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_pipe",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"changed\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "update-description",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_pipe/update",
+        "body": {
+          "id": "capture_pipe",
+          "name": "Capture Pipe Renamed",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"changed\"\n",
+          "meta": {
+            "description": "Changed description"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"changed\"\n",
+          "meta": {
+            "description": "Changed description",
+            "manifest": {
+              "title": "Capture Pipe"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-description",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_pipe",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"changed\"\n",
+          "meta": {
+            "description": "Changed description",
+            "manifest": {
+              "title": "Capture Pipe"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "update-type-pipe-to-action",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_pipe/update",
+        "body": {
+          "id": "capture_pipe",
+          "name": "Capture Pipe Renamed",
+          "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "action",
+          "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Action"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-type-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_pipe",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "action",
+          "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Action"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "update-no-class",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_pipe/update",
+        "body": {
+          "id": "capture_pipe",
+          "name": "Capture Pipe Renamed",
+          "content": "def helper():\n    return 1\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error updating function]"
+        }
+      }
+    },
+    {
+      "step": "get-after-no-class",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_pipe",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_pipe",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Pipe Renamed",
+          "type": "action",
+          "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Action"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    }
+  ]
+}

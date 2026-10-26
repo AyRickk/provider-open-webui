@@ -1,0 +1,128 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "function",
+  "scenario": "delete",
+  "steps": [
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/functions/id/capture_action/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "list-after-delete",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "version_id": "00000000-0000-4000-8000-000000000011",
+            "id": "capture_filter",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "type": "filter",
+            "name": "Capture Filter",
+            "meta": {
+              "description": "Changed while on",
+              "manifest": {
+                "title": "Capture Filter",
+                "description": "Filter used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "toggle": false
+            },
+            "is_active": true,
+            "is_global": true,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000013",
+            "id": "capture_history",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "type": "pipe",
+            "name": "Capture History v2",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Pipe"
+              },
+              "toggle": false
+            },
+            "is_active": true,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000010",
+            "id": "capture_pipe",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "type": "action",
+            "name": "Capture Pipe Renamed",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Action"
+              },
+              "toggle": false
+            },
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000005",
+            "id": "capture_toggle_filter",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "type": "filter",
+            "name": "Capture Toggle Filter",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Filter",
+                "description": "Filter used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "toggle": true
+            },
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "version_id": "00000000-0000-4000-8000-000000000006",
+            "id": "capture_upper",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "type": "pipe",
+            "name": "Upper",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Pipe"
+              },
+              "toggle": false
+            },
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          }
+        ]
+      }
+    }
+  ]
+}

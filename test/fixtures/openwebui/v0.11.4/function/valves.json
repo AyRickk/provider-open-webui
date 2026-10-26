@@ -1,0 +1,366 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "function",
+  "scenario": "valves",
+  "steps": [
+    {
+      "step": "valves-initial",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {}
+      }
+    },
+    {
+      "step": "valves-spec",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter/valves/spec",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "properties": {
+            "api_key": {
+              "default": "",
+              "title": "Api Key",
+              "type": "string"
+            },
+            "priority": {
+              "default": 0,
+              "title": "Priority",
+              "type": "integer"
+            }
+          },
+          "title": "Valves",
+          "type": "object"
+        }
+      }
+    },
+    {
+      "step": "valves-update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_filter/valves/update",
+        "body": {
+          "api_key": "<redacted>",
+          "priority": 5
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "api_key": "<redacted>",
+          "priority": 5
+        }
+      }
+    },
+    {
+      "step": "valves-after-update",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "api_key": "<redacted>",
+          "priority": 5
+        }
+      }
+    },
+    {
+      "step": "export-with-valves-after-update",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/export?include_valves=true",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "capture_action",
+            "user_id": "00000000-0000-4000-8000-000000000001",
+            "name": "Capture Action",
+            "type": "action",
+            "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Action"
+              }
+            },
+            "valves": {},
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "id": "capture_filter",
+            "user_id": "00000000-0000-4000-8000-000000000001",
+            "name": "Capture Filter",
+            "type": "filter",
+            "content": "\"\"\"\ntitle: Capture Filter\ndescription: Filter used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = 0\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Filter",
+                "description": "Filter used by the capture scenarios",
+                "version": "1.0.0"
+              }
+            },
+            "valves": {
+              "api_key": "<redacted>",
+              "priority": 5
+            },
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "id": "capture_pipe",
+            "user_id": "00000000-0000-4000-8000-000000000001",
+            "name": "Capture Pipe Renamed",
+            "type": "action",
+            "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Action"
+              }
+            },
+            "valves": {},
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "id": "capture_toggle_filter",
+            "user_id": "00000000-0000-4000-8000-000000000001",
+            "name": "Capture Toggle Filter",
+            "type": "filter",
+            "content": "\"\"\"\ntitle: Capture Filter\ndescription: Filter used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel\n\n\nclass Filter:\n    toggle = True\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = 0\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Filter",
+                "description": "Filter used by the capture scenarios",
+                "version": "1.0.0"
+              },
+              "toggle": true
+            },
+            "valves": {},
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          },
+          {
+            "id": "capture_upper",
+            "user_id": "00000000-0000-4000-8000-000000000001",
+            "name": "Upper",
+            "type": "pipe",
+            "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+            "meta": {
+              "description": "Captured function",
+              "manifest": {
+                "title": "Capture Pipe"
+              }
+            },
+            "valves": {},
+            "is_active": false,
+            "is_global": false,
+            "updated_at": 1700000000,
+            "created_at": 1700000000
+          }
+        ]
+      }
+    },
+    {
+      "step": "valves-update-partial",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_filter/valves/update",
+        "body": {
+          "priority": 7
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 7
+        }
+      }
+    },
+    {
+      "step": "valves-after-partial",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 7
+        }
+      }
+    },
+    {
+      "step": "valves-update-unknown-key",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_filter/valves/update",
+        "body": {
+          "priority": 7,
+          "not_a_valve": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 7
+        }
+      }
+    },
+    {
+      "step": "valves-after-unknown-key",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 7
+        }
+      }
+    },
+    {
+      "step": "valves-update-wrong-type",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_filter/valves/update",
+        "body": {
+          "priority": "high"
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error updating function valves]"
+        }
+      }
+    },
+    {
+      "step": "valves-after-wrong-type",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 7
+        }
+      }
+    },
+    {
+      "step": "valves-function-without-valves",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_action/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {}
+      }
+    },
+    {
+      "step": "valves-spec-function-without-valves",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_action/valves/spec",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": null
+      }
+    },
+    {
+      "step": "valves-update-function-without-valves",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_action/valves/update",
+        "body": {
+          "x": 1
+        }
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "get-after-valves",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_filter",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_filter",
+          "user_id": "00000000-0000-4000-8000-000000000001",
+          "name": "Capture Filter",
+          "type": "filter",
+          "content": "\"\"\"\ntitle: Capture Filter\ndescription: Filter used by the capture scenarios\nversion: 1.0.0\n\"\"\"\nfrom pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        api_key: str = \"\"\n        priority: int = 0\n\n    def __init__(self):\n        self.valves = self.Valves()\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Filter",
+              "description": "Filter used by the capture scenarios",
+              "version": "1.0.0"
+            }
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "function",
+  "scenario": "get-missing",
+  "steps": [
+    {
+      "step": "get-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_action",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "update-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_action/update",
+        "body": {
+          "id": "capture_action",
+          "name": "Capture Action",
+          "content": "\"\"\"\ntitle: Capture Action\n\"\"\"\n\n\nclass Action:\n    async def action(self, body: dict) -> None:\n        return None\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error updating function]"
+        }
+      }
+    },
+    {
+      "step": "delete-deleted",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/functions/id/capture_action/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "valves-deleted",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_action/valves",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "valves-update-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_action/valves/update",
+        "body": {
+          "x": 1
+        }
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "toggle-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_action/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    },
+    {
+      "step": "toggle-global-deleted",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_action/toggle/global",
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    }
+  ]
+}

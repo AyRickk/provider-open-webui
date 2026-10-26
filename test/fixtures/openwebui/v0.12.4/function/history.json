@@ -1,0 +1,273 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "function",
+  "scenario": "history",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/create",
+        "body": {
+          "id": "capture_history",
+          "name": "Capture History",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000012",
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "type": "pipe",
+          "name": "Capture History",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000012",
+            "function_id": "capture_history",
+            "parent_id": null,
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "name": "Provider Admin"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "update-no-change",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_history/update",
+        "body": {
+          "id": "capture_history",
+          "name": "Capture History",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000012",
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-no-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000012",
+            "function_id": "capture_history",
+            "parent_id": null,
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "name": "Provider Admin"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "update-change",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_history/update",
+        "body": {
+          "id": "capture_history",
+          "name": "Capture History v2",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000013",
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History v2",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            },
+            "toggle": false
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000012",
+            "function_id": "capture_history",
+            "parent_id": null,
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "name": "Provider Admin"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000013",
+            "function_id": "capture_history",
+            "parent_id": "00000000-0000-4000-8000-000000000012",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "name": "Provider Admin"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "toggle-active",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_history/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000013",
+          "id": "capture_history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History v2",
+          "type": "pipe",
+          "content": "\"\"\"\ntitle: Capture Pipe\n\"\"\"\n\n\nclass Pipe:\n    def pipe(self, body: dict) -> str:\n        return \"capture\"\n",
+          "meta": {
+            "description": "Captured function",
+            "manifest": {
+              "title": "Capture Pipe"
+            },
+            "toggle": false
+          },
+          "is_active": true,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "history-after-toggle",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_history/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000012",
+            "function_id": "capture_history",
+            "parent_id": null,
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "name": "Provider Admin"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000013",
+            "function_id": "capture_history",
+            "parent_id": "00000000-0000-4000-8000-000000000012",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "name": "Provider Admin"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
