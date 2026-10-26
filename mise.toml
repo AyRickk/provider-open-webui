@@ -27,3 +27,7 @@ run = "hack/openwebui/down.sh"
 [tasks."owui:openapi"]
 description = "Snapshot /openapi.json of a running instance: mise run owui:openapi <version>"
 run = "hack/openwebui/openapi.sh"
+
+[tasks."owui:capture"]
+description = "Capture API fixtures on a fresh instance: mise run owui:capture <resource> <version>"
+run = "hack/capture/capture.sh"

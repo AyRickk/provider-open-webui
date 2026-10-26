@@ -12,7 +12,7 @@ OWUI_ADMIN_NAME="${OWUI_ADMIN_NAME:-Provider Admin}"
 # leading zeros, the range the port scheme of owui_port covers.
 owui_require_version() {
   if [[ ! "${1:-}" =~ ^0\.(0|[1-9][0-9]?)\.(0|[1-9][0-9]?)$ ]]; then
-    echo "usage: mise run owui:<up|down|openapi> <version>   e.g. 0.12.4 (0.x.y, x and y below 100)" >&2
+    echo "invalid version '${1:-}': expected 0.x.y with x and y below 100, e.g. 0.12.4" >&2
     exit 2
   fi
 }

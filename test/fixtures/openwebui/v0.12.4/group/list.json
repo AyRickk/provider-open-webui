@@ -1,0 +1,63 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "group",
+  "scenario": "list",
+  "steps": [
+    {
+      "step": "list",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "parent_group_id": null,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "capture-minimal",
+            "description": "Group with name and description only",
+            "data": {
+              "config": {
+                "share": "members"
+              }
+            },
+            "meta": null,
+            "permissions": null,
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "member_count": 0
+          },
+          {
+            "parent_group_id": null,
+            "id": "00000000-0000-4000-8000-000000000003",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "capture-engineering",
+            "description": "Engineering",
+            "data": {
+              "config": {
+                "share": "members"
+              }
+            },
+            "meta": null,
+            "permissions": {
+              "workspace": {
+                "models": true,
+                "tools": true
+              },
+              "chat": {
+                "file_upload": false
+              }
+            },
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "member_count": 0
+          }
+        ]
+      }
+    }
+  ]
+}
