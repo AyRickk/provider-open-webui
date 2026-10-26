@@ -1,0 +1,73 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "model",
+  "scenario": "base-models",
+  "steps": [
+    {
+      "step": "app-models",
+      "request": {
+        "method": "GET",
+        "path": "/api/models",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "data": [
+            {
+              "id": "arena-model",
+              "name": "Arena Model",
+              "info": {
+                "meta": {
+                  "description": "Submit your questions to anonymous AI chatbots and vote on the best response.",
+                  "model_ids": null
+                }
+              },
+              "object": "model",
+              "created": 1700000000,
+              "owned_by": "arena",
+              "arena": true,
+              "actions": [],
+              "filters": [],
+              "tags": []
+            },
+            {
+              "id": "capture-base",
+              "object": "model",
+              "created": 1700000000,
+              "owned_by": "openai",
+              "connection_type": "external",
+              "name": "capture-base",
+              "openai": {
+                "id": "capture-base",
+                "object": "model",
+                "created": 1700000000,
+                "owned_by": "capture",
+                "connection_type": "external"
+              },
+              "provider": "",
+              "urlIdx": 0,
+              "actions": [],
+              "filters": [],
+              "tags": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "base",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/base",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": []
+      }
+    }
+  ]
+}

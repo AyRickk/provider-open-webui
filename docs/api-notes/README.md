@@ -13,6 +13,8 @@ Observed behavior of the Open WebUI API on the supported versions. Observed beha
 One page per resource, each with the same sections: endpoints, payloads, server-computed fields, behavior, missing object, differences between versions, deviations from spec #3. [`group.md`](group.md) is the template.
 
 - [Group](group.md)
+- [Model](model.md)
+- [Access grants](access-grants.md): sharing for every shareable resource (model, prompt, tool, knowledge)
 
 ## Cross-cutting
 

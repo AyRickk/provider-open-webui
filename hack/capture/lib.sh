@@ -1,6 +1,7 @@
 # shellcheck shell=bash
 # Recording helpers for capture scenarios. Sourced by capture.sh, which sets CAPTURE_URL,
-# CAPTURE_KEY and CAPTURE_RAW before sourcing a scenario file.
+# CAPTURE_KEY, CAPTURE_RAW, CAPTURE_VERSION and CAPTURE_DIR (hack/capture) before sourcing a
+# scenario file.
 
 # capture_scenario starts a new scenario; every following capture_call belongs to it.
 capture_scenario() {

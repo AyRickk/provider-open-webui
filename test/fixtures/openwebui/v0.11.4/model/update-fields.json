@@ -1,0 +1,2604 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "model",
+  "scenario": "update-fields",
+  "steps": [
+    {
+      "step": "update-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant v2",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant v2",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-name",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant v2",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-base-model",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-unexposed",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-unexposed",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-base-model",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-unexposed",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-description",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Changed description",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Changed description",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-description",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Changed description",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-tags",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              "plain-string",
+              {
+                "name": "object"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "plain-string"
+              },
+              {
+                "name": "object"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-tags",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "plain-string"
+              },
+              {
+                "name": "object"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-capabilities",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": true,
+              "citations": false,
+              "unknown_capability": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": true,
+              "citations": false,
+              "unknown_capability": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-capabilities",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": true,
+              "citations": false,
+              "unknown_capability": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-suggestion-prompts",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Another prompt"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Another prompt"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-suggestion-prompts",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Another prompt"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-system",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "Changed system prompt",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "Changed system prompt",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-system",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "Changed system prompt",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-temperature",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-temperature",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-top-p",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.5,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.5,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-top-p",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.5,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-max-tokens",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 1024
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 1024
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-max-tokens",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 1024
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-additional-params",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512,
+            "seed": 42,
+            "custom_param": {
+              "nested": [
+                1,
+                2
+              ]
+            }
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512,
+            "seed": 42,
+            "custom_param": {
+              "nested": [
+                1,
+                2
+              ]
+            }
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-additional-params",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512,
+            "seed": 42,
+            "custom_param": {
+              "nested": [
+                1,
+                2
+              ]
+            }
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-tools",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [
+              "capture_tool_that_does_not_exist"
+            ],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [
+              "capture_tool_that_does_not_exist"
+            ],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-tools",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [
+              "capture_tool_that_does_not_exist"
+            ],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-knowledge",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [
+              {
+                "id": "00000000-0000-4000-8000-000000000005",
+                "name": "capture-kb",
+                "type": "collection"
+              }
+            ],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [
+              {
+                "id": "00000000-0000-4000-8000-000000000005",
+                "name": "capture-kb",
+                "type": "collection"
+              }
+            ],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-knowledge",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [
+              {
+                "id": "00000000-0000-4000-8000-000000000005",
+                "name": "capture-kb",
+                "type": "collection"
+              }
+            ],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-filters",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [
+              "capture_filter_that_does_not_exist"
+            ],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [
+              "capture_filter_that_does_not_exist"
+            ],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-filters",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [
+              "capture_filter_that_does_not_exist"
+            ],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-actions",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [
+              "capture_action_that_does_not_exist"
+            ],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [
+              "capture_action_that_does_not_exist"
+            ],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-actions",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [
+              "capture_action_that_does_not_exist"
+            ],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-hidden",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": true
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": true
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-hidden",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": true
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-inactive",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "base_model_id": "capture-base",
+          "meta": {
+            "description": "Assistant defined as code",
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "knowledge": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "is_active": false
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-inactive",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {
+            "system": "You are a capture assistant.",
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "max_tokens": 512
+          },
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": "Assistant defined as code",
+            "i18n": null,
+            "capabilities": {
+              "vision": false,
+              "citations": true
+            },
+            "knowledge": [],
+            "tags": [
+              {
+                "name": "capture"
+              }
+            ],
+            "suggestion_prompts": [
+              {
+                "content": "Summarize this document"
+              }
+            ],
+            "toolIds": [],
+            "filterIds": [],
+            "actionIds": [],
+            "hidden": false
+          },
+          "access_grants": [],
+          "is_active": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-partial-payload",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-assistant",
+          "name": "Capture Assistant",
+          "meta": {},
+          "params": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-partial-payload",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "toggle",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/toggle?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-toggle",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-assistant",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-assistant",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": "capture-base",
+          "name": "Capture Assistant",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}
