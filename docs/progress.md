@@ -6,14 +6,15 @@ This document is **rewritten, never appended to**. It describes the current stat
 
 **Phase 0: API spike.** Establish the Open WebUI API facts for every resource on the supported versions, then consolidate them in ADR-0001. Human validation is required before phase 1 starts. See the spec, issue #3.
 
+Done so far: #4 (agent docs), #5 (devcontainer, mise toolchain, throwaway instances, cross-cutting API notes in `docs/api-notes/README.md`).
+
 ## Open phase 0 tickets
 
 GitHub's issue dependencies are the source of truth for blockers; this table is a snapshot.
 
 | Ticket | Title | Blocked by |
 | --- | --- | --- |
-| #5 | build: devcontainer, mise toolchain and throwaway Open WebUI instances | none |
-| #6 | spike(group): capture tooling and Group API notes | #5 |
+| #6 | spike(group): capture tooling and Group API notes | none |
 | #7 | spike(model): Model API capture and field mapping | #6 |
 | #8 | spike(prompt): Prompt API capture and notes | #6 |
 | #9 | spike(knowledge): Knowledge API capture and notes | #6 |
@@ -23,8 +24,9 @@ GitHub's issue dependencies are the source of truth for blockers; this table is 
 
 ## Frontier
 
-**#5**, the devcontainer and mise toolchain. Done so far: #4, the agent docs.
+**#6**, the capture tooling and the Group API notes.
 
 ## Open questions
 
-None.
+- On 0.12.4, `GET /api/v1/auths/` refuses API keys ("A human session is required."). Which authenticated endpoint the provider uses to check its credentials is to be settled in ADR-0001.
+- The `*API_KEYS*` settings are persistent config and only apply on a database's first boot. The bootstrap guide must say so.
