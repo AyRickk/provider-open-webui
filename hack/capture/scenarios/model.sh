@@ -9,7 +9,6 @@ upstream="$instance-upstream"
 network="$instance-net"
 capture_cleanup() {
   docker rm --force "$upstream" >/dev/null 2>&1 || true
-  docker network disconnect "$network" "$instance" >/dev/null 2>&1 || true
   docker network rm "$network" >/dev/null 2>&1 || true
 }
 docker network create "$network" >/dev/null

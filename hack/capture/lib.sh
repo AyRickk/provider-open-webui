@@ -46,3 +46,32 @@ capture_check() {
   jq -nc --arg scenario "$CAPTURE_SCENARIO" --arg step "$1" --arg claim "$2" --argjson holds "$3" \
     '{scenario: $scenario, step: $step, check: {claim: $claim, holds: $holds}}' >>"$CAPTURE_RAW"
 }
+
+# capture_observe <step> <what> <json> records something observed outside the API (database rows,
+# files on disk), normalized and redacted like any response.
+capture_observe() {
+  jq -nc --arg scenario "$CAPTURE_SCENARIO" --arg step "$1" --arg what "$2" --argjson value "$3" \
+    '{scenario: $scenario, step: $step, observation: {what: $what, value: $value}}' >>"$CAPTURE_RAW"
+}
+
+# capture_upload <step> <path> uploads a file as multipart form data, records the exchange (the
+# request as the file's name and size, not its bytes) and prints the response body.
+capture_upload() {
+  local step="$1" path="$2" resp_file meta status content_type
+  resp_file="$(mktemp)"
+  if ! meta="$(curl -sS -X POST -o "$resp_file" -w '%{http_code} %{content_type}' \
+    -H "Authorization: Bearer $CAPTURE_KEY" -F "file=@$path" "$CAPTURE_URL/api/v1/files/")"; then
+    echo "capture: $CAPTURE_SCENARIO/$step: upload got no HTTP response" >&2
+    rm -f "$resp_file"
+    return 1
+  fi
+  read -r status content_type <<<"$meta"
+  jq -nc --arg scenario "$CAPTURE_SCENARIO" --arg step "$step" --arg name "$(basename "$path")" \
+    --argjson size "$(wc -c <"$path")" --argjson status "$status" --arg content_type "$content_type" \
+    --rawfile resp "$resp_file" \
+    '{scenario: $scenario, step: $step,
+      request: {method: "POST", path: "/api/v1/files/", body: {multipart_file: $name, size: $size}},
+      response: {status: $status, content_type: $content_type, body: ($resp | try fromjson catch "<non-JSON body>")}}' >>"$CAPTURE_RAW"
+  cat "$resp_file"
+  rm -f "$resp_file"
+}

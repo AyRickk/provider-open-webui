@@ -14,24 +14,33 @@ source "$repo_root/hack/openwebui/lib.sh"
 resource="${1:-}"
 version="${2:-}"
 scenario_file="$here/scenarios/$resource.sh"
-if [[ -z "$resource" || ! -f "$scenario_file" ]]; then
-  echo "usage: mise run owui:capture <resource> <version>   resources: $(find "$here/scenarios" -name '*.sh' -exec basename {} .sh \; | sort | xargs)" >&2
+if [[ -z "$resource" || "$resource" == *.before || ! -f "$scenario_file" ]]; then
+  echo "usage: mise run owui:capture <resource> <version>   resources: $(find "$here/scenarios" -name '*.sh' ! -name '*.before.sh' -exec basename {} .sh \; | sort | xargs)" >&2
   exit 2
 fi
 owui_require_version "$version"
 
+# shellcheck disable=SC2034 # read by the scenario files, which shellcheck cannot follow
+CAPTURE_VERSION="$version" CAPTURE_DIR="$here"
+CAPTURE_SECRETS=()
 work="$(mktemp -d)"
-trap 'rm -rf "$work"' EXIT
-"$repo_root/hack/openwebui/up.sh" "$version" >"$work/up.env"
 # A scenario that starts helpers (e.g. a fake upstream) defines capture_cleanup to remove them.
-trap 'if declare -F capture_cleanup >/dev/null; then capture_cleanup || true; fi
-  "$repo_root/hack/openwebui/down.sh" "$version" >/dev/null 2>&1 || true; rm -rf "$work"' EXIT
+trap 'if declare -F capture_cleanup >/dev/null; then capture_cleanup || true; fi; rm -rf "$work"' EXIT
+
+# scenarios/<resource>.before.sh, when present, runs before the instance starts: it can start
+# helpers and set OWUI_NETWORK / OWUI_EXTRA_ENV for hack/openwebui/up.sh.
+if [[ -f "$here/scenarios/$resource.before.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "$here/scenarios/$resource.before.sh"
+fi
+"$repo_root/hack/openwebui/up.sh" "$version" >"$work/up.env"
+# The instance goes first: helpers' networks cannot be removed while it is still attached.
+trap '"$repo_root/hack/openwebui/down.sh" "$version" >/dev/null 2>&1 || true
+  if declare -F capture_cleanup >/dev/null; then capture_cleanup || true; fi; rm -rf "$work"' EXIT
 
 CAPTURE_URL="$(sed -n 's/^OWUI_URL=//p' "$work/up.env")"
 CAPTURE_KEY="$(sed -n 's/^OWUI_API_KEY=//p' "$work/up.env")"
 CAPTURE_RAW="$work/raw.jsonl"
-# shellcheck disable=SC2034 # read by the scenario file, which shellcheck cannot follow
-CAPTURE_VERSION="$version" CAPTURE_DIR="$here"
 # shellcheck source=hack/capture/lib.sh
 source "$here/lib.sh"
 # shellcheck source=/dev/null
@@ -53,7 +62,8 @@ done
 
 # No secret sent or received during the run, nor anything shaped like one, may reach a fixture.
 jq -r -L "$here" 'include "secrets"; secret_values | select(length >= 8)' "$CAPTURE_RAW" >"$work/secrets"
-printf '%s\n' "$CAPTURE_KEY" "$OWUI_ADMIN_PASSWORD" "$OWUI_SECRET_KEY" >>"$work/secrets"
+# A before.sh may add the credentials of its helpers to CAPTURE_SECRETS.
+printf '%s\n' "$CAPTURE_KEY" "$OWUI_ADMIN_PASSWORD" "$OWUI_SECRET_KEY" "${CAPTURE_SECRETS[@]}" >>"$work/secrets"
 if grep -rqF -f "$work/secrets" "$staged" || grep -rqE 'sk-[0-9a-f]{32}|eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.' "$staged"; then
   echo "a secret leaked into the captured fixtures; nothing written" >&2
   exit 1

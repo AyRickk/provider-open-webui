@@ -1,0 +1,162 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "knowledge",
+  "scenario": "update",
+  "steps": [
+    {
+      "step": "update-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "name": "capture-kb-renamed",
+          "description": "Knowledge base defined as code"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb-renamed",
+          "description": "Knowledge base defined as code",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "get-after-name",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb-renamed",
+          "description": "Knowledge base defined as code",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-description",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "name": "capture-kb-renamed",
+          "description": "Changed description"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb-renamed",
+          "description": "Changed description",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "get-after-description",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb-renamed",
+          "description": "Changed description",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-name-only",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003/update",
+        "body": {
+          "name": "capture-kb-renamed"
+        }
+      },
+      "response": {
+        "status": 422,
+        "content_type": "application/json",
+        "body": {
+          "detail": [
+            {
+              "type": "missing",
+              "loc": [
+                "body",
+                "description"
+              ],
+              "msg": "Field required",
+              "input": {
+                "name": "capture-kb-renamed"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "get-after-name-only",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb-renamed",
+          "description": "Changed description",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

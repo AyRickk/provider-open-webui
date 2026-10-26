@@ -18,6 +18,21 @@ fi
 
 trap 'echo "owui:up $version failed; removing $name" >&2; docker rm --force --volumes "$name" >/dev/null 2>&1 || true' ERR
 
+# Optional: OWUI_NETWORK attaches the instance to a docker network (to reach helper containers),
+# OWUI_EXTRA_ENV adds environment variables, one KEY=VALUE per line.
+extra=()
+if [[ -n "${OWUI_NETWORK:-}" ]]; then
+  extra+=(--network "$OWUI_NETWORK")
+fi
+while IFS= read -r line; do
+  [[ -z "$line" ]] && continue
+  if [[ "$line" != [A-Za-z_]*=* ]]; then
+    echo "OWUI_EXTRA_ENV: '$line' is not KEY=VALUE" >&2
+    exit 2
+  fi
+  extra+=(--env "$line")
+done <<<"${OWUI_EXTRA_ENV:-}"
+
 # ENV=dev serves /openapi.json (the image defaults to ENV=prod).
 # PYTHONHASHSEED=0 keeps /openapi.json reproducible: multi-method routes derive their
 # operationId from a Python set, whose order otherwise changes on every start.
@@ -32,6 +47,7 @@ docker run --detach --name "$name" \
   --env WEBUI_ADMIN_NAME="$OWUI_ADMIN_NAME" \
   --env ENABLE_API_KEYS=true \
   --env ENABLE_OLLAMA_API=false \
+  "${extra[@]}" \
   "$OWUI_IMAGE:v$version-slim" >/dev/null
 
 echo "waiting for $url/health ..." >&2

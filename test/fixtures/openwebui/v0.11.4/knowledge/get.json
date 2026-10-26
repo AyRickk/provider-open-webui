@@ -1,0 +1,65 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "knowledge",
+  "scenario": "get",
+  "steps": [
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000003",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb",
+          "description": "Knowledge base defined as code",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "get-shared",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000005",
+              "resource_type": "knowledge",
+              "resource_id": "00000000-0000-4000-8000-000000000004",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

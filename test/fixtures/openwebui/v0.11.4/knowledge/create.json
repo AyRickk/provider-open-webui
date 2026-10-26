@@ -1,0 +1,128 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "knowledge",
+  "scenario": "create",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-kb",
+          "description": "Knowledge base defined as code"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb",
+          "description": "Knowledge base defined as code",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "create-with-access-grants",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-shared",
+          "description": "Shared",
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000005",
+              "resource_type": "knowledge",
+              "resource_id": "00000000-0000-4000-8000-000000000004",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "create-duplicate-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-kb",
+          "description": "Same name"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-kb",
+          "description": "Same name",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "create-empty-name",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "",
+          "description": "No name"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000007",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "",
+          "description": "No name",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    }
+  ]
+}

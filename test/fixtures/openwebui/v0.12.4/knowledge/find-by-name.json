@@ -1,0 +1,239 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "knowledge",
+  "scenario": "find-by-name",
+  "steps": [
+    {
+      "step": "search-exact-name",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/search?query=capture-kb",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000003",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-kb",
+              "description": "Knowledge base defined as code",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000006",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-kb",
+              "description": "Same name",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            }
+          ],
+          "total": 2
+        }
+      }
+    },
+    {
+      "step": "search-prefix",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/search?query=capture-page-0",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000008",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-01",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000009",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-02",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000010",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-03",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000011",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-04",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000012",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-05",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000013",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-06",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000014",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-07",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000015",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-08",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000016",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-09",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            }
+          ],
+          "total": 9
+        }
+      }
+    }
+  ]
+}
