@@ -27,7 +27,7 @@ Apply the `mattpocock-skills:tdd` skill at the seams agreed in the spec (issue #
 
 ## 4. Test
 
-Inside the devcontainer (once it exists), run single test files while working, then the full suite once at the end. Report failures as they are; do not commit over a red suite.
+Inside the devcontainer (`devcontainer exec --workspace-folder . <command>`, see `README.md`), run single test files while working, then the full suite once at the end. Report failures as they are; do not commit over a red suite.
 
 ## 5. Review
 

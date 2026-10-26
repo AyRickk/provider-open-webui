@@ -1,0 +1,29 @@
+# Single source of tool versions for the devcontainer, and for CI once it exists.
+[tools]
+go = "1.27.3"
+golangci-lint = "2.15.0"
+kind = "0.33.0"
+kubectl = "1.37.1"
+helm = "4.3.1"
+"aqua:kyverno/chainsaw" = "0.2.15"
+crossplane = "2.5.0"
+flux2 = "2.10.0"
+argocd = "3.5.6"
+"go:golang.org/x/vuln/cmd/govulncheck" = "1.9.0"
+trivy = "0.76.1"
+gomplate = "5.3.1"
+syft = "1.55.0"
+cosign = "3.1.4"
+jq = "1.8.2"
+
+[tasks."owui:up"]
+description = "Start a throwaway Open WebUI instance: mise run owui:up <version>"
+run = "hack/openwebui/up.sh"
+
+[tasks."owui:down"]
+description = "Tear down a throwaway Open WebUI instance: mise run owui:down <version>"
+run = "hack/openwebui/down.sh"
+
+[tasks."owui:openapi"]
+description = "Snapshot /openapi.json of a running instance: mise run owui:openapi <version>"
+run = "hack/openwebui/openapi.sh"

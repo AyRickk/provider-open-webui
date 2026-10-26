@@ -17,7 +17,7 @@
 - One ticket per session: finish it, open its PR, then stop and hand over.
 - Every commit carries a DCO sign-off of its own author (`git commit -s`), using the identity configured in git.
 - Commit messages and PR titles follow Conventional Commits, with no AI attribution trailers or lines.
-- Commands run inside the devcontainer, with tools pinned in the mise file (once they exist).
+- Commands run inside the devcontainer through `devcontainer exec`, with tools pinned in `mise.toml` (see `README.md`).
 - Repository content is written in English.
 - Observed Open WebUI API behavior takes precedence over the spec; record the difference in an ADR.
 

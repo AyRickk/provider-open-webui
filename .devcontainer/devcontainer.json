@@ -1,0 +1,17 @@
+{
+  "name": "provider-openwebui",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "29.9.2",
+      "moby": true
+    }
+  },
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=provider-openwebui-mise,target=/home/vscode/.local/share/mise,type=volume"
+  ],
+  "onCreateCommand": ".devcontainer/on-create.sh"
+}
