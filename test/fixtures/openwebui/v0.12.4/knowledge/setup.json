@@ -1,0 +1,39 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "knowledge",
+  "scenario": "setup",
+  "steps": [
+    {
+      "step": "setup-group-readers",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/create",
+        "body": {
+          "name": "capture-readers",
+          "description": "Readers"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "parent_group_id": null,
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-readers",
+          "description": "Readers",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    }
+  ]
+}

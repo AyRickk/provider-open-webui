@@ -1,0 +1,637 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "knowledge",
+  "scenario": "files-and-deletion",
+  "steps": [
+    {
+      "step": "upload",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/files/",
+        "body": {
+          "multipart_file": "capture-doc.txt",
+          "size": 46
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000040",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "hash": null,
+          "filename": "capture-doc.txt",
+          "data": {
+            "status": "pending"
+          },
+          "meta": {
+            "name": "capture-doc.txt",
+            "content_type": "text/plain",
+            "size": 46,
+            "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+            "data": {}
+          },
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "status": true,
+          "path": "/app/backend/data/uploads/00000000-0000-4000-8000-000000000040_capture-doc.txt"
+        }
+      }
+    },
+    {
+      "step": "file-after-processing",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/files/00000000-0000-4000-8000-000000000040",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000040",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+          "filename": "capture-doc.txt",
+          "path": "/app/backend/data/uploads/00000000-0000-4000-8000-000000000040_capture-doc.txt",
+          "data": {
+            "status": "completed",
+            "content": "Capture knowledge document.\nIt has two lines.\n",
+            "error": null
+          },
+          "meta": {
+            "name": "capture-doc.txt",
+            "content_type": "text/plain",
+            "size": 46,
+            "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+            "data": {},
+            "collection_name": "file-00000000-0000-4000-8000-000000000040"
+          },
+          "created_at": 1700000000,
+          "updated_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "create-kb",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-docs",
+          "description": "With a file"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000041",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs",
+          "description": "With a file",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "add-file",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000041/file/add",
+        "body": {
+          "file_id": "00000000-0000-4000-8000-000000000040"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000041",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs",
+          "description": "With a file",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+              "meta": {
+                "name": "capture-doc.txt",
+                "content_type": "text/plain",
+                "size": 46,
+                "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+                "data": {},
+                "collection_name": "00000000-0000-4000-8000-000000000041"
+              },
+              "created_at": 1700000000,
+              "updated_at": 1700000000
+            }
+          ],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "kb-files",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000041/files",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+              "filename": "capture-doc.txt",
+              "data": null,
+              "meta": {
+                "name": "capture-doc.txt",
+                "content_type": "text/plain",
+                "size": 46,
+                "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+                "data": {},
+                "collection_name": "00000000-0000-4000-8000-000000000041"
+              },
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "directory_id": null,
+              "directory_path": "",
+              "has_original": true,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              }
+            }
+          ],
+          "directories": [],
+          "breadcrumbs": [],
+          "total": 1
+        }
+      }
+    },
+    {
+      "step": "create-model-using-kb",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/create",
+        "body": {
+          "id": "capture-kb-model",
+          "name": "Uses the knowledge base",
+          "meta": {
+            "knowledge": [
+              {
+                "id": "00000000-0000-4000-8000-000000000041",
+                "name": "capture-docs",
+                "type": "collection"
+              }
+            ]
+          },
+          "params": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000042",
+          "id": "capture-kb-model",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "Uses the knowledge base",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": [
+              {
+                "id": "00000000-0000-4000-8000-000000000041",
+                "name": "capture-docs",
+                "type": "collection"
+              }
+            ],
+            "voice": null,
+            "voice_avatar": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "vectors-before-delete",
+      "observation": {
+        "what": "pgvector document_chunk rows per collection",
+        "value": [
+          {
+            "id": "00000000-0000-4000-8000-000000000041",
+            "chunks": 1
+          },
+          {
+            "id": "file-00000000-0000-4000-8000-000000000040",
+            "chunks": 1
+          },
+          {
+            "id": "knowledge-bases",
+            "chunks": 36
+          }
+        ]
+      }
+    },
+    {
+      "step": "uploads-before-delete",
+      "observation": {
+        "what": "files in data/uploads",
+        "value": [
+          {
+            "id": "00000000-0000-4000-8000-000000000040_capture-doc.txt"
+          }
+        ]
+      }
+    },
+    {
+      "step": "delete-kb",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000041/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "vectors-after-delete",
+      "observation": {
+        "what": "pgvector document_chunk rows per collection",
+        "value": [
+          {
+            "id": "file-00000000-0000-4000-8000-000000000040",
+            "chunks": 1
+          },
+          {
+            "id": "knowledge-bases",
+            "chunks": 35
+          }
+        ]
+      }
+    },
+    {
+      "step": "uploads-after-delete",
+      "observation": {
+        "what": "files in data/uploads",
+        "value": [
+          {
+            "id": "00000000-0000-4000-8000-000000000040_capture-doc.txt"
+          }
+        ]
+      }
+    },
+    {
+      "step": "file-after-kb-delete",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/files/00000000-0000-4000-8000-000000000040",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000040",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+          "filename": "capture-doc.txt",
+          "path": "/app/backend/data/uploads/00000000-0000-4000-8000-000000000040_capture-doc.txt",
+          "data": {
+            "status": "completed",
+            "content": "Capture knowledge document.\nIt has two lines.\n",
+            "error": null
+          },
+          "meta": {
+            "name": "capture-doc.txt",
+            "content_type": "text/plain",
+            "size": 46,
+            "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+            "data": {},
+            "collection_name": "00000000-0000-4000-8000-000000000041"
+          },
+          "created_at": 1700000000,
+          "updated_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "model-after-kb-delete",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-kb-model",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "version_id": "00000000-0000-4000-8000-000000000043",
+          "id": "capture-kb-model",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "Uses the knowledge base",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": [],
+            "voice": null,
+            "voice_avatar": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "create-kb-2",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-docs-2",
+          "description": "Remove files"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000044",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs-2",
+          "description": "Remove files",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "add-file-2",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000044/file/add",
+        "body": {
+          "file_id": "00000000-0000-4000-8000-000000000040"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000044",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs-2",
+          "description": "Remove files",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+              "meta": {
+                "name": "capture-doc.txt",
+                "content_type": "text/plain",
+                "size": 46,
+                "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+                "data": {},
+                "collection_name": "00000000-0000-4000-8000-000000000044"
+              },
+              "created_at": 1700000000,
+              "updated_at": 1700000000
+            }
+          ],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "remove-file-keep",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000044/file/remove?delete_file=false",
+        "body": {
+          "file_id": "00000000-0000-4000-8000-000000000040"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000044",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs-2",
+          "description": "Remove files",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "vectors-after-remove-keep",
+      "observation": {
+        "what": "pgvector document_chunk rows per collection",
+        "value": [
+          {
+            "id": "file-00000000-0000-4000-8000-000000000040",
+            "chunks": 1
+          },
+          {
+            "id": "knowledge-bases",
+            "chunks": 36
+          }
+        ]
+      }
+    },
+    {
+      "step": "uploads-after-remove-keep",
+      "observation": {
+        "what": "files in data/uploads",
+        "value": [
+          {
+            "id": "00000000-0000-4000-8000-000000000040_capture-doc.txt"
+          }
+        ]
+      }
+    },
+    {
+      "step": "file-after-remove-keep",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/files/00000000-0000-4000-8000-000000000040",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000040",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+          "filename": "capture-doc.txt",
+          "path": "/app/backend/data/uploads/00000000-0000-4000-8000-000000000040_capture-doc.txt",
+          "data": {
+            "status": "completed",
+            "content": "Capture knowledge document.\nIt has two lines.\n",
+            "error": null
+          },
+          "meta": {
+            "name": "capture-doc.txt",
+            "content_type": "text/plain",
+            "size": 46,
+            "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+            "data": {},
+            "collection_name": "00000000-0000-4000-8000-000000000044"
+          },
+          "created_at": 1700000000,
+          "updated_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "add-file-3",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000044/file/add",
+        "body": {
+          "file_id": "00000000-0000-4000-8000-000000000040"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000044",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs-2",
+          "description": "Remove files",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+              "meta": {
+                "name": "capture-doc.txt",
+                "content_type": "text/plain",
+                "size": 46,
+                "file_hash": "74f2165f6f6be210fc58a6745210bf700a4d2dc6595195ffdac21efab9b1e628",
+                "data": {},
+                "collection_name": "00000000-0000-4000-8000-000000000044"
+              },
+              "created_at": 1700000000,
+              "updated_at": 1700000000
+            }
+          ],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "remove-file-default",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000044/file/remove",
+        "body": {
+          "file_id": "00000000-0000-4000-8000-000000000040"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000044",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-docs-2",
+          "description": "Remove files",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "vectors-after-remove-default",
+      "observation": {
+        "what": "pgvector document_chunk rows per collection",
+        "value": [
+          {
+            "id": "knowledge-bases",
+            "chunks": 36
+          }
+        ]
+      }
+    },
+    {
+      "step": "uploads-after-remove-default",
+      "observation": {
+        "what": "files in data/uploads",
+        "value": []
+      }
+    },
+    {
+      "step": "file-after-remove-default",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/files/00000000-0000-4000-8000-000000000040",
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "body": {
+          "detail": "We could not find what you're looking for :/"
+        }
+      }
+    }
+  ]
+}

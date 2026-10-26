@@ -1,0 +1,211 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "knowledge",
+  "scenario": "access-update",
+  "steps": [
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004/access/update",
+        "body": {
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "write"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000039",
+              "resource_type": "knowledge",
+              "resource_id": "00000000-0000-4000-8000-000000000004",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "write",
+              "created_at": 1700000000
+            }
+          ],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "get-after-update-access",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000039",
+              "resource_type": "knowledge",
+              "resource_id": "00000000-0000-4000-8000-000000000004",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "write",
+              "created_at": 1700000000
+            }
+          ],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-with-grants-in-body",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004/update",
+        "body": {
+          "name": "capture-shared",
+          "description": "Shared",
+          "access_grants": [
+            {
+              "principal_type": "user",
+              "principal_id": "*",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "resource_type": "knowledge",
+              "resource_id": "00000000-0000-4000-8000-000000000004",
+              "principal_type": "user",
+              "principal_id": "*",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "get-after-update-with-grants",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "resource_type": "knowledge",
+              "resource_id": "00000000-0000-4000-8000-000000000004",
+              "principal_type": "user",
+              "principal_id": "*",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "make-private",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004/access/update",
+        "body": {
+          "access_grants": []
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "get-after-make-private",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000004",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-shared",
+          "description": "Shared",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

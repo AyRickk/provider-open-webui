@@ -1,0 +1,1503 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "knowledge",
+  "scenario": "list",
+  "steps": [
+    {
+      "step": "setup-create-page-01",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-01",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000008",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-01",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-02",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-02",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000009",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-02",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-03",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-03",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000010",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-03",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-04",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-04",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000011",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-04",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-05",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-05",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000012",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-05",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-06",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-06",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-06",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-07",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-07",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-07",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-08",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-08",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000015",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-08",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-09",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-09",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000016",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-09",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-10",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-10",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000017",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-10",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-11",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-11",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000018",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-11",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-12",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-12",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000019",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-12",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-13",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-13",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000020",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-13",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-14",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-14",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000021",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-14",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-15",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-15",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000022",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-15",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-16",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-16",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000023",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-16",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-17",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-17",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000024",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-17",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-18",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-18",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000025",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-18",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-19",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-19",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000026",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-19",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-20",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-20",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000027",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-20",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-21",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-21",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000028",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-21",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-22",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-22",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000029",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-22",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-23",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-23",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000030",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-23",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-24",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-24",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000031",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-24",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-25",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-25",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000032",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-25",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-26",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-26",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000033",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-26",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-27",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-27",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000034",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-27",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-28",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-28",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000035",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-28",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-29",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-29",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000036",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-29",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-30",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-30",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000037",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-30",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "setup-create-page-31",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-page-31",
+          "description": "Paging"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000038",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-page-31",
+          "description": "Paging",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "list-page-1",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/?page=1",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000009",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-02",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000010",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-03",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000011",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-04",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000012",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-05",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000013",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-06",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000014",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-07",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000015",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-08",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000016",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-09",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000017",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-10",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000018",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-11",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000019",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-12",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000020",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-13",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000021",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-14",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000022",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-15",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000023",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-16",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000024",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-17",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000025",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-18",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000026",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-19",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000027",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-20",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000028",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-21",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-22",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000030",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-23",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000031",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-24",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000032",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-25",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000033",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-26",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000034",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-27",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000035",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-28",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000036",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-29",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000037",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-30",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000038",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-31",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            }
+          ],
+          "total": 35
+        }
+      }
+    },
+    {
+      "step": "list-page-2",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/?page=2",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000003",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-kb",
+              "description": "Knowledge base defined as code",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000004",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-shared",
+              "description": "Shared",
+              "meta": null,
+              "access_grants": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000005",
+                  "resource_type": "knowledge",
+                  "resource_id": "00000000-0000-4000-8000-000000000004",
+                  "principal_type": "group",
+                  "principal_id": "00000000-0000-4000-8000-000000000001",
+                  "permission": "read",
+                  "created_at": 1700000000
+                }
+              ],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000006",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-kb",
+              "description": "Same name",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000007",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "",
+              "description": "No name",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000008",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-page-01",
+              "description": "Paging",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            }
+          ],
+          "total": 35
+        }
+      }
+    },
+    {
+      "step": "list-page-3",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/?page=3",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [],
+          "total": 35
+        }
+      }
+    }
+  ]
+}
