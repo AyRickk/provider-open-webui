@@ -1,0 +1,15 @@
+/api/v1/users/default/permissions
+/api/v1/groups/
+/api/v1/groups/create
+/api/v1/groups/id
+/api/models
+/api/v1/models/create
+/api/v1/models/model
+/api/v1/prompts/create
+/api/v1/prompts/list
+/api/v1/prompts/id
+/api/v1/tools/create
+/api/v1/tools/id
+/api/v1/functions/create
+/api/v1/functions/id
+/api/v1/knowledge

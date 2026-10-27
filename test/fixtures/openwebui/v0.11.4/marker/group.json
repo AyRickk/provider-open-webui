@@ -1,0 +1,166 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "marker",
+  "scenario": "group",
+  "steps": [
+    {
+      "step": "create-data",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/create",
+        "body": {
+          "name": "capture-marker",
+          "description": "d",
+          "data": {
+            "managed_by": "provider-openwebui"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker",
+          "description": "d",
+          "data": {
+            "managed_by": "provider-openwebui",
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "get-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000001",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker",
+          "description": "d",
+          "data": {
+            "managed_by": "provider-openwebui",
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "update-without-data",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000001/update",
+        "body": {
+          "name": "capture-marker",
+          "description": "changed"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker",
+          "description": "changed",
+          "data": {
+            "managed_by": "provider-openwebui",
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "get-after-update-without-data",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000001",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker",
+          "description": "changed",
+          "data": {
+            "managed_by": "provider-openwebui",
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "create-meta",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/create",
+        "body": {
+          "name": "capture-marker-meta",
+          "description": "d",
+          "meta": {
+            "managed_by": "provider-openwebui"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker-meta",
+          "description": "d",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "prompt",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-restricted",
+          "name": "R",
+          "content": "c"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "command": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R",
+          "content": "c",
+          "data": {},
+          "meta": {},
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000005",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "find",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/list?query=capture-restricted",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000004",
+              "command": "capture-restricted",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "R",
+              "content": "c",
+              "data": {},
+              "meta": {},
+              "tags": [],
+              "is_active": true,
+              "version_id": "00000000-0000-4000-8000-000000000005",
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "access_grants": [],
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "write_access": true
+            }
+          ],
+          "total": 1
+        }
+      }
+    },
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000004",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "command": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R",
+          "content": "c",
+          "data": {},
+          "meta": {},
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000005",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000004/update",
+        "body": {
+          "command": "capture-restricted",
+          "name": "R2",
+          "content": "c"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "command": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "content": "c",
+          "data": {},
+          "meta": {},
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "toggle",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000004/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "command": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "content": "c",
+          "data": {},
+          "meta": {},
+          "tags": [],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000004/access/update",
+        "body": {
+          "access_grants": []
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "command": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "content": "c",
+          "data": {},
+          "meta": {},
+          "tags": [],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000006",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000004/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}

@@ -4,31 +4,30 @@ This document is **rewritten, never appended to**. It describes the current stat
 
 ## Current phase
 
-**Phase 0: API spike.** Establish the Open WebUI API facts for every resource on the supported versions, then consolidate them in ADR-0001. Human validation is required before phase 1 starts. See the spec, issue #3.
+**Phase 0: API spike, complete and waiting for the maintainer's validation.** Phase 1 does not start before it (spec #3: "Human validation is required before phase 1").
 
-All resource spikes are done: #4 (agent docs), #5 (devcontainer, throwaway instances, cross-cutting API notes), #6 (capture tooling, Group), #7 (Model, access grants), #11 (Function), #10 (Tool), #9 (Knowledge, `docs/limitations.md`), #8 (Prompt). The notes are indexed in `docs/api-notes/README.md`.
+The consolidated result is [ADR-0001](adr/0001-phase-0-api-consolidation.md) (status: proposed). The phase 0 exit report is posted on spec #3.
 
-## Open phase 0 tickets
+## Phase 0 exit criteria
 
-GitHub's issue dependencies are the source of truth for blockers; this table is a snapshot.
-
-| Ticket | Title | Blocked by |
+| Criterion (#12) | State | Where |
 | --- | --- | --- |
-| #12 | docs(adr): ADR-0001 phase 0 consolidation and validation gate | none |
+| API notes for all six resources on both versions, no placeholder | done | [`docs/api-notes/`](api-notes/README.md) |
+| OpenAPI diff of the used routes, classified | done: 43 routes, 35 none, 8 profile, 0 breaking | [`openapi-diff.md`](api-notes/openapi-diff.md) |
+| Minimal API-key allow-list | done, verified on both versions | [`api-key-allowed-endpoints.txt`](api-notes/api-key-allowed-endpoints.txt) |
+| Marker storage per resource | done, documented only | [ADR-0001](adr/0001-phase-0-api-consolidation.md#marker-storage) |
+| ADR-0001 with every deviation from spec #3 | done: 38 deviations | [ADR-0001](adr/0001-phase-0-api-consolidation.md#deviations-from-spec-3) |
+| Exit report on #3 | posted | spec #3 |
+| Maintainer's validation | **waiting** | spec #3 |
+
+## Open tickets
+
+None in phase 0. Phase 1 tickets are created after the validation, from ADR-0001's [consequences](adr/0001-phase-0-api-consolidation.md#consequences).
 
 ## Frontier
 
-**#12**, ADR-0001: consolidate the open questions below, then the maintainer's validation gates phase 1.
+**Stop.** The next step is the maintainer's: validate ADR-0001 and answer its [decisions needed](adr/0001-phase-0-api-consolidation.md#decisions-needed) on spec #3. Phase 1 tickets follow.
 
 ## Open questions
 
-- On 0.12.4, `GET /api/v1/auths/` refuses API keys ("A human session is required."). Which authenticated endpoint the provider uses to check its credentials is to be settled in ADR-0001.
-- The `*API_KEYS*` settings are persistent config and only apply on a database's first boot. The bootstrap guide must say so.
-- Group and knowledge base names are not unique (knowledge names may even be empty), prompt commands are unique only as exact, case-sensitive strings, and Keycloak group sync matches by name: ADR-0001 must decide how find-by-name / find-by-command and adoption treat several matching objects.
-- Not-found handling differs per resource, version and endpoint (Group: 401, 400 or `200 true` on 0.11.4; Model: 401 on update and delete, 403 on export, the access endpoint re-creates a missing model; Function: 401 on get, 400 on update, `200 true` on delete; Tool: 404 on get, 401 on update and delete; Knowledge: 404 on get, 400 on update and delete; Prompt: 404 everywhere); ADR-0001 records the quirk map.
-- Model additional params are flat keys of `params`: ADR-0001 decides how the CRD's `additionalParams` is flattened and how collisions with named fields are rejected.
-- Function and tool ids are lowercased by the server: ADR-0001 fixes the CEL rule for `functionId` and `toolId`.
-- Tool and function code is rewritten by `replace_imports` before storage: ADR-0001 records that the comparison applies the same rewrite to the desired code.
-- Deleting a knowledge base orphans its files and vectors and rewrites the models that referenced it: ADR-0001 decides whether `Delete` warns, and how `Usage` ordering is documented.
-- Prompt commands are stored as sent, leading `/` included: ADR-0001 fixes the normalization the provider applies and how adoption matches both spellings.
-- `access_grants` in an object update are applied on 0.11.4 and ignored on 0.12.4, for every shareable resource: ADR-0001 records that sharing is written only through the access endpoints.
+The five [decisions needed](adr/0001-phase-0-api-consolidation.md#decisions-needed) in ADR-0001: prompt command spelling, duplicate names at adoption, the optional marker, knowledge deletion, and the 0.12.4 version label.

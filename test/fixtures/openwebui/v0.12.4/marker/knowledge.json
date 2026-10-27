@@ -1,0 +1,60 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "marker",
+  "scenario": "knowledge",
+  "steps": [
+    {
+      "step": "create-meta",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-marker",
+          "description": "d",
+          "meta": {
+            "managed_by": "provider-openwebui"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker",
+          "description": "d",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "get-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000013",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-marker",
+          "description": "d",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

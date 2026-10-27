@@ -1,0 +1,144 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "outside-the-list",
+  "steps": [
+    {
+      "step": "session-user",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/auths/",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "list-users",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/users/",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "models-sync",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/sync",
+        "body": {
+          "models": []
+        }
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "models-delete-all",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/models/delete/all",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "model-list-all",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/all",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "openai-config",
+      "request": {
+        "method": "GET",
+        "path": "/openai/config",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "files",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/files/",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "You do not have permission to access this resource. Please contact your administrator for assistance."
+        }
+      }
+    },
+    {
+      "step": "groups-users-add-covered",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/id/missing-group-id/users/add",
+        "body": {
+          "user_ids": []
+        }
+      },
+      "response": {
+        "status": 400,
+        "content_type": "application/json",
+        "body": {
+          "detail": "[ERROR: Error adding users to group]"
+        }
+      }
+    },
+    {
+      "step": "knowledge-reindex-covered",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/reindex",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "group",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/create",
+        "body": {
+          "name": "capture-restricted",
+          "description": "d"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "d",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "list",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "capture-restricted",
+            "description": "d",
+            "data": {
+              "config": {
+                "share": "members"
+              }
+            },
+            "meta": null,
+            "permissions": null,
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "member_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000001",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "d",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    },
+    {
+      "step": "update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/groups/id/00000000-0000-4000-8000-000000000001/update",
+        "body": {
+          "name": "capture-restricted",
+          "description": "changed"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "changed",
+          "data": {
+            "config": {
+              "share": "members"
+            }
+          },
+          "meta": null,
+          "permissions": null,
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "member_count": 0
+        }
+      }
+    }
+  ]
+}

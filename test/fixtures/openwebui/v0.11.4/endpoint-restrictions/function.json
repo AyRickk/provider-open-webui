@@ -1,0 +1,221 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "function",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/create",
+        "body": {
+          "id": "capture_restricted",
+          "name": "R",
+          "content": "from pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "d"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "type": "filter",
+          "name": "R",
+          "meta": {
+            "description": "d",
+            "manifest": {}
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_restricted",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R",
+          "type": "filter",
+          "content": "from pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "d",
+            "manifest": {}
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_restricted/update",
+        "body": {
+          "id": "capture_restricted",
+          "name": "R2",
+          "content": "from pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "d"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "type": "filter",
+          "content": "from pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "d",
+            "manifest": {}
+          },
+          "is_active": false,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "toggle",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_restricted/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "type": "filter",
+          "content": "from pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "d",
+            "manifest": {}
+          },
+          "is_active": true,
+          "is_global": false,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "toggle-global",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_restricted/toggle/global",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "type": "filter",
+          "content": "from pydantic import BaseModel\n\n\nclass Filter:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def inlet(self, body: dict) -> dict:\n        return body\n",
+          "meta": {
+            "description": "d",
+            "manifest": {}
+          },
+          "is_active": true,
+          "is_global": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "valves",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_restricted/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {}
+      }
+    },
+    {
+      "step": "valves-spec",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/functions/id/capture_restricted/valves/spec",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "properties": {
+            "priority": {
+              "default": 0,
+              "title": "Priority",
+              "type": "integer"
+            }
+          },
+          "title": "Valves",
+          "type": "object"
+        }
+      }
+    },
+    {
+      "step": "valves-update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/functions/id/capture_restricted/valves/update",
+        "body": {
+          "priority": 1
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 1
+        }
+      }
+    },
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/functions/id/capture_restricted/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}
