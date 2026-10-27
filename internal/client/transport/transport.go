@@ -103,10 +103,18 @@ type Request struct {
 	// Body is sent as JSON when not nil.
 	Body any
 
-	// StatusErrors overrides, for this endpoint, the sentinel a status code maps to, for
-	// Open WebUI's per-endpoint quirks (e.g. a missing group answering 401 on 0.11). A nil
-	// value maps the status to no sentinel.
-	StatusErrors map[int]error
+	// StatusErrors overrides, for this endpoint, the sentinel an error response maps to, for
+	// Open WebUI's per-endpoint quirks (e.g. a missing group answering 401 on 0.11). The
+	// first matching entry wins; without one, the status keeps its default sentinel.
+	StatusErrors []StatusError
+}
+
+// A StatusError maps the error responses with Status, and a detail containing Detail
+// unless it is empty, to Err. A nil Err maps them to no sentinel.
+type StatusError struct {
+	Status int
+	Detail string
+	Err    error
 }
 
 // String returns the method and endpoint template, e.g. GET /api/v1/groups/id/{id}.

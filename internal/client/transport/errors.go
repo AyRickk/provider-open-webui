@@ -76,17 +76,20 @@ func (e *Error) Unwrap() error {
 
 // newError builds the Error of a response with the supplied status and body.
 func (t *Transport) newError(req Request, status int, body []byte) *Error {
-	sentinel := defaultStatusErrors[status]
-	if s, ok := req.StatusErrors[status]; ok {
-		sentinel = s
-	}
-	return &Error{
+	e := &Error{
 		Method:     req.Method,
 		Endpoint:   req.Endpoint,
 		StatusCode: status,
 		Detail:     truncate(t.redact(detail(body)), maxDetail),
-		sentinel:   sentinel,
+		sentinel:   defaultStatusErrors[status],
 	}
+	for _, se := range req.StatusErrors {
+		if se.Status == status && strings.Contains(e.Detail, se.Detail) {
+			e.sentinel = se.Err
+			break
+		}
+	}
+	return e
 }
 
 // detail returns the detail of a FastAPI error body, or else the trimmed body.
