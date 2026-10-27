@@ -3,14 +3,16 @@ kind: Namespace
 metadata:
   name: default
 ---
+# The API key of a dedicated Open WebUI admin account. Supply it with External Secrets or
+# SOPS rather than committing it.
 apiVersion: v1
 kind: Secret
 metadata:
   namespace: default
-  name: example-provider-secret
+  name: openwebui-api-key
 type: Opaque
-data:
-  credentials: QkFTRTY0RU5DT0RFRF9QUk9WSURFUl9DUkVEUwo=
+stringData:
+  token: sk-replace-me
 ---
 apiVersion: openwebui.m.crossplane.io/v1alpha1
 kind: ProviderConfig
@@ -18,21 +20,18 @@ metadata:
   name: example
   namespace: default
 spec:
-  credentials:
-    source: Secret
-    secretRef:
-      namespace: default
-      name: example-provider-secret
-      key: credentials
+  url: http://open-webui.open-webui.svc:8080
+  apiKeySecretRef:
+    name: openwebui-api-key
+    key: token
 ---
 apiVersion: openwebui.m.crossplane.io/v1alpha1
 kind: ClusterProviderConfig
 metadata:
-  name: example
+  name: default
 spec:
-  credentials:
-    source: Secret
-    secretRef:
-      namespace: default
-      name: example-provider-secret
-      key: credentials
+  url: http://open-webui.open-webui.svc:8080
+  apiKeySecretRef:
+    namespace: default
+    name: openwebui-api-key
+    key: token

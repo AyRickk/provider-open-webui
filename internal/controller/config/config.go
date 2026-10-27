@@ -11,20 +11,37 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/providerconfig"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	"github.com/AyRickk/provider-openwebui/apis/v1alpha1"
 )
 
-// Setup adds a controller that reconciles ProviderConfigs by accounting for
-// their current usage.
-func Setup(mgr ctrl.Manager, o controller.Options) error {
-	if err := setupNamespacedProviderConfig(mgr, o); err != nil {
+// Setup adds the controllers that reconcile ProviderConfigs and ClusterProviderConfigs by
+// accounting for their current usage, and by reporting their connection to Open WebUI,
+// made with c, in their status.
+func Setup(mgr ctrl.Manager, o controller.Options, c *Connector) error {
+	if err := setupNamespacedProviderConfig(mgr, o, c); err != nil {
 		return err
 	}
-	return setupClusterProviderConfig(mgr, o)
+	return setupClusterProviderConfig(mgr, o, c)
 }
 
-func setupNamespacedProviderConfig(mgr ctrl.Manager, o controller.Options) error {
+// newStatusReconciler returns the reconciler of the provider configs of, which reconciles
+// their usage with usage first.
+func newStatusReconciler(mgr ctrl.Manager, o controller.Options, c *Connector, of resource.ProviderConfigKinds, usage reconcile.Reconciler, record event.Recorder) *statusReconciler {
+	return &statusReconciler{
+		kube:      mgr.GetClient(),
+		usage:     usage,
+		connector: c,
+		newConfig: func() resource.ProviderConfig {
+			return resource.MustCreateObject(of.Config, mgr.GetScheme()).(resource.ProviderConfig) //nolint:forcetypeassert // Always a provider config.
+		},
+		record:   record,
+		interval: o.PollInterval,
+	}
+}
+
+func setupNamespacedProviderConfig(mgr ctrl.Manager, o controller.Options, c *Connector) error {
 	name := providerconfig.ControllerName(v1alpha1.ProviderConfigGroupKind)
 
 	of := resource.ProviderConfigKinds{
@@ -33,9 +50,11 @@ func setupNamespacedProviderConfig(mgr ctrl.Manager, o controller.Options) error
 		UsageList: v1alpha1.ProviderConfigUsageListGroupVersionKind,
 	}
 
-	r := providerconfig.NewReconciler(mgr, of,
+	record := event.NewAPIRecorder(mgr.GetEventRecorderFor(name)) //nolint:staticcheck // TODO(jbw976) Crossplane needs to update to the new events API, see https://github.com/crossplane/crossplane/issues/7152
+	usage := providerconfig.NewReconciler(mgr, of,
 		providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
-		providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))) //nolint:staticcheck // TODO(jbw976) Crossplane needs to update to the new events API, see https://github.com/crossplane/crossplane/issues/7152
+		providerconfig.WithRecorder(record))
+	r := newStatusReconciler(mgr, o, c, of, usage, record)
 
 	return ctrl.NewControllerManagedBy(mgr).
 		Named(name).
@@ -45,7 +64,7 @@ func setupNamespacedProviderConfig(mgr ctrl.Manager, o controller.Options) error
 		Complete(ratelimiter.NewReconciler(name, r, o.GlobalRateLimiter))
 }
 
-func setupClusterProviderConfig(mgr ctrl.Manager, o controller.Options) error {
+func setupClusterProviderConfig(mgr ctrl.Manager, o controller.Options, c *Connector) error {
 	name := providerconfig.ControllerName(v1alpha1.ClusterProviderConfigGroupKind)
 
 	// Every MR in this provider is namespaced, so every usage record is a namespaced
@@ -58,9 +77,11 @@ func setupClusterProviderConfig(mgr ctrl.Manager, o controller.Options) error {
 		UsageList: v1alpha1.ProviderConfigUsageListGroupVersionKind,
 	}
 
-	r := providerconfig.NewReconciler(mgr, of,
+	record := event.NewAPIRecorder(mgr.GetEventRecorderFor(name)) //nolint:staticcheck // TODO(jbw976) Crossplane needs to update to the new events API, see https://github.com/crossplane/crossplane/issues/7152
+	usage := providerconfig.NewReconciler(mgr, of,
 		providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
-		providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))) //nolint:staticcheck // TODO(jbw976) Crossplane needs to update to the new events API, see https://github.com/crossplane/crossplane/issues/7152
+		providerconfig.WithRecorder(record))
+	r := newStatusReconciler(mgr, o, c, of, usage, record)
 
 	return ctrl.NewControllerManagedBy(mgr).
 		Named(name).
