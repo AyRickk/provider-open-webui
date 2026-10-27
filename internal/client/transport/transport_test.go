@@ -139,7 +139,7 @@ func TestDoErrors(t *testing.T) {
 	type args struct {
 		status       int
 		body         string
-		statusErrors map[int]error
+		statusErrors []StatusError
 	}
 	type want struct {
 		sentinel error
@@ -173,8 +173,27 @@ func TestDoErrors(t *testing.T) {
 		},
 		"EndpointQuirk": {
 			reason: "A per-endpoint mapping overrides the default: a missing group answers 401 on 0.11.4.",
-			args:   args{status: http.StatusUnauthorized, body: `{"detail":"Not found"}`, statusErrors: map[int]error{http.StatusUnauthorized: ErrNotFound}},
+			args:   args{status: http.StatusUnauthorized, body: `{"detail":"Not found"}`, statusErrors: []StatusError{{Status: http.StatusUnauthorized, Err: ErrNotFound}}},
 			want:   want{sentinel: ErrNotFound, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Not found"`},
+		},
+		"EndpointQuirkByDetail": {
+			reason: "A mapping with a detail applies only to a response whose detail contains it: a duplicate model id answers 401.",
+			args: args{status: http.StatusUnauthorized, body: `{"detail":"Uh-oh! This model id is already registered. Please choose another model id string."}`, statusErrors: []StatusError{
+				{Status: http.StatusUnauthorized, Detail: "already registered", Err: ErrConflict},
+			}},
+			want: want{sentinel: ErrConflict, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Uh-oh! This model id is already registered. Please choose another model id string."`},
+		},
+		"EndpointQuirkOtherDetail": {
+			reason: "A response whose detail does not match a mapping keeps the next matching one, or the default.",
+			args: args{status: http.StatusUnauthorized, body: `{"detail":"Your session has expired or the token is invalid. Please sign in again."}`, statusErrors: []StatusError{
+				{Status: http.StatusUnauthorized, Detail: "already registered", Err: ErrConflict},
+			}},
+			want: want{sentinel: ErrUnauthorized, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Your session has expired or the token is invalid. Please sign in again."`},
+		},
+		"EndpointQuirkNoSentinel": {
+			reason: "A mapping to a nil error maps the status to no sentinel.",
+			args:   args{status: http.StatusNotFound, body: `{"detail":"x"}`, statusErrors: []StatusError{{Status: http.StatusNotFound}}},
+			want:   want{err: `GET /api/v1/groups/id/{id}: 404 Not Found: "x"`},
 		},
 		"OtherStatus": {
 			reason: "Another status maps to no sentinel; a body without detail is kept as is.",

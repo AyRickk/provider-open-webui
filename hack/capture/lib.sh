@@ -11,6 +11,7 @@ capture_scenario() {
 # capture_call <step> <METHOD> <path> [json-body] sends one authenticated request, records the
 # exchange in CAPTURE_RAW and prints the response body so scenarios can read ids from it.
 # Any HTTP status is recorded as data; only a transport failure (no HTTP response) fails.
+# `CAPTURE_KEY=<key> capture_call …` sends one call with another key.
 capture_call() {
   local step="$1" method="$2" path="$3" body="${4:-}"
   local resp_file meta status content_type

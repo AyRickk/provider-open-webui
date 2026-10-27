@@ -51,6 +51,18 @@ Admin endpoints accept the key on both versions (observed with `GET /api/v1/grou
 
 **0.12.4 only:** routes that depend on `get_human_user` refuse API keys with `403 {"detail":"A human session is required."}`. They are `GET /api/v1/auths/` (the current session user) and the MFA routes. On 0.11.4, `GET /api/v1/auths/` returns the key owner. The provider must therefore not use `GET /api/v1/auths/` to check its credentials; `GET /api/version` (no auth) plus an authenticated read of the resource being reconciled works on both versions.
 
+### Credential check
+
+The provider checks its credentials with `GET /api/v1/users/default/permissions` ([ADR-0001](../adr/0001-phase-0-api-consolidation.md#cross-cutting)). Its answers, captured by `mise run owui:capture credentials <version>`, are the same on both versions:
+
+| Key | Answer | Fixture |
+| --- | --- | --- |
+| The admin's API key | `200`, the default permissions | `credentials/check#admin-key` |
+| An unknown key | `401 {"detail":"Your session has expired or the token is invalid. Please sign in again."}` | `credentials/check#invalid-key` |
+| A non-admin user's API key | **`401`** `{"detail":"You do not have permission to access this resource. Please contact your administrator for assistance."}` | `credentials/non-admin#user-key` |
+
+A non-admin key is refused with `401`, not `403`: only the detail tells it from an invalid key, so the client maps that `401` with the access-prohibited detail to `ErrForbidden`. A route outside the API-key allow-list answers `403` with the same detail (`*/endpoint-restrictions/outside-the-list`). A non-admin user can only create an API key once `features.api_keys` is allowed in the default permissions (`credentials/non-admin-setup`).
+
 ### Bootstrap environment variables
 
 The names are identical on both versions (`open_webui/env.py`, `open_webui/config.py`):
