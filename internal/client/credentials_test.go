@@ -6,7 +6,6 @@ package client
 
 import (
 	"context"
-	"errors"
 	"sync/atomic"
 	"testing"
 
@@ -42,14 +41,7 @@ func TestCheckCredentials(t *testing.T) {
 		},
 	}
 	for _, version := range fixtureVersions {
-		v, err := ParseVersion(version)
-		if err != nil {
-			t.Fatalf("ParseVersion(%q): %v", version, err)
-		}
-		p, _, err := SelectProfile(v, false)
-		if err != nil {
-			t.Fatalf("SelectProfile(%s): %v", v, err)
-		}
+		p := profileFor(t, version)
 		for name, tc := range cases {
 			t.Run(version+"/"+name, func(t *testing.T) {
 				var n atomic.Int64
@@ -58,11 +50,7 @@ func TestCheckCredentials(t *testing.T) {
 				if diff := cmp.Diff(tc.want, err, cmpopts.EquateErrors()); diff != "" {
 					t.Errorf("\n%s\nCheckCredentials(...): -want, +got:\n%s", tc.reason, diff)
 				}
-				for _, s := range []error{transport.ErrUnauthorized, transport.ErrForbidden} {
-					if !errors.Is(tc.want, s) && errors.Is(err, s) {
-						t.Errorf("\n%s\nCheckCredentials(...): error %q also matches %q", tc.reason, err, s)
-					}
-				}
+				checkNoOtherSentinel(t, "CheckCredentials(...)", tc.want, err)
 			})
 		}
 	}

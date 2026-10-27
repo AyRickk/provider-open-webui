@@ -115,8 +115,10 @@ func TestStatusErrors(t *testing.T) {
 		},
 		"function": {
 			{nil, OpFunctionGet, getMissing, getDeleted, notFoundErr},
-			{nil, OpFunctionUpdate, getMissing, updateDeleted, notFoundErr},
-			{only012, OpFunctionUpdate, "update", "update-no-class", noSentinel},
+			// 0.11 answers a missing function and invalid code alike: no sentinel.
+			{only011, OpFunctionUpdate, getMissing, updateDeleted, noSentinel},
+			{only012, OpFunctionUpdate, getMissing, updateDeleted, notFoundErr},
+			{nil, OpFunctionUpdate, "update", "update-no-class", noSentinel},
 			{nil, OpFunctionDelete, getMissing, deleteDeleted, succeeds},
 			{nil, OpFunctionCreate, create, "create-duplicate-id", conflictErr},
 			{nil, OpFunctionCreate, create, "create-no-class", noSentinel},
@@ -137,16 +139,8 @@ func TestStatusErrors(t *testing.T) {
 			{nil, OpToolDelete, "check", "invalid-key", unauthorizedErr},
 		},
 	}
-	sentinels := []error{transport.ErrNotFound, transport.ErrConflict, transport.ErrUnauthorized, transport.ErrForbidden}
 	for _, version := range fixtureVersions {
-		v, err := ParseVersion(version)
-		if err != nil {
-			t.Fatalf("ParseVersion(%q): %v", version, err)
-		}
-		p, _, err := SelectProfile(v, false)
-		if err != nil {
-			t.Fatalf("SelectProfile(%s): %v", v, err)
-		}
+		p := profileFor(t, version)
 		for resource, rows := range cases {
 			for _, tc := range rows {
 				if tc.versions != nil && !slices.Contains(tc.versions, version) {
@@ -181,11 +175,7 @@ func TestStatusErrors(t *testing.T) {
 					case want != nil && !errors.Is(err, want):
 						t.Errorf("Do(...): got %v, want %v", err, want)
 					}
-					for _, se := range sentinels {
-						if !errors.Is(want, se) && errors.Is(err, se) {
-							t.Errorf("Do(...): error %q also matches %q", err, se)
-						}
-					}
+					checkNoOtherSentinel(t, "Do(...)", want, err)
 				})
 			}
 		}

@@ -16,7 +16,7 @@ import (
 // CheckCredentials checks that the provider's API key is an admin's, with GET
 // /api/v1/users/default/permissions (ADR-0001). The error matches transport.ErrUnauthorized
 // when the server rejects the key, and transport.ErrForbidden when the key is not an
-// admin's or the API-key endpoint restrictions do not allow the route.
+// admin's, or on a 403, e.g. when the API-key endpoint restrictions refuse the route.
 func (p *Profile) CheckCredentials(ctx context.Context, d Doer) error {
 	err := d.Do(ctx, transport.Request{
 		Method:       http.MethodGet,

@@ -162,9 +162,9 @@ var profiles = []*Profile{
 // returns ErrUnsupportedVersion, unless allowUnsupported is set: it then returns the newest
 // profile and reports v as unsupported, for the caller to emit a warning.
 func SelectProfile(v Version, allowUnsupported bool) (p *Profile, unsupported bool, err error) {
-	for _, p := range profiles {
-		if p.minor == v.MinorString() {
-			return p, false, nil
+	for _, candidate := range profiles {
+		if candidate.minor == v.MinorString() {
+			return candidate, false, nil
 		}
 	}
 	if allowUnsupported {

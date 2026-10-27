@@ -178,17 +178,17 @@ func TestDoErrors(t *testing.T) {
 		},
 		"EndpointQuirkByDetail": {
 			reason: "A mapping with a detail applies only to a response whose detail contains it: a duplicate model id answers 401.",
-			args: args{status: http.StatusUnauthorized, body: `{"detail":"Uh-oh! This model id is already registered."}`, statusErrors: []StatusError{
+			args: args{status: http.StatusUnauthorized, body: `{"detail":"Uh-oh! This model id is already registered. Please choose another model id string."}`, statusErrors: []StatusError{
 				{Status: http.StatusUnauthorized, Detail: "already registered", Err: ErrConflict},
 			}},
-			want: want{sentinel: ErrConflict, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Uh-oh! This model id is already registered."`},
+			want: want{sentinel: ErrConflict, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Uh-oh! This model id is already registered. Please choose another model id string."`},
 		},
 		"EndpointQuirkOtherDetail": {
 			reason: "A response whose detail does not match a mapping keeps the next matching one, or the default.",
-			args: args{status: http.StatusUnauthorized, body: `{"detail":"Your session has expired or the token is invalid."}`, statusErrors: []StatusError{
+			args: args{status: http.StatusUnauthorized, body: `{"detail":"Your session has expired or the token is invalid. Please sign in again."}`, statusErrors: []StatusError{
 				{Status: http.StatusUnauthorized, Detail: "already registered", Err: ErrConflict},
 			}},
-			want: want{sentinel: ErrUnauthorized, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Your session has expired or the token is invalid."`},
+			want: want{sentinel: ErrUnauthorized, err: `GET /api/v1/groups/id/{id}: 401 Unauthorized: "Your session has expired or the token is invalid. Please sign in again."`},
 		},
 		"EndpointQuirkNoSentinel": {
 			reason: "A mapping to a nil error maps the status to no sentinel.",

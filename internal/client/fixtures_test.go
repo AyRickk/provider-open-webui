@@ -6,6 +6,7 @@ package client
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -61,6 +62,30 @@ func fixtureStep(t *testing.T, version, resource, scenario, name string) step {
 	}
 	t.Fatalf("%s has no step %q", path, name)
 	return step{}
+}
+
+// profileFor returns the profile SelectProfile picks for version.
+func profileFor(t *testing.T, version string) *Profile {
+	t.Helper()
+	v, err := ParseVersion(version)
+	if err != nil {
+		t.Fatalf("ParseVersion(%q): %v", version, err)
+	}
+	p, _, err := SelectProfile(v, false)
+	if err != nil {
+		t.Fatalf("SelectProfile(%s): %v", v, err)
+	}
+	return p
+}
+
+// checkNoOtherSentinel reports err if it matches a sentinel other than want, which may be nil.
+func checkNoOtherSentinel(t *testing.T, call string, want, err error) {
+	t.Helper()
+	for _, s := range []error{transport.ErrNotFound, transport.ErrConflict, transport.ErrUnauthorized, transport.ErrForbidden} {
+		if !errors.Is(want, s) && errors.Is(err, s) {
+			t.Errorf("%s: error %q also matches %q", call, err, s)
+		}
+	}
 }
 
 // replay serves the recorded response of each step to a request with its method and path,

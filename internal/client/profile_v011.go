@@ -13,9 +13,11 @@ import (
 // v011 is the profile of Open WebUI 0.11, observed on 0.11.4.
 var v011 = newProfile("0.11",
 	map[Operation][]transport.StatusError{
-		OpGroupGet:       {{Status: http.StatusUnauthorized, Detail: notFound, Err: transport.ErrNotFound}},
-		OpGroupUpdate:    {{Status: http.StatusBadRequest, Detail: "[ERROR: Error updating group]", Err: transport.ErrNotFound}},
-		OpFunctionUpdate: {{Status: http.StatusBadRequest, Detail: "[ERROR: Error updating function]", Err: transport.ErrNotFound}},
+		OpGroupGet: {{Status: http.StatusUnauthorized, Detail: notFound, Err: transport.ErrNotFound}},
+		// A catch-all detail, observed only for a missing group.
+		OpGroupUpdate: {{Status: http.StatusBadRequest, Detail: "[ERROR: Error updating group]", Err: transport.ErrNotFound}},
+		// OpFunctionUpdate has none: its 400 "[ERROR: Error updating function]" answers both a
+		// missing function and invalid code, so only a get tells them apart.
 	},
 	// A missing group's delete answers 200 true.
 	OpGroupDelete,
