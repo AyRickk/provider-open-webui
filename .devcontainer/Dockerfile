@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:2.0.5-ubuntu-24.04@sha256:d94c97dd9cacf183d0a6fd12a8e87b526e9e928307674ae9c94139139c0c6eae
 
-# mise itself is pinned here; every other tool is pinned in mise.toml.
+# mise itself is pinned here and in .github/workflows/ci.yml; every other tool is pinned in mise.toml.
+# renovate: datasource=github-releases depName=jdx/mise
 ARG MISE_VERSION=v2026.10.8
 
 RUN curl -fsSL https://mise.run \
