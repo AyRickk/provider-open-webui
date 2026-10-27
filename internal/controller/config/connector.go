@@ -6,7 +6,11 @@ package config
 
 import (
 	"context"
+	"crypto/sha256"
+	"fmt"
+	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/logging"
@@ -51,6 +55,18 @@ type Connector struct {
 	newDoer  NewDoerFn
 	metrics  *transport.Metrics
 	log      logging.Logger
+
+	mu sync.Mutex
+	// doers holds the Doer of each provider config, by id, so that its connections are
+	// reused and its warnings logged once.
+	doers map[string]cachedDoer
+}
+
+// A cachedDoer is a Doer and the fingerprint of the transport configuration it was built
+// with.
+type cachedDoer struct {
+	fingerprint [sha256.Size]byte
+	doer        client.Doer
 }
 
 // A ConnectorOption configures a Connector.
@@ -85,6 +101,7 @@ func NewConnector(kube kclient.Client, o ...ConnectorOption) *Connector {
 		versions: client.NewVersionCache(client.DefaultVersionTTL),
 		newDoer:  func(cfg transport.Config) (client.Doer, error) { return transport.New(cfg) },
 		log:      logging.NewNopLogger(),
+		doers:    map[string]cachedDoer{},
 	}
 	for _, fn := range o {
 		fn(c)
@@ -152,7 +169,7 @@ func (c *Connector) Connect(ctx context.Context, mg resource.ModernManaged) (*Co
 		return nil, errors.Errorf("unsupported provider config kind %q", ref.Kind)
 	}
 	if err := c.kube.Get(ctx, key, pc); err != nil {
-		return nil, errors.Wrapf(err, "cannot get %s %s", ref.Kind, ref.Name)
+		return nil, errors.Wrapf(err, "cannot get %s %q", ref.Kind, ref.Name)
 	}
 	return c.ConnectConfig(ctx, pc)
 }
@@ -175,7 +192,7 @@ func (c *Connector) ConnectConfig(ctx context.Context, pc resource.ProviderConfi
 			return nil, errors.Wrap(err, "cannot read the CA certificate")
 		}
 	}
-	d, err := c.newDoer(transport.Config{
+	d, err := c.doer(s.id, transport.Config{
 		BaseURL: s.URL,
 		// A Secret made from a file often ends with a newline, which is not part of the key.
 		Token:              strings.TrimSpace(string(token)),
@@ -186,7 +203,7 @@ func (c *Connector) ConnectConfig(ctx context.Context, pc resource.ProviderConfi
 		Logger:             c.log.WithValues("providerConfig", s.id),
 	})
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "cannot build the Open WebUI client")
 	}
 	// The URL is part of the key, so that a changed URL is detected again.
 	v, err := c.versions.Get(ctx, s.id+"@"+s.URL, d)
@@ -203,16 +220,41 @@ func (c *Connector) ConnectConfig(ctx context.Context, pc resource.ProviderConfi
 	return &Connection{Doer: d, Version: v, Profile: p, Unsupported: unsupported}, nil
 }
 
+// doer returns the Doer of the provider config id for cfg, built again only when cfg
+// changed. The fingerprint hashes cfg, so that the cache never holds the token in clear
+// beside the Doer.
+func (c *Connector) doer(id string, cfg transport.Config) (client.Doer, error) {
+	h := sha256.New()
+	for _, v := range []string{cfg.BaseURL, cfg.Token, cfg.AuthHeader, string(cfg.CACertPEM), strconv.FormatBool(cfg.InsecureSkipVerify)} {
+		// Each value is length-prefixed, so that no two configurations hash alike.
+		_, _ = fmt.Fprintf(h, "%d:%s", len(v), v)
+	}
+	var fp [sha256.Size]byte
+	copy(fp[:], h.Sum(nil))
+
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if e, ok := c.doers[id]; ok && e.fingerprint == fp {
+		return e.doer, nil
+	}
+	d, err := c.newDoer(cfg)
+	if err != nil {
+		return nil, err
+	}
+	c.doers[id] = cachedDoer{fingerprint: fp, doer: d}
+	return d, nil
+}
+
 // secretValue returns the value of a Secret key. Errors name the Secret and the key, never
 // the value.
 func (c *Connector) secretValue(ctx context.Context, sk secretKey) ([]byte, error) {
 	s := &corev1.Secret{}
 	if err := c.kube.Get(ctx, types.NamespacedName{Namespace: sk.namespace, Name: sk.name}, s); err != nil {
-		return nil, errors.Wrapf(err, "cannot get Secret %s/%s", sk.namespace, sk.name)
+		return nil, errors.Wrapf(err, "cannot get Secret %q", sk.namespace+"/"+sk.name)
 	}
 	v, ok := s.Data[sk.key]
 	if !ok {
-		return nil, errors.Errorf("Secret %s/%s has no key %q", sk.namespace, sk.name, sk.key)
+		return nil, errors.Errorf("Secret %q has no key %q", sk.namespace+"/"+sk.name, sk.key)
 	}
 	return v, nil
 }

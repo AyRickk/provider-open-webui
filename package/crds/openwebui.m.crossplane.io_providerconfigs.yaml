@@ -120,8 +120,9 @@ spec:
               url:
                 description: |-
                   URL is the root URL of the Open WebUI instance, e.g. https://openwebui.example.com or
-                  http://open-webui.open-webui.svc:8080. A path prefix is kept.
-                pattern: ^https?://[^/]+
+                  http://open-webui.open-webui.svc:8080. A path prefix is kept; credentials, a query
+                  and a fragment are refused.
+                pattern: ^https?://[^/?#@]+(/[^?#]*)?$
                 type: string
             required:
             - apiKeySecretRef

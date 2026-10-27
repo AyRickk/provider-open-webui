@@ -64,8 +64,9 @@ type SecretKeySelector struct {
 // ConnectionSettings are the settings of a provider config that do not refer to a Secret.
 type ConnectionSettings struct {
 	// URL is the root URL of the Open WebUI instance, e.g. https://openwebui.example.com or
-	// http://open-webui.open-webui.svc:8080. A path prefix is kept.
-	// +kubebuilder:validation:Pattern=`^https?://[^/]+`
+	// http://open-webui.open-webui.svc:8080. A path prefix is kept; credentials, a query
+	// and a fragment are refused.
+	// +kubebuilder:validation:Pattern=`^https?://[^/?#@]+(/[^?#]*)?$`
 	URL string `json:"url"`
 
 	// AuthHeader is the HTTP header that carries the API key. Authorization, the default,

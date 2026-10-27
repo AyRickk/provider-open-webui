@@ -189,14 +189,14 @@ func TestConnectConfig(t *testing.T) {
 			reason: "A missing API key Secret is an error naming it.",
 			owui:   fakeOpenWebUI{version: v0124},
 			pc:     providerConfig(),
-			want:   want{msg: "cannot read the API key: cannot get Secret team/owui-key"},
+			want:   want{msg: `cannot read the API key: cannot get Secret "team/owui-key"`},
 		},
 		"MissingKey": {
 			reason: "A Secret without the selected key is an error naming both.",
 			owui:   fakeOpenWebUI{version: v0124},
 			objs:   []kclient.Object{secret("team", "owui-key", map[string]string{"other": apiKey})},
 			pc:     providerConfig(),
-			want:   want{msg: `cannot read the API key: Secret team/owui-key has no key "token"`},
+			want:   want{msg: `cannot read the API key: Secret "team/owui-key" has no key "token"`},
 		},
 		"MissingCACert": {
 			reason: "A missing CA certificate Secret is an error naming it.",
@@ -205,7 +205,7 @@ func TestConnectConfig(t *testing.T) {
 			pc: providerConfig(func(pc *v1alpha1.ProviderConfig) {
 				pc.Spec.CACertSecretRef = &v1alpha1.LocalSecretKeySelector{Name: "owui-ca", Key: "ca.crt"}
 			}),
-			want: want{msg: "cannot read the CA certificate: cannot get Secret team/owui-ca"},
+			want: want{msg: `cannot read the CA certificate: cannot get Secret "team/owui-ca"`},
 		},
 		"BadKey": {
 			reason: "An API key Open WebUI rejects is unauthorized.",
@@ -309,12 +309,12 @@ func TestConnect(t *testing.T) {
 			reason: "A ProviderConfig of another namespace is not found.",
 			objs:   []kclient.Object{providerConfig(func(pc *v1alpha1.ProviderConfig) { pc.Namespace = "other" })},
 			mg:     managed(v1alpha1.ProviderConfigKind, "owui"),
-			want:   want{tracked: true, msg: "cannot get ProviderConfig owui"},
+			want:   want{tracked: true, msg: `cannot get ProviderConfig "owui"`},
 		},
 		"MissingClusterProviderConfig": {
 			reason: "A missing ClusterProviderConfig is an error naming it.",
 			mg:     managed(v1alpha1.ClusterProviderConfigKind, "default"),
-			want:   want{tracked: true, msg: "cannot get ClusterProviderConfig default"},
+			want:   want{tracked: true, msg: `cannot get ClusterProviderConfig "default"`},
 		},
 		"UnknownKind": {
 			reason: "A reference to another kind is an error.",
@@ -345,6 +345,57 @@ func TestConnect(t *testing.T) {
 			}
 			if tracked != tc.want.tracked {
 				t.Errorf("\n%s\nConnect(...): tracked usage %t, want %t", tc.reason, tracked, tc.want.tracked)
+			}
+		})
+	}
+}
+
+func TestConnectConfigReusesTheDoer(t *testing.T) {
+	cases := map[string]struct {
+		reason string
+		change func(kclient.Client, *v1alpha1.ProviderConfig)
+		builds int
+	}{
+		"Unchanged": {
+			reason: "Connecting twice with the same settings builds one Doer, so connections are reused and the insecure warning is logged once.",
+			change: func(kclient.Client, *v1alpha1.ProviderConfig) {},
+			builds: 1,
+		},
+		"ChangedSettings": {
+			reason: "A changed setting builds a new Doer.",
+			change: func(_ kclient.Client, pc *v1alpha1.ProviderConfig) { pc.Spec.AuthHeader = "x-api-key" },
+			builds: 2,
+		},
+		"RotatedKey": {
+			reason: "A rotated API key builds a new Doer.",
+			change: func(kc kclient.Client, _ *v1alpha1.ProviderConfig) {
+				if err := kc.Update(context.Background(), secret("team", "owui-key", map[string]string{tokenKey: apiKey + "2"})); err != nil {
+					t.Fatal(err)
+				}
+			},
+			builds: 2,
+		},
+	}
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			owui := &fakeOpenWebUI{version: v0124}
+			builds := 0
+			newDoer := func(cfg transport.Config) (client.Doer, error) {
+				builds++
+				return owui.newDoer(cfg)
+			}
+			kc := kube(t, secret("team", "owui-key", map[string]string{tokenKey: apiKey}))
+			c := NewConnector(kc, WithNewDoer(newDoer))
+			pc := providerConfig()
+			if _, err := c.ConnectConfig(context.Background(), pc); err != nil {
+				t.Fatal(err)
+			}
+			tc.change(kc, pc)
+			if _, err := c.ConnectConfig(context.Background(), pc); err != nil {
+				t.Fatal(err)
+			}
+			if builds != tc.builds {
+				t.Errorf("\n%s\nConnectConfig(...) twice: built %d Doers, want %d", tc.reason, builds, tc.builds)
 			}
 		})
 	}

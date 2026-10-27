@@ -83,10 +83,10 @@ func TestReconcile(t *testing.T) {
 			pc:     providerConfig(),
 			want: observed{
 				Ready: corev1.ConditionFalse, Reason: xpv2.ReasonUnavailable,
-				Message: `cannot read the API key: cannot get Secret team/owui-key: secrets "owui-key" not found`,
+				Message: `cannot read the API key: cannot get Secret "team/owui-key": secrets "owui-key" not found`,
 				Events: []event.Event{{
 					Type: event.TypeWarning, Reason: reasonCannotConnect,
-					Message:     `cannot read the API key: cannot get Secret team/owui-key: secrets "owui-key" not found`,
+					Message:     `cannot read the API key: cannot get Secret "team/owui-key": secrets "owui-key" not found`,
 					Annotations: map[string]string{},
 				}},
 			},
