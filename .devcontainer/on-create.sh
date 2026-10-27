@@ -11,7 +11,7 @@
 set -euo pipefail
 
 ws_uid="$(stat -c %u "$PWD")"
-install="cd $(printf %q "$PWD") && mise trust --yes && mise install --yes"
+install="cd $(printf %q "$PWD") && git submodule update --init --recursive && mise trust --yes && mise install --yes"
 
 if [[ "$ws_uid" == 0 || "$ws_uid" == "$(id -u)" ]]; then
   exec bash -c "$install"

@@ -1,0 +1,14 @@
+apiVersion: meta.pkg.crossplane.io/v1alpha1
+kind: Provider
+metadata:
+  name: provider-openwebui
+  annotations:
+    meta.crossplane.io/maintainer: provider-openwebui maintainers <https://github.com/AyRickk/provider-openwebui>
+    meta.crossplane.io/source: github.com/AyRickk/provider-openwebui
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      Manage Open WebUI's business objects (groups, models, prompts, tools, functions and
+      knowledge bases) declaratively, with drift correction.
+spec:
+  capabilities:
+    - safe-start
