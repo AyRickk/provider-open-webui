@@ -27,7 +27,7 @@ Grants come back with server fields added: `id` (UUID), `resource_type`, `resour
 
 - **Create** accepts `access_grants` in the create body and stores them (`*/create-with-access-grants#create`).
 - **The access endpoint replaces the whole list**: `POST /api/v1/models/model/access/update` with `{"id": "…", "access_grants": [...]}`. Sending one group grant leaves exactly that grant (`*/access-update#get-after-update-access`); sending `[]` makes the resource private (`*/access-update#get-after-make-private`).
-- **The object update and grants differ per version.** On 0.11.4, `access_grants` in the model update body replace the grants (`0.11.4/access-update#get-after-update-with-grants`: they become `user:*:read`). On 0.12.4 they are ignored (`0.12.4/access-update#get-after-update-with-grants`: unchanged). The provider must never send `access_grants` in an object update, and write access only through the access endpoint.
+- **The object update and grants differ per version**, for every shareable resource (models here; tools, knowledge bases and prompts in their pages). On 0.11.4, `access_grants` in the model update body replace the grants (`0.11.4/access-update#get-after-update-with-grants`: they become `user:*:read`). On 0.12.4 they are ignored (`0.12.4/access-update#get-after-update-with-grants`: unchanged). The provider must never send `access_grants` in an object update, and write access only through the access endpoint.
 
 ## Silently dropped grants
 

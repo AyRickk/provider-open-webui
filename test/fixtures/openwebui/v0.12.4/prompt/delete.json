@@ -1,0 +1,172 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "prompt",
+  "scenario": "delete",
+  "steps": [
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000003/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    },
+    {
+      "step": "list-after-delete",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000005",
+            "command": "/capture-slashed",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Slashed",
+            "content": "Slashed command, changed while inactive",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000023",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000007",
+            "command": "/capture-summary",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Same command with a slash",
+            "content": "Other content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000008",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000009",
+            "command": "capture-slashed",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Slashed without the slash",
+            "content": "Other content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000010",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000011",
+            "command": "Capture-Summary",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Same command, other case",
+            "content": "Other content",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000012",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000013",
+            "command": "capture-other",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Summary",
+            "content": "Same name, other command",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000014",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000015",
+            "command": "capture-shared",
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "name": "Capture Shared",
+            "content": "Shared prompt",
+            "data": {},
+            "meta": {},
+            "tags": [
+              "capture"
+            ],
+            "is_active": true,
+            "version_id": "00000000-0000-4000-8000-000000000016",
+            "created_at": 1700000000,
+            "updated_at": 1700000000,
+            "access_grants": []
+          }
+        ]
+      }
+    },
+    {
+      "step": "create-reusing-deleted-command",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-summary-v3",
+          "name": "Reused command",
+          "content": "Reused",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000029",
+          "command": "capture-summary-v3",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Reused command",
+          "content": "Reused",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000030",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    }
+  ]
+}

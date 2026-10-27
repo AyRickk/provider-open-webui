@@ -1,0 +1,461 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "prompt",
+  "scenario": "history",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-history",
+          "name": "Capture History",
+          "content": "History content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000025",
+          "command": "capture-history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "content": "History content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000026",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "history-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000026",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture History",
+              "content": "History content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "update-no-change",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/update",
+        "body": {
+          "command": "capture-history",
+          "name": "Capture History",
+          "content": "History content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000025",
+          "command": "capture-history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "content": "History content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000026",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "history-after-no-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000026",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture History",
+              "content": "History content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "update-change",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/update",
+        "body": {
+          "command": "capture-history",
+          "name": "Capture History",
+          "content": "Changed history content",
+          "tags": [
+            "capture"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000025",
+          "command": "capture-history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "content": "Changed history content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000027",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "history-after-change",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000026",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture History",
+              "content": "History content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000027",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": "00000000-0000-4000-8000-000000000026",
+            "snapshot": {
+              "name": "Capture History",
+              "content": "Changed history content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "toggle",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/toggle",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000025",
+          "command": "capture-history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "content": "Changed history content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000027",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "history-after-toggle",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000026",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture History",
+              "content": "History content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000027",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": "00000000-0000-4000-8000-000000000026",
+            "snapshot": {
+              "name": "Capture History",
+              "content": "Changed history content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/access/update",
+        "body": {
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000025",
+          "command": "capture-history",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "Capture History",
+          "content": "Changed history content",
+          "data": {},
+          "meta": {},
+          "tags": [
+            "capture"
+          ],
+          "is_active": false,
+          "version_id": "00000000-0000-4000-8000-000000000027",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000028",
+              "resource_type": "prompt",
+              "resource_id": "00000000-0000-4000-8000-000000000025",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "history-after-access",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000025/history",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": [
+          {
+            "id": "00000000-0000-4000-8000-000000000026",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": null,
+            "snapshot": {
+              "name": "Capture History",
+              "content": "History content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": "Initial version",
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000027",
+            "prompt_id": "00000000-0000-4000-8000-000000000025",
+            "parent_id": "00000000-0000-4000-8000-000000000026",
+            "snapshot": {
+              "name": "Capture History",
+              "content": "Changed history content",
+              "command": "capture-history",
+              "data": {},
+              "meta": {},
+              "tags": [
+                "capture"
+              ],
+              "access_grants": []
+            },
+            "user_id": "00000000-0000-4000-8000-000000000002",
+            "commit_message": null,
+            "created_at": 1700000000,
+            "user": {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "Provider Admin",
+              "role": "admin",
+              "email": "admin@example.com"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
