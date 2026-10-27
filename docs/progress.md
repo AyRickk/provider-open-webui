@@ -19,6 +19,16 @@ Done so far:
   - Spec: `url`, `apiKeySecretRef`, `authHeader`, `caCertSecretRef`, `insecureSkipVerify`, `allowUnsupportedVersions`. A `ProviderConfig` reads its Secrets in its own namespace; a `ClusterProviderConfig` names theirs.
   - `config.Connector`, in `internal/controller/config`, is shared by every controller. It reads the Secrets, keeps one `Doer` per provider config, detects the version, selects the profile and checks the credentials. `Connect(ctx, mg)` tracks the usage first, then resolves the managed resource's provider config. Resource controllers receive the connector in `Setup`, and the `provider.addtype` scaffold already uses it.
   - The provider config controllers report `status.version`, `status.profile` and the `Ready` condition, checked every poll interval. A `Warning` event is emitted when `Ready` turns to an error or to an allowed unsupported version.
+- The baseline CI (#24):
+  - `.github/workflows/ci.yml`, with every tool coming from `mise.toml` through `jdx/mise-action`. Its jobs:
+    - lint: golangci-lint, `go vet`, and `make generate` leaving the tree clean;
+    - Renovate configuration validation;
+    - unit tests, through `hack/ci/test-coverage.sh`;
+    - govulncheck;
+    - a multi-arch build of the image and the xpkg, scanned by trivy (HIGH and CRITICAL with a fix), without publishing.
+  - The coverage table per package goes to the job summary. The gate is 80% on `internal/client/...` and on every `internal/controller/<pkg>`, but not on the controller root, which only wires the controllers together.
+  - `.github/workflows/scorecard.yml` runs OpenSSF Scorecard.
+  - `.github/renovate.json5` watches Go modules, `mise.toml`, actions, Dockerfiles, and versions annotated with `# renovate: datasource=... depName=...`. The contract and e2e matrices annotate each Open WebUI version this way with `depName=ghcr.io/open-webui/open-webui`. Patch bumps are grouped, and a new minor waits for approval on the dependency dashboard.
 
 ## Open phase 1 tickets
 
@@ -27,16 +37,15 @@ GitHub's issue dependencies are the source of truth for blockers; this table is 
 | Ticket | Title | Blocked by |
 | --- | --- | --- |
 | #23 | docs: contrib-ready repository files | none |
-| #24 | ci: lint, unit tests, coverage, security, build | none |
 | #30 | docs(adr): ADRs for the deviations from the original brief | none |
-| #28 | test(e2e): kind + Crossplane + Open WebUI harness | #24 |
-| #29 | test(contract): contract test harness against real instances | #24 |
+| #28 | test(e2e): kind + Crossplane + Open WebUI harness | none |
+| #29 | test(contract): contract test harness against real instances | none |
 
 Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with the release.
 
 ## Frontier
 
-**#24** (CI) first: it is the last blocker of the tracer bullet #28 and of #29. #23 and #30 (docs) have no blocker either.
+**#28** (e2e harness) first: it is the tracer bullet of phase 1. #29 (contract harness) follows, and #23 and #30 (docs) have no blocker either.
 
 ## Open questions
 
@@ -46,4 +55,7 @@ Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with t
 - 0.11.4 answers a function update with the same `400 "[ERROR: Error updating function]"` for a missing function and for invalid code, so the 0.11 profile maps it to no sentinel. The `Function` ticket must decide existence with a get, as ADR-0001 already requires, and surface the detail as is.
 - The profiles are tested directly, against the fixtures, because the resource `Client` interface (seam S1) does not exist yet. Spec #3 wants profiles tested only through S1, so these tests move behind it when the first resource lands.
 - The connector runs the credential check on every connection, including each managed resource's reconcile: one extra GET per reconcile. If the request counter shows it matters, cache the check alongside the version.
+- The Renovate GitHub app must be installed on the repository by the maintainer for the configuration to take effect. Dependabot security updates are still on, so the two can open overlapping PRs. The maintainer can turn Dependabot off once Renovate runs.
+- `npm:renovate` cannot go in `mise.toml`: mise's npm trust policy refuses a transitive dependency (`@yarnpkg/libzip@3.2.2`) whose provenance attestation was dropped. CI runs the validator from the Renovate image, pinned by digest. Revisit when upstream republishes with provenance.
+- Trivy fails the build on any HIGH or CRITICAL CVE with a fix, so a CVE published upstream can turn an unrelated PR red until the dependency is bumped. This is the release requirement of spec #3, applied to every PR.
 - `hack/helpers/addtype.sh` is committed without the executable bit, and it needs `GOMPLATE` set, so `make provider.addtype` fails as documented in the README. Running `GOMPLATE=$(command -v gomplate) bash ./hack/helpers/addtype.sh` with the same variables works.
