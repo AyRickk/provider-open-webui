@@ -13,6 +13,16 @@ devcontainer exec --workspace-folder . <command>        # e.g. mise run owui:up 
 
 Every command in this repository is meant to run through `devcontainer exec` (or a shell opened with `devcontainer exec --workspace-folder . bash`).
 
+### Building the provider
+
+The provider is scaffolded from [`crossplane/provider-template`](https://github.com/crossplane/provider-template) and builds with its `make` targets, using the `build` submodule (`git submodule update --init` after cloning). `make` takes every tool from `mise.toml` and never downloads its own; outside the devcontainer it stops with a message.
+
+```bash
+make reviewable     # generate code and CRDs, go mod tidy, lint, unit tests
+make build          # binary, image and package (xpkg) for the host platform
+make provider.addtype provider=OpenWebUI group=<group> kind=<Kind>   # scaffold a new kind, then make generate
+```
+
 ### Throwaway Open WebUI instances
 
 ```bash

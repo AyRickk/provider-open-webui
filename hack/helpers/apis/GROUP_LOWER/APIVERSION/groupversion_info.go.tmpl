@@ -1,0 +1,28 @@
+// SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
+// Package {{ .Env.APIVERSION | strings.ToLower }} contains the {{ .Env.APIVERSION | strings.ToLower }} group {{ .Env.GROUP | strings.Title }} resources of the {{ .Env.PROVIDER | strings.ToLower }} provider.
+// +kubebuilder:object:generate=true
+// +groupName={{ .Env.GROUP | strings.ToLower }}.{{ .Env.GROUP_SUFFIX }}
+// +versionName={{ .Env.APIVERSION | strings.ToLower }}
+package {{ .Env.APIVERSION | strings.ToLower }}
+
+import (
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"sigs.k8s.io/controller-runtime/pkg/scheme"
+)
+
+// Package type metadata.
+const (
+	Group   = "{{ .Env.GROUP | strings.ToLower }}.{{ .Env.GROUP_SUFFIX }}"
+	Version = "{{ .Env.APIVERSION | strings.ToLower }}"
+)
+
+var (
+	// SchemeGroupVersion is group version used to register these objects
+	SchemeGroupVersion = schema.GroupVersion{Group: Group, Version: Version}
+
+	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
+	SchemeBuilder = &scheme.Builder{GroupVersion: SchemeGroupVersion}
+)

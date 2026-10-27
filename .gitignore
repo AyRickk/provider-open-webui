@@ -31,3 +31,9 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+/.cache
+/.work
+/_output
+/vendor
+/.vendor-new
+.DS_Store

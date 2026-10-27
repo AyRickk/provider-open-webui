@@ -1,0 +1,152 @@
+# ====================================================================================
+# Setup Project
+PROJECT_NAME := provider-openwebui
+PROJECT_REPO := github.com/AyRickk/$(PROJECT_NAME)
+
+PLATFORMS ?= linux_amd64 linux_arm64
+
+# ====================================================================================
+# Setup Tools
+
+# Every tool comes from mise.toml, installed in the devcontainer: one pinned source of
+# versions. `override` beats the build submodule's own assignments, so it never downloads
+# its copies into .cache/tools. GOTOOLCHAIN=local makes go use mise's Go instead of fetching
+# go.mod's version; keep mise's Go within the minor golangci-lint was built with, since a
+# prebuilt golangci-lint cannot typecheck a newer standard library.
+tool = $(or $(shell command -v $(1)),$(error $(1) not found: run make inside the devcontainer, see README.md))
+override GOTOOLCHAIN := local
+export GOTOOLCHAIN
+override GOLANGCILINT := $(call tool,golangci-lint)
+override KIND := $(call tool,kind)
+override KUBECTL := $(call tool,kubectl)
+override HELM := $(call tool,helm)
+override CROSSPLANE_CLI := $(call tool,crossplane)
+override GOMPLATE := $(call tool,gomplate)
+override CHAINSAW := $(call tool,chainsaw)
+export GOMPLATE
+
+ifeq ($(wildcard build/makelib/common.mk),)
+$(warning the build submodule is missing: run `git submodule update --init` (or plain `make`))
+endif
+
+-include build/makelib/common.mk
+
+# ====================================================================================
+# Setup Output
+
+-include build/makelib/output.mk
+
+# ====================================================================================
+# Setup Go
+
+NPROCS ?= 1
+GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
+GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider-openwebui
+GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
+GO_SUBDIRS += cmd internal apis
+GO111MODULE = on
+-include build/makelib/golang.mk
+
+# ====================================================================================
+# Setup Kubernetes tools
+
+-include build/makelib/k8s_tools.mk
+
+# ====================================================================================
+# Setup Images
+
+IMAGES = provider-openwebui
+-include build/makelib/imagelight.mk
+
+# ====================================================================================
+# Setup XPKG
+
+XPKG_REG_ORGS ?= ghcr.io/ayrickk
+XPKG_REG_ORGS_NO_PROMOTE ?= ghcr.io/ayrickk
+XPKGS = provider-openwebui
+-include build/makelib/xpkg.mk
+
+# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
+# we ensure image is present in daemon.
+xpkg.build.provider-openwebui: do.build.images
+
+fallthrough: submodules
+	@echo Initial setup complete. Running make again . . .
+	@make
+
+# Update the submodules, such as the common build scripts.
+submodules:
+	@git submodule sync
+	@git submodule update --init --recursive
+
+# NOTE(hasheddan): the build submodule currently overrides XDG_CACHE_HOME in
+# order to force the Helm 3 to use the .work/helm directory. This causes Go on
+# Linux machines to use that directory as the build cache as well. We should
+# adjust this behavior in the build submodule because it is also causing Linux
+# users to duplicate their build cache, but for now we just make it easier to
+# identify its location in CI so that we cache between builds.
+go.cachedir:
+	@go env GOCACHE
+
+go.mod.cachedir:
+	@go env GOMODCACHE
+
+# The xpkg build runs the crossplane CLI.
+build.init: $(CROSSPLANE_CLI)
+
+# This is for running out-of-cluster locally, and is for convenience. Running
+# this make target will print out the command which was used. For more control,
+# try running the binary directly with different arguments.
+run: go.build
+	@$(INFO) Running Crossplane locally out-of-cluster . . .
+	@# To see other arguments that can be provided, run the command with --help instead
+	$(GO_OUT_DIR)/provider-openwebui --debug
+
+dev: $(KIND) $(KUBECTL)
+	@$(INFO) Creating kind cluster
+	@$(KIND) create cluster --name=$(PROJECT_NAME)-dev
+	@$(KUBECTL) cluster-info --context kind-$(PROJECT_NAME)-dev
+	@$(INFO) Installing Provider OpenWebUI CRDs
+	@$(KUBECTL) apply -R -f package/crds
+	@$(INFO) Starting Provider OpenWebUI controllers
+	@$(GO) run ./cmd/provider-openwebui --debug
+
+dev-clean: $(KIND) $(KUBECTL)
+	@$(INFO) Deleting kind cluster
+	@$(KIND) delete cluster --name=$(PROJECT_NAME)-dev
+
+.PHONY: submodules fallthrough run dev dev-clean
+
+# ====================================================================================
+# Special Targets
+
+# This target adds a new api type and its controller.
+# You would still need to register new api in "apis/<provider>.go" and
+# controller in "internal/controller/<provider>.go".
+# Arguments:
+#   provider: Camel case name of your provider, e.g. GitHub, PlanetScale
+#   group: API group for the type you want to add.
+#   kind: Kind of the type you want to add
+#	apiversion: API version of the type you want to add. Optional and defaults to "v1alpha1"
+provider.addtype:
+	@[ "${provider}" ] || ( echo "argument \"provider\" is not set"; exit 1 )
+	@[ "${group}" ] || ( echo "argument \"group\" is not set"; exit 1 )
+	@[ "${kind}" ] || ( echo "argument \"kind\" is not set"; exit 1 )
+	@PROVIDER=$(provider) GROUP=$(group) KIND=$(kind) APIVERSION=$(apiversion) PROJECT_REPO=$(PROJECT_REPO) ./hack/helpers/addtype.sh
+
+define CROSSPLANE_MAKE_HELP
+Crossplane Targets:
+    submodules            Update the submodules, such as the common build scripts.
+    run                   Run crossplane locally, out-of-cluster. Useful for development.
+
+endef
+# The reason CROSSPLANE_MAKE_HELP is used instead of CROSSPLANE_HELP is because the crossplane
+# binary will try to use CROSSPLANE_HELP if it is set, and this is for something different.
+export CROSSPLANE_MAKE_HELP
+
+crossplane.help:
+	@echo "$$CROSSPLANE_MAKE_HELP"
+
+help-special: crossplane.help
+
+.PHONY: crossplane.help help-special
