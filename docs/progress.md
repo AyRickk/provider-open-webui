@@ -4,30 +4,18 @@ This document is **rewritten, never appended to**. It describes the current stat
 
 ## Current phase
 
-**Phase 0: API spike, complete and waiting for the maintainer's validation.** Phase 1 does not start before it (spec #3: "Human validation is required before phase 1").
+**Phase 1: foundation**, not yet ticketed. Phase 0 (API spike, #4 to #12) is closed: the maintainer validated [ADR-0001](adr/0001-phase-0-api-consolidation.md) on 2026-10-27 and settled its five [decisions](adr/0001-phase-0-api-consolidation.md#decisions) (spec #3).
 
-The consolidated result is [ADR-0001](adr/0001-phase-0-api-consolidation.md) (status: proposed). The phase 0 exit report is posted on spec #3.
-
-## Phase 0 exit criteria
-
-| Criterion (#12) | State | Where |
-| --- | --- | --- |
-| API notes for all six resources on both versions, no placeholder | done | [`docs/api-notes/`](api-notes/README.md) |
-| OpenAPI diff of the used routes, classified | done: 43 routes, 35 none, 8 profile, 0 breaking | [`openapi-diff.md`](api-notes/openapi-diff.md) |
-| Minimal API-key allow-list | done, verified on both versions | [`api-key-allowed-endpoints.txt`](api-notes/api-key-allowed-endpoints.txt) |
-| Marker storage per resource | done, documented only | [ADR-0001](adr/0001-phase-0-api-consolidation.md#marker-storage) |
-| ADR-0001 with every deviation from spec #3 | done: 38 deviations | [ADR-0001](adr/0001-phase-0-api-consolidation.md#deviations-from-spec-3) |
-| Exit report on #3 | posted | spec #3 |
-| Maintainer's validation | **waiting** | spec #3 |
+Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation): the repository scaffold from `crossplane/provider-template`, the `ProviderConfig` / `ClusterProviderConfig`, the versioned `Client` layer with its 0.11 and 0.12 profiles (seam S1) and its contract tests, the credential and version checks, CI, and the contrib-ready repository files.
 
 ## Open tickets
 
-None in phase 0. Phase 1 tickets are created after the validation, from ADR-0001's [consequences](adr/0001-phase-0-api-consolidation.md#consequences).
+None yet. Phase 1 is cut into tracer-bullet tickets (sub-issues of spec #3, with blocking links) before any code.
 
 ## Frontier
 
-**Stop.** The next step is the maintainer's: validate ADR-0001 and answer its [decisions needed](adr/0001-phase-0-api-consolidation.md#decisions-needed) on spec #3. Phase 1 tickets follow.
+**Cut phase 1 into tickets** from spec #3 and ADR-0001; then the first frontier ticket.
 
 ## Open questions
 
-The five [decisions needed](adr/0001-phase-0-api-consolidation.md#decisions-needed) in ADR-0001: prompt command spelling, duplicate names at adoption, the optional marker, knowledge deletion, and the 0.12.4 version label.
+None. The phase 0 inputs to phase 1 are in ADR-0001 and [`docs/api-notes/`](api-notes/README.md).

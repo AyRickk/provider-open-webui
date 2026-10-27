@@ -1,6 +1,6 @@
 # ADR-0001: Phase 0 consolidation of the Open WebUI API
 
-- **Status:** proposed, awaiting the maintainer's validation (gate to phase 1, spec #3 "Delivery process")
+- **Status:** accepted on 2026-10-27 by the maintainer, with the [decisions](#decisions) below (validation recorded on spec #3); it opens phase 1
 - **Date:** 2026-10-27
 - **Scope:** the six resources of spec #3 (`Group`, `Model`, `Prompt`, `Tool`, `Function`, `Knowledge`) and the cross-cutting API facts, on Open WebUI **0.11.4** and **0.12.4**.
 
@@ -97,7 +97,7 @@ Stories 8–11 are **confirmed** with these adjustments ([model.md](../api-notes
 Stories 12–13 are **adjusted** ([prompt.md](../api-notes/prompt.md)):
 
 - **Routing and external-name are the server UUID**, not the command; prompts have no immutable identifier field. `command` is an ordinary updatable field (the server lets an update change it); its uniqueness is checked by the server on create and update.
-- **Leading `/`**: the server stores commands exactly as sent and treats `/x` and `x` as different. The provider normalizes the declared command to **one** spelling before writing and comparing, and find-by-command / adoption look for **both** spellings; two matches are a conflict. *Which spelling to write is a decision for the maintainer (see [Decisions needed](#decisions-needed)); the Open WebUI UI's own convention was not verified.*
+- **Leading `/`**: the server stores commands exactly as sent and treats `/x` and `x` as different. The CRD accepts either spelling and the provider writes and compares the command **without** the leading `/` ([decision 1](#decisions)); find-by-command / adoption look for **both** spellings, and two matches are a conflict.
 - **Find-by-command** pages through `GET /api/v1/prompts/list?query=` (substring over name, command, content and owner) and filters on the exact command.
 - **Active** is a toggle that flips; it is called only when the observed value differs (as story 36 for functions). New prompts start active. `GET /api/v1/prompts/` hides inactive prompts, so it is never used to observe.
 - **Tags** are a list of strings, replaced by an update and kept when the field is omitted *(source)*; the provider always sends them.
@@ -152,7 +152,7 @@ Documented only; **the provider does not depend on a marker** (adoption stays go
 | Function | `meta.managed_by` | yes / yes | **no** (`meta` is replaced) | |
 | Knowledge | none | no / no | n/a | the create ignores `meta`; only the description could carry it |
 
-On 0.12.4, `commit_message` on model, tool and function writes is a second, history-only place to label the provider's versions ([OpenAPI diff](../api-notes/openapi-diff.md)).
+No marker is written in v1 ([decision 3](#decisions)). On 0.12.4 the provider labels its model, tool and function versions with `commit_message: provider-openwebui` ([decision 5](#decisions)), a history-only label that the comparison ignores ([OpenAPI diff](../api-notes/openapi-diff.md)).
 
 ### OpenAPI diff
 
@@ -160,7 +160,7 @@ Of the 43 routes the provider uses, 25 are unchanged between 0.11.4 and 0.12.4 a
 
 ## Deviations from spec #3
 
-Every deviation recorded in the API notes, in one place. Each is resolved by the decision above; those needing the maintainer are repeated under [Decisions needed](#decisions-needed).
+Every deviation recorded in the API notes, in one place. Each is resolved by the decision above; the ones the maintainer settled are listed under [Decisions](#decisions).
 
 | # | Spec #3 | Deviation | Resolution |
 | --- | --- | --- | --- |
@@ -207,7 +207,7 @@ Every deviation recorded in the API notes, in one place. Each is resolved by the
 
 ### Phase 1 (foundation)
 
-- The `Client` interface (seam S1) carries: per-version not-found and conflict mapping; access writes only through access endpoints; set comparison of grants; the `replace_imports` normalization; whole-set valve writes; toggles that flip. Two profiles, **0.11** and **0.12**, differ in the not-found map, `access_grants` handling in object updates, model `is_active` handling, tool error details and the optional `commit_message`.
+- The `Client` interface (seam S1) carries: per-version not-found and conflict mapping; access writes only through access endpoints; set comparison of grants; the `replace_imports` normalization; whole-set valve writes; toggles that flip. Two profiles, **0.11** and **0.12**, differ in the not-found map, `access_grants` handling in object updates, model `is_active` handling, tool error details and the `commit_message` label.
 - The credential check uses `GET /api/v1/users/default/permissions`; the bootstrap guide documents first-boot settings and the [allow-list](../api-notes/api-key-allowed-endpoints.txt).
 - Contract tests (S1) reuse the capture scenarios' operations and fixtures; the S2 fake `Client` is seeded from `test/fixtures/openwebui/`.
 - The CRD definitions use the adjusted identifier rules (`^[a-z_][a-z0-9_]*$` for `toolId` and `functionId`, no immutable field for prompts) and reject `additionalParams` collisions and empty knowledge names by CEL.
@@ -224,19 +224,19 @@ Every deviation recorded in the API notes, in one place. Each is resolved by the
 - Tool and Function: valves whole-set and hash over the read-back, spec validation, toggles on difference, type re-check.
 - Knowledge: exact-name find with conflict; orphan limitation and its issue; `Usage` guidance in the GitOps guide.
 
-## Decisions needed
+## Decisions
 
-The maintainer validates this ADR, and in particular:
+Settled by the maintainer on 2026-10-27 (spec #3):
 
-1. **Prompt command spelling**: write commands **without** the leading `/` (the API examples and `prompt.md` fixtures use that form) or **with** it; adoption matches both either way. The Open WebUI UI's own convention was not verified.
-2. **Duplicate names or commands at adoption**: treat several exact matches as a conflict (`Synced=False`, as proposed) rather than adopting the oldest.
-3. **Optional marker**: leave it out of v1 (proposed), or write `managed_by` where it survives (table above) for operators' visibility.
-4. **Knowledge deletion**: document the orphaned files and model edits as a limitation with a `Usage` recommendation (proposed), or have `Delete` refuse while models still reference the base.
-5. **Model version label**: set `commit_message` on 0.12.4 model, tool and function writes (optional, profile-only), or not.
+1. **Prompt command spelling**: the provider writes commands **without** the leading `/`; the CRD accepts both spellings, and adoption matches both.
+2. **Several exact matches at adoption** (group name, knowledge name, prompt command): a **conflict** (`Synced=False` with an explicit message), never an adoption.
+3. **"Managed by" marker**: **not written in v1**; adoption stays governed by the annotation.
+4. **Knowledge deletion**: a **documented limitation** (orphaned files and vectors, models edited), with its issue, and Crossplane `Usage` recommended in the GitOps guide; `Delete` does not refuse.
+5. **Version label**: on 0.12.4, model, tool and function writes carry `commit_message: provider-openwebui`.
 
 ## Not verified
 
-- The Open WebUI UI's spelling of prompt commands (decision 1).
+- The Open WebUI UI's spelling of prompt commands ([decision 1](#decisions) does not depend on it, since adoption matches both).
 - Endpoint restrictions with a non-admin API key, and behavior under `BYPASS_ADMIN_ACCESS_CONTROL=false`: phase 0 used the admin's key only.
 - Group hierarchy (0.12.4 `parent_group_id`, inherited permissions and membership): no parent group was created; it is out of scope.
 - Knowledge ingestion on 0.11.4 without external services (observed on 0.12.4 only), and oikb against the supported versions.
