@@ -165,10 +165,14 @@ func New(cfg Config) (*Transport, error) {
 		authHeader: cmp.Or(cfg.AuthHeader, defaultAuthHeader),
 		authValue:  cfg.Token,
 		timeout:    cmp.Or(cfg.RequestTimeout, defaultRequestTimeout),
-		http:       &http.Client{Transport: ht},
-		metrics:    cfg.Metrics,
-		log:        log,
-		sleep:      sleep,
+		http: &http.Client{
+			Transport: ht,
+			// A redirect could carry the token to another host: it is returned as an error.
+			CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse },
+		},
+		metrics: cfg.Metrics,
+		log:     log,
+		sleep:   sleep,
 	}
 	if strings.EqualFold(t.authHeader, defaultAuthHeader) {
 		t.authValue = "Bearer " + cfg.Token
@@ -349,16 +353,22 @@ var placeholder = regexp.MustCompile(`\{([^}]*)\}`)
 
 // url expands the endpoint template of req and appends its query.
 func (t *Transport) url(req Request) (string, error) {
-	var missing []string
+	var err error
 	path := placeholder.ReplaceAllStringFunc(req.Endpoint, func(m string) string {
-		v, ok := req.Params[m[1:len(m)-1]]
-		if !ok {
-			missing = append(missing, m)
+		name := m[1 : len(m)-1]
+		v, ok := req.Params[name]
+		switch {
+		case err != nil:
+		case !ok:
+			err = errors.Errorf("no parameter for %s in endpoint %q", m, req.Endpoint)
+		case v == "" || v == "." || v == "..":
+			// Escaping keeps them as is, and a proxy may resolve them to another endpoint.
+			err = errors.Errorf(`invalid parameter %s %q: empty, "." and ".." are not allowed`, name, v)
 		}
 		return url.PathEscape(v)
 	})
-	if len(missing) > 0 {
-		return "", errors.Errorf("no parameter for %s in endpoint %q", strings.Join(missing, ", "), req.Endpoint)
+	if err != nil {
+		return "", err
 	}
 	u := t.baseURL + path
 	if len(req.Query) > 0 {

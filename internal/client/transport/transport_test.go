@@ -31,6 +31,7 @@ import (
 const (
 	token         = "sk-0123456789abcdef0123456789abcdef"
 	groupEndpoint = "/api/v1/groups/id/{id}"
+	apiKeyHeader  = "X-Api-Key"
 )
 
 // seen is what the test server observed of one request.
@@ -49,7 +50,7 @@ func recordingServer(t *testing.T, status int, body string, got *[]seen) *httpte
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		b, _ := io.ReadAll(r.Body)
 		auth := map[string]string{}
-		for _, h := range []string{"Authorization", "X-Api-Key"} {
+		for _, h := range []string{"Authorization", apiKeyHeader} {
 			if v := r.Header.Get(h); v != "" {
 				auth[h] = v
 			}
@@ -99,14 +100,14 @@ func TestDoSuccess(t *testing.T) {
 		},
 		"CustomHeaderSendsTheBareToken": {
 			reason: "Another auth header, such as Open WebUI's x-api-key, carries the bare token.",
-			args: args{authHeader: "X-Api-Key", req: Request{
+			args: args{authHeader: apiKeyHeader, req: Request{
 				Method:   http.MethodPost,
 				Endpoint: "/api/v1/groups/create",
 				Query:    map[string][]string{"q": {"x"}},
 				Body:     map[string]string{"name": "g"},
 			}},
 			want: want{
-				seen: []seen{{Method: http.MethodPost, Path: "/api/v1/groups/create", Query: "q=x", UserAgent: ua, Auth: map[string]string{"X-Api-Key": token}, Body: `{"name":"g"}`}},
+				seen: []seen{{Method: http.MethodPost, Path: "/api/v1/groups/create", Query: "q=x", UserAgent: ua, Auth: map[string]string{apiKeyHeader: token}, Body: `{"name":"g"}`}},
 				out:  map[string]any{"id": "g1"},
 			},
 		},
@@ -704,7 +705,7 @@ func TestTokenNeverLeaks(t *testing.T) {
 	// echo puts the credentials it received everywhere it can: the error detail, a raw
 	// body, a header, and a validation error.
 	echo := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		cred := r.Header.Get("Authorization") + " " + r.Header.Get("X-Api-Key")
+		cred := r.Header.Get("Authorization") + " " + r.Header.Get(apiKeyHeader)
 		w.Header().Set("X-Echo", cred)
 		switch r.URL.Path {
 		case "/detail":
@@ -723,7 +724,7 @@ func TestTokenNeverLeaks(t *testing.T) {
 	}))
 	t.Cleanup(echo.Close)
 
-	for _, header := range []string{"", "X-Api-Key"} {
+	for _, header := range []string{"", apiKeyHeader} {
 		for _, path := range []string{"/detail", "/raw", "/validation", "/long"} {
 			t.Run(header+path, func(t *testing.T) {
 				log := newRecordingLogger()
@@ -773,6 +774,18 @@ func TestLocalErrors(t *testing.T) {
 			req:     Request{Method: http.MethodGet, Endpoint: groupEndpoint},
 			wantErr: `no parameter for {id} in endpoint "/api/v1/groups/id/{id}"`,
 		},
+		"DotParameter": {
+			reason:  "A parameter of . or .. could make a proxy resolve another endpoint, and is refused.",
+			baseURL: srv.URL,
+			req:     Request{Method: http.MethodDelete, Endpoint: "/api/v1/groups/id/{id}/delete", Params: map[string]string{"id": ".."}},
+			wantErr: `invalid parameter id "..": empty, "." and ".." are not allowed`,
+		},
+		"EmptyParameter": {
+			reason:  "An empty parameter would collapse the path, and is refused.",
+			baseURL: srv.URL,
+			req:     Request{Method: http.MethodGet, Endpoint: "/api/v1/groups/id/{id}", Params: map[string]string{"id": ""}},
+			wantErr: `invalid parameter id "": empty, "." and ".." are not allowed`,
+		},
 		"UndecodableResponse": {
 			reason:  "A successful response that is not JSON is an error, not retried.",
 			baseURL: srv.URL,
@@ -791,8 +804,42 @@ func TestLocalErrors(t *testing.T) {
 			if diff := cmp.Diff(tc.wantErr, errString(err)); diff != "" {
 				t.Errorf("\n%s\n-want error, +got error:\n%s", tc.reason, diff)
 			}
+			if strings.HasPrefix(name, "Dot") || strings.HasPrefix(name, "Empty") {
+				if len(got) != 0 {
+					t.Errorf("\n%s\nsent %d requests, want none", tc.reason, len(got))
+				}
+			}
 			if len(got) > 1 {
 				t.Errorf("\n%s\nsent %d requests, want at most 1", tc.reason, len(got))
+			}
+		})
+	}
+}
+
+func TestRedirectsAreNotFollowed(t *testing.T) {
+	var leaked []string
+	other := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		leaked = append(leaked, r.Header.Get(apiKeyHeader)+r.Header.Get("Authorization"))
+		_, _ = io.WriteString(w, "{}")
+	}))
+	t.Cleanup(other.Close)
+	srv := httptest.NewServer(http.RedirectHandler(other.URL+"/steal", http.StatusTemporaryRedirect))
+	t.Cleanup(srv.Close)
+
+	for _, header := range []string{"", apiKeyHeader} {
+		t.Run("Header"+header, func(t *testing.T) {
+			leaked = nil
+			tr, err := New(Config{BaseURL: srv.URL, Token: token, AuthHeader: header})
+			if err != nil {
+				t.Fatalf("New(...): %v", err)
+			}
+			err = tr.Do(context.Background(), Request{Method: http.MethodGet, Endpoint: "/api/v1/groups/"}, nil)
+			var herr *Error
+			if !errors.As(err, &herr) || herr.StatusCode != http.StatusTemporaryRedirect {
+				t.Errorf("Do(...): a redirect is returned as an error, not followed: got %v", err)
+			}
+			if len(leaked) != 0 {
+				t.Errorf("Do(...): the redirect was followed, sending %q", leaked)
 			}
 		})
 	}
