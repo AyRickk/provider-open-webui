@@ -9,7 +9,7 @@
 - **Ticket workflow**: `docs/agents/ticket-workflow.md`, the steps every ticket session follows.
 - **Issue tracker**: GitHub Issues via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 - **Triage labels**: `docs/agents/triage-labels.md`.
-- **Domain docs**: `docs/agents/domain.md`, which points to `GLOSSARY.md` and `docs/adr/` (once they exist).
+- **Domain docs**: `docs/agents/domain.md`, which points to `docs/adr/` and `GLOSSARY.md` (once it exists).
 - **Conventions**: `CONTRIBUTING.md` (once it exists).
 
 ## Guardrails

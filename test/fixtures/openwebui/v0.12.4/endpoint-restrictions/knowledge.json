@@ -1,0 +1,158 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "knowledge",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/create",
+        "body": {
+          "name": "capture-restricted",
+          "description": "d"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "d",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null
+        }
+      }
+    },
+    {
+      "step": "find",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/search?query=capture-restricted",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [
+            {
+              "id": "00000000-0000-4000-8000-000000000013",
+              "user_id": "00000000-0000-4000-8000-000000000002",
+              "name": "capture-restricted",
+              "description": "d",
+              "meta": null,
+              "access_grants": [],
+              "created_at": 1700000000,
+              "updated_at": 1700000000,
+              "user": {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Provider Admin",
+                "role": "admin",
+                "email": "admin@example.com"
+              },
+              "file_count": 0,
+              "write_access": true
+            }
+          ],
+          "total": 1
+        }
+      }
+    },
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000013",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "d",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000013/update",
+        "body": {
+          "name": "capture-restricted",
+          "description": "changed"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "changed",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000013/access/update",
+        "body": {
+          "access_grants": []
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000013",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "capture-restricted",
+          "description": "changed",
+          "meta": null,
+          "access_grants": [],
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "files": [],
+          "write_access": false
+        }
+      }
+    },
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/knowledge/00000000-0000-4000-8000-000000000013/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}

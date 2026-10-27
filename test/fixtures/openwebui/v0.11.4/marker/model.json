@@ -1,0 +1,149 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "marker",
+  "scenario": "model",
+  "steps": [
+    {
+      "step": "create-meta",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/create",
+        "body": {
+          "id": "capture-marker",
+          "name": "M",
+          "meta": {
+            "managed_by": "provider-openwebui"
+          },
+          "params": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "M",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null,
+            "managed_by": "provider-openwebui"
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-marker",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "M",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null,
+            "managed_by": "provider-openwebui"
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-without-marker",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-marker",
+          "name": "M2",
+          "meta": {},
+          "params": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "M2",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get-after-update-without-marker",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-marker",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "M2",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

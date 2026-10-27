@@ -8,7 +8,7 @@ Each session implements exactly one ticket, from a clean context, using only wha
 - The ticket: `gh issue view <N> --json number,title,body,labels,comments`.
 - `docs/progress.md`, for the current phase and frontier.
 - `CONTRIBUTING.md` (once it exists), for coding and testing conventions.
-- The ADRs in `docs/adr/` (once they exist) that touch the area of the ticket.
+- The ADRs in `docs/adr/` that touch the area of the ticket, and the matching pages of `docs/api-notes/`.
 
 Check that the ticket has no open blocker: `gh api 'repos/{owner}/{repo}/issues/<N>' --jq .issue_dependencies_summary.blocked_by` must print `0`. If it does not, stop and tell the maintainer.
 

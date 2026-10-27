@@ -1,0 +1,149 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "marker",
+  "scenario": "prompt",
+  "steps": [
+    {
+      "step": "create-meta-and-data",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/create",
+        "body": {
+          "command": "capture-marker",
+          "name": "P",
+          "content": "c",
+          "meta": {
+            "managed_by": "provider-openwebui"
+          },
+          "data": {
+            "managed_by": "provider-openwebui"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "command": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "P",
+          "content": "c",
+          "data": {
+            "managed_by": "provider-openwebui"
+          },
+          "meta": {
+            "managed_by": "provider-openwebui"
+          },
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000007",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-create",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000006",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "command": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "P",
+          "content": "c",
+          "data": {
+            "managed_by": "provider-openwebui"
+          },
+          "meta": {
+            "managed_by": "provider-openwebui"
+          },
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000007",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update-without-meta",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000006/update",
+        "body": {
+          "command": "capture-marker",
+          "name": "P2",
+          "content": "c"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "command": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "P2",
+          "content": "c",
+          "data": {
+            "managed_by": "provider-openwebui"
+          },
+          "meta": {
+            "managed_by": "provider-openwebui"
+          },
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000008",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": []
+        }
+      }
+    },
+    {
+      "step": "get-after-update-without-meta",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/prompts/id/00000000-0000-4000-8000-000000000006",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "command": "capture-marker",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "P2",
+          "content": "c",
+          "data": {
+            "managed_by": "provider-openwebui"
+          },
+          "meta": {
+            "managed_by": "provider-openwebui"
+          },
+          "tags": [],
+          "is_active": true,
+          "version_id": "00000000-0000-4000-8000-000000000008",
+          "created_at": 1700000000,
+          "updated_at": 1700000000,
+          "access_grants": [],
+          "user": null,
+          "write_access": true
+        }
+      }
+    }
+  ]
+}

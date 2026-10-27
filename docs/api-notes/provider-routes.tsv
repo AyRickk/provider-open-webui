@@ -1,0 +1,44 @@
+resource	method	path	class	expected	rationale
+cross	get	/api/version	none	unchanged	
+cross	get	/api/v1/users/default/permissions	none	+response.features.encrypted_channels +response.workspace.models_hidden	Two permission keys added (`features.encrypted_channels`, `workspace.models_hidden`); the `Exact` policy reads the key set from the server, so nothing is hardcoded ([group.md](group.md#behavior)).
+group	get	/api/v1/groups/	none	+response.parent_group_id	`parent_group_id` (group hierarchy) added; not managed by the provider ([group.md](group.md#differences-between-versions)).
+group	post	/api/v1/groups/create	none	+request.parent_group_id +response.parent_group_id	`parent_group_id` added; the provider does not send it, the server stores `null`.
+group	get	/api/v1/groups/id/{id}	none	+response.parent_group_id	`parent_group_id` added; not read by the comparison.
+group	post	/api/v1/groups/id/{id}/update	none	+request.parent_group_id +response.parent_group_id	`parent_group_id` added; omitted on update it keeps the stored value *(source)*.
+group	delete	/api/v1/groups/id/{id}/delete	none	unchanged	
+model	get	/api/models	none	unchanged	
+model	post	/api/v1/models/create	profile	+request.commit_message +request.meta.voice +request.meta.voice_avatar +request.params.model_controls +response.meta.voice +response.meta.voice_avatar +response.params.model_controls +response.version_id	0.12.4 adds `commit_message` (history only; a profile may set it to label the provider's versions), `meta.voice`, `meta.voice_avatar`, `params.model_controls` (server keys the read-modify-write keeps) and `version_id` (server-computed) ([model.md](model.md)).
+model	get	/api/v1/models/model	profile	+response.meta.voice +response.meta.voice_avatar +response.params.model_controls +response.version_id	Same additions on read: the 0.12.4 profile ignores `version_id` and carries the new server keys through the read-modify-write.
+model	post	/api/v1/models/model/update	profile	+request.commit_message +request.meta.voice +request.meta.voice_avatar +request.params.model_controls +response.meta.voice +response.meta.voice_avatar +response.params.model_controls +response.version_id	Same as create.
+model	post	/api/v1/models/model/access/update	none	+response.meta.voice +response.meta.voice_avatar +response.params.model_controls +response.version_id	Response additions only; the access call reads nothing else back.
+model	post	/api/v1/models/model/delete	none	unchanged	
+prompt	post	/api/v1/prompts/create	none	unchanged	
+prompt	get	/api/v1/prompts/id/{prompt_id}	none	unchanged	
+prompt	get	/api/v1/prompts/list	none	unchanged	
+prompt	post	/api/v1/prompts/id/{prompt_id}/update	none	unchanged	
+prompt	post	/api/v1/prompts/id/{prompt_id}/toggle	none	unchanged	
+prompt	post	/api/v1/prompts/id/{prompt_id}/access/update	none	unchanged	
+prompt	delete	/api/v1/prompts/id/{prompt_id}/delete	none	unchanged	
+tool	post	/api/v1/tools/create	profile	+request.commit_message +request.meta.additionalProperties +response.meta.additionalProperties +response.version_id	`commit_message` (history only) and `version_id` added; tool `meta` accepts extra keys on 0.12.4 only, which matters for a marker stored in `meta` ([tool.md](tool.md)).
+tool	get	/api/v1/tools/id/{id}	profile	+response.meta.additionalProperties +response.version_id	`version_id` added; `meta` extra keys returned on 0.12.4 only.
+tool	post	/api/v1/tools/id/{id}/update	profile	+request.commit_message +request.meta.additionalProperties +response.meta.additionalProperties +response.version_id	Same as create.
+tool	post	/api/v1/tools/id/{id}/access/update	none	+response.meta.additionalProperties +response.version_id	Response additions only.
+tool	delete	/api/v1/tools/id/{id}/delete	none	unchanged	
+tool	get	/api/v1/tools/id/{id}/valves	none	unchanged	
+tool	get	/api/v1/tools/id/{id}/valves/spec	none	unchanged	
+tool	post	/api/v1/tools/id/{id}/valves/update	none	unchanged	
+function	post	/api/v1/functions/create	profile	+request.commit_message +response.version_id	`commit_message` (history only) and `version_id` added ([function.md](function.md)).
+function	get	/api/v1/functions/id/{id}	none	+response.version_id	`version_id` added; server-computed, ignored by the comparison.
+function	post	/api/v1/functions/id/{id}/update	profile	+request.commit_message +response.version_id	Same as create.
+function	delete	/api/v1/functions/id/{id}/delete	none	unchanged	
+function	post	/api/v1/functions/id/{id}/toggle	none	+response.version_id	`version_id` added to the response; the toggle response is read only for `is_active` / `is_global`.
+function	post	/api/v1/functions/id/{id}/toggle/global	none	+response.version_id	Same as the toggle.
+function	get	/api/v1/functions/id/{id}/valves	none	unchanged	
+function	get	/api/v1/functions/id/{id}/valves/spec	none	unchanged	
+function	post	/api/v1/functions/id/{id}/valves/update	none	unchanged	
+knowledge	post	/api/v1/knowledge/create	none	unchanged	
+knowledge	get	/api/v1/knowledge/{id}	none	unchanged	
+knowledge	get	/api/v1/knowledge/search	none	unchanged	
+knowledge	post	/api/v1/knowledge/{id}/update	none	unchanged	
+knowledge	post	/api/v1/knowledge/{id}/access/update	none	unchanged	
+knowledge	delete	/api/v1/knowledge/{id}/delete	none	unchanged	

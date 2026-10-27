@@ -1,0 +1,192 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "model",
+  "steps": [
+    {
+      "step": "base-models",
+      "request": {
+        "method": "GET",
+        "path": "/api/models",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "data": []
+        }
+      }
+    },
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/create",
+        "body": {
+          "id": "capture-restricted",
+          "name": "R",
+          "meta": {},
+          "params": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "R",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/model?id=capture-restricted",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "R",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true
+        }
+      }
+    },
+    {
+      "step": "update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/update",
+        "body": {
+          "id": "capture-restricted",
+          "name": "R2",
+          "meta": {},
+          "params": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "R2",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/access/update",
+        "body": {
+          "id": "capture-restricted",
+          "access_grants": [
+            {
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture-restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "base_model_id": null,
+          "name": "R2",
+          "params": {},
+          "meta": {
+            "profile_image_url": null,
+            "background_image_url": null,
+            "description": null,
+            "i18n": null,
+            "capabilities": null,
+            "knowledge": null
+          },
+          "access_grants": [
+            {
+              "id": "00000000-0000-4000-8000-000000000003",
+              "resource_type": "model",
+              "resource_id": "capture-restricted",
+              "principal_type": "group",
+              "principal_id": "00000000-0000-4000-8000-000000000001",
+              "permission": "read",
+              "created_at": 1700000000
+            }
+          ],
+          "is_active": true,
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "delete",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/models/model/delete",
+        "body": {
+          "id": "capture-restricted"
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}

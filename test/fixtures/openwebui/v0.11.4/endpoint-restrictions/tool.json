@@ -1,0 +1,228 @@
+{
+  "openwebui_version": "0.11.4",
+  "resource": "endpoint-restrictions",
+  "scenario": "tool",
+  "steps": [
+    {
+      "step": "create",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/create",
+        "body": {
+          "id": "capture_restricted",
+          "name": "R",
+          "content": "from pydantic import BaseModel\n\n\nclass Tools:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def ping(self) -> str:\n        \"\"\"Answer pong.\"\"\"\n        return \"pong\"\n",
+          "meta": {
+            "description": "d"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R",
+          "meta": {
+            "i18n": null,
+            "description": "d",
+            "manifest": {},
+            "has_user_valves": false
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "get",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_restricted",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R",
+          "meta": {
+            "i18n": null,
+            "description": "d",
+            "manifest": {},
+            "has_user_valves": false
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000,
+          "user": null,
+          "write_access": true,
+          "content": "from pydantic import BaseModel\n\n\nclass Tools:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def ping(self) -> str:\n        \"\"\"Answer pong.\"\"\"\n        return \"pong\"\n",
+          "specs": [
+            {
+              "name": "ping",
+              "description": "Answer pong.",
+              "parameters": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_restricted/update",
+        "body": {
+          "id": "capture_restricted",
+          "name": "R2",
+          "content": "from pydantic import BaseModel\n\n\nclass Tools:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def ping(self) -> str:\n        \"\"\"Answer pong.\"\"\"\n        return \"pong\"\n",
+          "meta": {
+            "description": "d"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "content": "from pydantic import BaseModel\n\n\nclass Tools:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def ping(self) -> str:\n        \"\"\"Answer pong.\"\"\"\n        return \"pong\"\n",
+          "specs": [
+            {
+              "name": "ping",
+              "description": "Answer pong.",
+              "parameters": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ],
+          "meta": {
+            "i18n": null,
+            "description": "d",
+            "manifest": {},
+            "has_user_valves": false
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "valves",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_restricted/valves",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {}
+      }
+    },
+    {
+      "step": "valves-spec",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/tools/id/capture_restricted/valves/spec",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "properties": {
+            "priority": {
+              "default": 0,
+              "title": "Priority",
+              "type": "integer"
+            }
+          },
+          "title": "Valves",
+          "type": "object"
+        }
+      }
+    },
+    {
+      "step": "valves-update",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_restricted/valves/update",
+        "body": {
+          "priority": 1
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "priority": 1
+        }
+      }
+    },
+    {
+      "step": "update-access",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/tools/id/capture_restricted/access/update",
+        "body": {
+          "access_grants": []
+        }
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "id": "capture_restricted",
+          "user_id": "00000000-0000-4000-8000-000000000002",
+          "name": "R2",
+          "content": "from pydantic import BaseModel\n\n\nclass Tools:\n    class Valves(BaseModel):\n        priority: int = 0\n\n    def ping(self) -> str:\n        \"\"\"Answer pong.\"\"\"\n        return \"pong\"\n",
+          "specs": [
+            {
+              "name": "ping",
+              "description": "Answer pong.",
+              "parameters": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ],
+          "meta": {
+            "i18n": null,
+            "description": "d",
+            "manifest": {},
+            "has_user_valves": false
+          },
+          "access_grants": [],
+          "updated_at": 1700000000,
+          "created_at": 1700000000
+        }
+      }
+    },
+    {
+      "step": "delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/api/v1/tools/id/capture_restricted/delete",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": true
+      }
+    }
+  ]
+}

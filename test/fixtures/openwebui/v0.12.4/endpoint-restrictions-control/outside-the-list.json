@@ -1,0 +1,115 @@
+{
+  "openwebui_version": "0.12.4",
+  "resource": "endpoint-restrictions-control",
+  "scenario": "outside-the-list",
+  "steps": [
+    {
+      "step": "session-user",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/auths/",
+        "body": null
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "body": {
+          "detail": "A human session is required."
+        }
+      }
+    },
+    {
+      "step": "list-users",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/users/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "users": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "email": "admin@example.com",
+              "username": null,
+              "role": "admin",
+              "name": "Provider Admin",
+              "profile_image_url": "/user.png",
+              "profile_banner_image_url": null,
+              "bio": null,
+              "gender": null,
+              "date_of_birth": null,
+              "timezone": null,
+              "presence_state": null,
+              "status_emoji": null,
+              "status_message": null,
+              "status_expires_at": null,
+              "info": null,
+              "settings": null,
+              "oauth": null,
+              "scim": null,
+              "last_active_at": 1700000000,
+              "updated_at": 1700000000,
+              "created_at": 1700000000,
+              "group_ids": []
+            }
+          ],
+          "total": 1
+        }
+      }
+    },
+    {
+      "step": "model-list-all",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/models/all",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": []
+      }
+    },
+    {
+      "step": "openai-config",
+      "request": {
+        "method": "GET",
+        "path": "/openai/config",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "ENABLE_OPENAI_API": true,
+          "OPENAI_API_BASE_URLS": [
+            "https://api.openai.com/v1"
+          ],
+          "OPENAI_API_KEYS": [
+            "<redacted>"
+          ],
+          "OPENAI_API_CONFIGS": {}
+        }
+      }
+    },
+    {
+      "step": "files",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/files/",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "body": {
+          "items": [],
+          "total": 0
+        }
+      }
+    }
+  ]
+}
