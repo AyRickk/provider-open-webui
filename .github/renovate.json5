@@ -1,0 +1,56 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  // config:best-practices pins actions and images by digest and shows a dependency dashboard.
+  extends: ['config:best-practices', ':semanticCommits'],
+  // Conventional Commits, and a DCO sign-off on every commit Renovate makes.
+  semanticCommitType: 'build',
+  semanticCommitScope: 'deps',
+  commitBody: 'Signed-off-by: {{{gitAuthor}}}',
+  // The default managers cover go.mod, mise.toml, the actions and the Dockerfiles. Git
+  // submodules are off by default, so the build submodule moves only by deliberate updates.
+  postUpdateOptions: ['gomodTidy'],
+  // The preset ignores test directories, where the contract and e2e matrices may live.
+  ignorePaths: ['**/node_modules/**', '**/vendor/**', 'test/fixtures/**'],
+  customManagers: [
+    {
+      // A version, optionally followed by `@sha256:<digest>`, on the line after a
+      // `# renovate: datasource=... depName=...` comment, assigned with `:` or `=` or given as
+      // a YAML list item. Used for the mise CLI, the Renovate image that validates this file,
+      // and the Open WebUI images of the contract and e2e matrices.
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^\\.github/workflows/.+\\.ya?ml$/',
+        '/^\\.devcontainer/Dockerfile$/',
+        '/^hack/.+\\.sh$/',
+        '/^test/.+\\.(ya?ml|sh)$/',
+      ],
+      matchStrings: [
+        '#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(\\s+versioning=(?<versioning>\\S+))?\\s*\\n[^\\n]*?[:=-]\\s*["\']?(?<currentValue>[^"\'@\\s]+)(@(?<currentDigest>sha256:[0-9a-f]+))?["\']?',
+      ],
+      versioningTemplate: '{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}',
+    },
+  ],
+  packageRules: [
+    {
+      matchManagers: ['github-actions'],
+      semanticCommitType: 'ci',
+    },
+    {
+      // mise is pinned in .devcontainer/Dockerfile and in ci.yml, read by two managers.
+      matchDepNames: ['jdx/mise'],
+      groupName: 'mise',
+    },
+    {
+      // A new Open WebUI patch only moves the matrix within a supported minor. A new minor
+      // needs a new API profile first, so it waits for approval on the dependency dashboard.
+      matchDepNames: ['ghcr.io/open-webui/open-webui'],
+      versioning: 'docker',
+      groupName: 'Open WebUI',
+    },
+    {
+      matchDepNames: ['ghcr.io/open-webui/open-webui'],
+      matchUpdateTypes: ['major', 'minor'],
+      dependencyDashboardApproval: true,
+    },
+  ],
+}

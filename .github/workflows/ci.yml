@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          # mise itself, pinned like .devcontainer/Dockerfile; every other tool comes from mise.toml.
+          version: 2026.10.8
+          # make generate needs only go, but the Makefile stops when any of its tools is missing.
+          install_args: go golangci-lint gomplate kind kubectl helm crossplane aqua:kyverno/chainsaw
+      - name: golangci-lint
+        run: golangci-lint run
+      - name: go vet
+        run: go vet ./...
+      - name: Generated code is up to date
+        run: |
+          make generate
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain
+            git diff
+            echo "::error::generated code is out of date: run make generate and commit the result"
+            exit 1
+          fi
+
+  renovate:
+    name: Renovate configuration
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate the Renovate configuration
+        env:
+          # renovate: datasource=docker depName=ghcr.io/renovatebot/renovate
+          RENOVATE_TAG: 44.186.2@sha256:07cc53137718c142dcba8393d346d0e49dd3a2279d07c4f91bf82e51fb43e995
+        run: |
+          docker run --rm --user root -v "${PWD}:/w:ro" -w /w "ghcr.io/renovatebot/renovate:${RENOVATE_TAG}" \
+            renovate-config-validator --strict
+
+  test:
+    name: Unit tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          version: 2026.10.8
+          install_args: go
+      - name: Unit tests and coverage
+        run: hack/ci/test-coverage.sh
+
+  vulncheck:
+    name: Security (govulncheck)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          version: 2026.10.8
+          install_args: go go:golang.org/x/vuln/cmd/govulncheck
+      - name: govulncheck
+        run: govulncheck ./...
+
+  build:
+    name: Build and scan (amd64, arm64)
+    runs-on: ubuntu-24.04
+    env:
+      BUILD_REGISTRY: build-ci
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: true
+          # The build derives the package version from git describe.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          version: 2026.10.8
+          install_args: go golangci-lint gomplate kind kubectl helm crossplane aqua:kyverno/chainsaw trivy
+      - name: Build the images and packages, without publishing
+        run: make build.all PLATFORMS="linux_amd64 linux_arm64"
+      - name: List the packages
+        run: find _output/xpkg -name '*.xpkg' -exec ls -l {} +
+      - name: Scan the images with trivy
+        run: |
+          for arch in amd64 arm64; do
+            trivy image --image-src docker \
+              --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 \
+              "${BUILD_REGISTRY}/provider-openwebui-${arch}"
+          done

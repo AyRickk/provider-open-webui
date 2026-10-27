@@ -1,4 +1,4 @@
-# Single source of tool versions for the devcontainer, and for CI once it exists.
+# Single source of tool versions for the devcontainer and for CI.
 [tools]
 go = "1.27.3"
 golangci-lint = "2.15.0"

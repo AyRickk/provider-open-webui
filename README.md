@@ -4,7 +4,7 @@ A native Crossplane v2 provider for Open WebUI. Work in progress; see `docs/prog
 
 ## Development environment
 
-The devcontainer is the only execution environment. The host needs a container runtime (Docker or Podman) and the [devcontainer CLI](https://github.com/devcontainers/cli); everything else is installed inside the container. Tool versions are pinned in `mise.toml`, mise itself in `.devcontainer/Dockerfile`. The tools live in the `provider-openwebui-mise` volume, so rebuilding the container does not download them again. Containers started from inside (Open WebUI instances, kind clusters) run in the devcontainer's own Docker daemon (docker-in-docker).
+The devcontainer is the only execution environment. The host needs a container runtime (Docker or Podman) and the [devcontainer CLI](https://github.com/devcontainers/cli); everything else is installed inside the container. Tool versions are pinned in `mise.toml`, mise itself in `.devcontainer/Dockerfile` and `.github/workflows/ci.yml`, which Renovate updates together. The tools live in the `provider-openwebui-mise` volume, so rebuilding the container does not download them again. Containers started from inside (Open WebUI instances, kind clusters) run in the devcontainer's own Docker daemon (docker-in-docker).
 
 ```bash
 devcontainer up --workspace-folder .                    # add --docker-path podman with Podman
