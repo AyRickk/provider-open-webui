@@ -18,31 +18,116 @@ var (
 	_ resource.ProviderConfigUsageList  = &ProviderConfigUsageList{}
 )
 
-// A ProviderConfigStatus defines the status of a Provider.
+// A ProviderConfigStatus is the observed state of a provider config: the Open WebUI
+// instance it reaches and the API profile used to talk to it.
 type ProviderConfigStatus struct {
 	xpv2.ProviderConfigStatus `json:",inline"`
+
+	// Version is the Open WebUI version the instance reports on GET /api/version, e.g.
+	// 0.12.4. It is empty until the provider connects.
+	// +optional
+	Version string `json:"version,omitempty"`
+
+	// Profile is the minor whose API profile the provider uses, e.g. 0.12. With
+	// allowUnsupportedVersions, an unsupported version uses the newest profile.
+	// +optional
+	Profile string `json:"profile,omitempty"`
 }
 
-// ProviderCredentials required to authenticate.
-type ProviderCredentials struct {
-	// Source of the provider credentials.
-	// +kubebuilder:validation:Enum=None;Secret;InjectedIdentity;Environment;Filesystem
-	Source xpv2.CredentialsSource `json:"source"`
+// A LocalSecretKeySelector selects a key of a Secret in the namespace of the
+// ProviderConfig.
+type LocalSecretKeySelector struct {
+	// Name of the Secret.
+	// +kubebuilder:validation:MinLength=1
+	Name string `json:"name"`
 
-	xpv2.CommonCredentialSelectors `json:",inline"`
+	// Key of the Secret's data that holds the value.
+	// +kubebuilder:validation:MinLength=1
+	Key string `json:"key"`
 }
 
+// A SecretKeySelector selects a key of a Secret in any namespace.
+type SecretKeySelector struct {
+	// Name of the Secret.
+	// +kubebuilder:validation:MinLength=1
+	Name string `json:"name"`
+
+	// Namespace of the Secret.
+	// +kubebuilder:validation:MinLength=1
+	Namespace string `json:"namespace"`
+
+	// Key of the Secret's data that holds the value.
+	// +kubebuilder:validation:MinLength=1
+	Key string `json:"key"`
+}
+
+// ConnectionSettings are the settings of a provider config that do not refer to a Secret.
+type ConnectionSettings struct {
+	// URL is the root URL of the Open WebUI instance, e.g. https://openwebui.example.com or
+	// http://open-webui.open-webui.svc:8080. A path prefix is kept; credentials, a query
+	// and a fragment are refused.
+	// +kubebuilder:validation:Pattern=`^https?://[^/?#@]+(/[^?#]*)?$`
+	URL string `json:"url"`
+
+	// AuthHeader is the HTTP header that carries the API key. Authorization, the default,
+	// sends "Bearer <key>"; any other header, e.g. x-api-key behind a proxy that consumes
+	// Authorization, sends the bare key.
+	// +kubebuilder:default=Authorization
+	// +kubebuilder:validation:Pattern=`^[A-Za-z0-9-]+$`
+	// +optional
+	AuthHeader string `json:"authHeader,omitempty"`
+
+	// InsecureSkipVerify disables the verification of the server's TLS certificate. It is
+	// off by default and logged as a warning; prefer caCertSecretRef.
+	// +optional
+	InsecureSkipVerify bool `json:"insecureSkipVerify,omitempty"`
+
+	// AllowUnsupportedVersions lets the provider talk to an Open WebUI minor it has no API
+	// profile for, with the newest profile and a Warning event. Without it, an unsupported
+	// minor makes the provider config unavailable.
+	// +optional
+	AllowUnsupportedVersions bool `json:"allowUnsupportedVersions,omitempty"`
+}
+
+// A ProviderConfigSpec configures the connection to an Open WebUI instance. Its Secrets
+// live in the namespace of the ProviderConfig.
 type ProviderConfigSpec struct {
-	// Credentials required to authenticate to this provider.
-	Credentials ProviderCredentials `json:"credentials"`
+	ConnectionSettings `json:",inline"`
+
+	// APIKeySecretRef selects the Secret key that holds the API key of an Open WebUI admin
+	// account.
+	APIKeySecretRef LocalSecretKeySelector `json:"apiKeySecretRef"`
+
+	// CACertSecretRef selects the Secret key that holds PEM-encoded CA certificates,
+	// trusted in addition to the system's to verify the server's certificate.
+	// +optional
+	CACertSecretRef *LocalSecretKeySelector `json:"caCertSecretRef,omitempty"`
+}
+
+// A ClusterProviderConfigSpec configures the connection to an Open WebUI instance. Its
+// Secrets name their namespace.
+type ClusterProviderConfigSpec struct {
+	ConnectionSettings `json:",inline"`
+
+	// APIKeySecretRef selects the Secret key that holds the API key of an Open WebUI admin
+	// account.
+	APIKeySecretRef SecretKeySelector `json:"apiKeySecretRef"`
+
+	// CACertSecretRef selects the Secret key that holds PEM-encoded CA certificates,
+	// trusted in addition to the system's to verify the server's certificate.
+	// +optional
+	CACertSecretRef *SecretKeySelector `json:"caCertSecretRef,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:storageversion
 
 // +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
+// +kubebuilder:printcolumn:name="VERSION",type="string",JSONPath=".status.version"
+// +kubebuilder:printcolumn:name="PROFILE",type="string",JSONPath=".status.profile"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1
+// +kubebuilder:printcolumn:name="URL",type="string",JSONPath=".spec.url",priority=1
 // +kubebuilder:resource:scope=Namespaced,categories={crossplane,provider,openwebui}
 // A ProviderConfig configures how the provider connects to an Open WebUI instance, for
 // managed resources in its namespace.
@@ -93,8 +178,11 @@ type ProviderConfigUsageList struct {
 // +kubebuilder:object:root=true
 
 // +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
+// +kubebuilder:printcolumn:name="VERSION",type="string",JSONPath=".status.version"
+// +kubebuilder:printcolumn:name="PROFILE",type="string",JSONPath=".status.profile"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1
+// +kubebuilder:printcolumn:name="URL",type="string",JSONPath=".spec.url",priority=1
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,openwebui}
 // A ClusterProviderConfig configures how the provider connects to an Open WebUI
 // instance, for managed resources in any namespace.
@@ -102,8 +190,8 @@ type ClusterProviderConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ProviderConfigSpec   `json:"spec"`
-	Status ProviderConfigStatus `json:"status,omitempty"`
+	Spec   ClusterProviderConfigSpec `json:"spec"`
+	Status ProviderConfigStatus      `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

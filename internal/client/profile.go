@@ -5,6 +5,7 @@
 package client
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -170,7 +171,25 @@ func SelectProfile(v Version, allowUnsupported bool) (p *Profile, unsupported bo
 	if allowUnsupported {
 		return profiles[len(profiles)-1], true, nil
 	}
-	return nil, false, errors.Wrapf(ErrUnsupportedVersion, "%s, supported minors: %s", v, supportedMinors())
+	return nil, false, UnsupportedVersion(v)
+}
+
+// UnsupportedVersion returns the error of v, a version whose minor has no profile. It matches
+// ErrUnsupportedVersion, and its message gives the supported range.
+func UnsupportedVersion(v Version) error {
+	return unsupportedVersionError{v: v}
+}
+
+// An unsupportedVersionError is ErrUnsupportedVersion for a version, with the supported
+// range in its message.
+type unsupportedVersionError struct{ v Version }
+
+func (e unsupportedVersionError) Error() string {
+	return fmt.Sprintf("Open WebUI v%s is not in the supported range [%s]", e.v, supportedMinors())
+}
+
+func (e unsupportedVersionError) Is(target error) bool {
+	return target == ErrUnsupportedVersion
 }
 
 // supportedMinors lists the minors that have a profile.

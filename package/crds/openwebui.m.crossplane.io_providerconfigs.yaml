@@ -19,11 +19,20 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.version
+      name: VERSION
+      type: string
+    - jsonPath: .status.profile
+      name: PROFILE
+      type: string
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    - jsonPath: .spec.credentials.secretRef.name
-      name: SECRET-NAME
+    - jsonPath: .spec.url
+      name: URL
       priority: 1
       type: string
     name: v1alpha1
@@ -51,68 +60,78 @@ spec:
           metadata:
             type: object
           spec:
+            description: |-
+              A ProviderConfigSpec configures the connection to an Open WebUI instance. Its Secrets
+              live in the namespace of the ProviderConfig.
             properties:
-              credentials:
-                description: Credentials required to authenticate to this provider.
+              allowUnsupportedVersions:
+                description: |-
+                  AllowUnsupportedVersions lets the provider talk to an Open WebUI minor it has no API
+                  profile for, with the newest profile and a Warning event. Without it, an unsupported
+                  minor makes the provider config unavailable.
+                type: boolean
+              apiKeySecretRef:
+                description: |-
+                  APIKeySecretRef selects the Secret key that holds the API key of an Open WebUI admin
+                  account.
                 properties:
-                  env:
-                    description: |-
-                      Env is a reference to an environment variable that contains credentials
-                      that must be used to connect to the provider.
-                    properties:
-                      name:
-                        description: Name is the name of an environment variable.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  fs:
-                    description: |-
-                      Fs is a reference to a filesystem location that contains credentials that
-                      must be used to connect to the provider.
-                    properties:
-                      path:
-                        description: Path is a filesystem path.
-                        type: string
-                    required:
-                    - path
-                    type: object
-                  secretRef:
-                    description: |-
-                      A SecretRef is a reference to a secret key that contains the credentials
-                      that must be used to connect to the provider.
-                    properties:
-                      key:
-                        description: The key to select.
-                        type: string
-                      name:
-                        description: Name of the secret.
-                        type: string
-                      namespace:
-                        description: Namespace of the secret.
-                        type: string
-                    required:
-                    - key
-                    - name
-                    - namespace
-                    type: object
-                  source:
-                    description: Source of the provider credentials.
-                    enum:
-                    - None
-                    - Secret
-                    - InjectedIdentity
-                    - Environment
-                    - Filesystem
+                  key:
+                    description: Key of the Secret's data that holds the value.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
                     type: string
                 required:
-                - source
+                - key
+                - name
                 type: object
+              authHeader:
+                default: Authorization
+                description: |-
+                  AuthHeader is the HTTP header that carries the API key. Authorization, the default,
+                  sends "Bearer <key>"; any other header, e.g. x-api-key behind a proxy that consumes
+                  Authorization, sends the bare key.
+                pattern: ^[A-Za-z0-9-]+$
+                type: string
+              caCertSecretRef:
+                description: |-
+                  CACertSecretRef selects the Secret key that holds PEM-encoded CA certificates,
+                  trusted in addition to the system's to verify the server's certificate.
+                properties:
+                  key:
+                    description: Key of the Secret's data that holds the value.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              insecureSkipVerify:
+                description: |-
+                  InsecureSkipVerify disables the verification of the server's TLS certificate. It is
+                  off by default and logged as a warning; prefer caCertSecretRef.
+                type: boolean
+              url:
+                description: |-
+                  URL is the root URL of the Open WebUI instance, e.g. https://openwebui.example.com or
+                  http://open-webui.open-webui.svc:8080. A path prefix is kept; credentials, a query
+                  and a fragment are refused.
+                pattern: ^https?://[^/?#@]+(/[^?#]*)?$
+                type: string
             required:
-            - credentials
+            - apiKeySecretRef
+            - url
             type: object
           status:
-            description: A ProviderConfigStatus defines the status of a Provider.
+            description: |-
+              A ProviderConfigStatus is the observed state of a provider config: the Open WebUI
+              instance it reaches and the API profile used to talk to it.
             properties:
               conditions:
                 description: Conditions of the resource.
@@ -160,10 +179,20 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              profile:
+                description: |-
+                  Profile is the minor whose API profile the provider uses, e.g. 0.12. With
+                  allowUnsupportedVersions, an unsupported version uses the newest profile.
+                type: string
               users:
                 description: Users of this provider configuration.
                 format: int64
                 type: integer
+              version:
+                description: |-
+                  Version is the Open WebUI version the instance reports on GET /api/version, e.g.
+                  0.12.4. It is empty until the provider connects.
+                type: string
             type: object
         required:
         - spec

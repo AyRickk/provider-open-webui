@@ -12,9 +12,13 @@ Done so far:
 - The HTTP transport of the client layer, `internal/client/transport` (#25): timeouts, retries, TLS, auth header, request counter, sentinel errors, redacted error details. Per-request `StatusErrors` override the default sentinels by status and, optionally, by detail.
 - Version detection and API profiles, `internal/client` (#26):
   - `VersionCache` reads `GET /api/version`, cached per provider-config key for 5 minutes.
-  - `SelectProfile` picks the 0.11 or 0.12 profile and applies the unknown-minor policy. With `allowUnsupported`, it returns the newest profile and reports the version unsupported.
+  - `SelectProfile` picks the 0.11 or 0.12 profile and applies the unknown-minor policy. An unknown minor reads `Open WebUI vX.Y.Z is not in the supported range [0.11, 0.12]`. With `allowUnsupported`, it returns the newest profile and reports the version unsupported.
   - `Profile.CheckCredentials` calls `GET /api/v1/users/default/permissions`. A bad key gives `ErrUnauthorized`. A non-admin key gives `ErrForbidden`: it also answers 401, recognized by its detail.
   - ADR-0001's not-found and conflict map is profile data: `Profile.StatusErrors(op)` and `Profile.MissingSucceeds(op)`. Resource tickets pass them into their requests.
+- `ProviderConfig` and `ClusterProviderConfig` (#27):
+  - Spec: `url`, `apiKeySecretRef`, `authHeader`, `caCertSecretRef`, `insecureSkipVerify`, `allowUnsupportedVersions`. A `ProviderConfig` reads its Secrets in its own namespace; a `ClusterProviderConfig` names theirs.
+  - `config.Connector`, in `internal/controller/config`, is shared by every controller. It reads the Secrets, keeps one `Doer` per provider config, detects the version, selects the profile and checks the credentials. `Connect(ctx, mg)` tracks the usage first, then resolves the managed resource's provider config. Resource controllers receive the connector in `Setup`, and the `provider.addtype` scaffold already uses it.
+  - The provider config controllers report `status.version`, `status.profile` and the `Ready` condition, checked every poll interval. A `Warning` event is emitted when `Ready` turns to an error or to an allowed unsupported version.
 
 ## Open phase 1 tickets
 
@@ -25,17 +29,21 @@ GitHub's issue dependencies are the source of truth for blockers; this table is 
 | #23 | docs: contrib-ready repository files | none |
 | #24 | ci: lint, unit tests, coverage, security, build | none |
 | #30 | docs(adr): ADRs for the deviations from the original brief | none |
-| #27 | feat(apis): ProviderConfig and ClusterProviderConfig | none |
-| #28 | test(e2e): kind + Crossplane + Open WebUI harness | #24, #27 |
+| #28 | test(e2e): kind + Crossplane + Open WebUI harness | #24 |
 | #29 | test(contract): contract test harness against real instances | #24 |
 
 Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with the release.
 
 ## Frontier
 
-**#27** (ProviderConfig and ClusterProviderConfig) first. It is on the critical path to the tracer bullet #28. It wires `VersionCache`, `SelectProfile` (with `allowUnsupportedVersions` and its `Warning` event) and `CheckCredentials` into the config's status. #24 (CI) unblocks #28 and #29. #23 and #30 (docs) have no blocker either.
+**#24** (CI) first: it is the last blocker of the tracer bullet #28 and of #29. #23 and #30 (docs) have no blocker either.
 
 ## Open questions
 
+- A namespaced `ProviderConfig` lets a tenant point the provider at any URL the provider can reach. The provider sends two fixed GETs there, and up to 512 redacted characters of an error body reach that tenant's status and events. This follows spec #3 (stories 41 and 51). The URL pattern refuses credentials, a query and a fragment. Whether to go further (a host allowlist, refusing link-local and loopback addresses, generic messages) is the maintainer's call, best recorded in #30's RBAC and tenancy ADR.
+- With the Secret cache on (the template default), the provider lists and watches Secrets cluster-wide. Crossplane's provider role grants this, but it is broader than spec #3's "Secrets (get)". #30's RBAC ADR should record it, or the cache should be scoped.
+- Provider configs have no `Synced` condition, so an unknown minor shows there as `Ready=False`. Managed resources get `Synced=False` from the connector's error, with the same message. `Connect` reports an allowed unsupported version through `Connection.Unsupported`; only the provider config emits the `Warning` event, so resource controllers need not emit one.
 - 0.11.4 answers a function update with the same `400 "[ERROR: Error updating function]"` for a missing function and for invalid code, so the 0.11 profile maps it to no sentinel. The `Function` ticket must decide existence with a get, as ADR-0001 already requires, and surface the detail as is.
 - The profiles are tested directly, against the fixtures, because the resource `Client` interface (seam S1) does not exist yet. Spec #3 wants profiles tested only through S1, so these tests move behind it when the first resource lands.
+- The connector runs the credential check on every connection, including each managed resource's reconcile: one extra GET per reconcile. If the request counter shows it matters, cache the check alongside the version.
+- `hack/helpers/addtype.sh` is committed without the executable bit, and it needs `GOMPLATE` set, so `make provider.addtype` fails as documented in the README. Running `GOMPLATE=$(command -v gomplate) bash ./hack/helpers/addtype.sh` with the same variables works.
