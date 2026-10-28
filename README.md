@@ -33,6 +33,37 @@ mise run owui:down 0.12.4      # removes the container and its data
 
 Each version gets a fixed port (`0.12.4` → `31204`) so several versions can run side by side. The admin credentials are disposable defaults from `hack/openwebui/lib.sh`, overridable through `OWUI_ADMIN_EMAIL`, `OWUI_ADMIN_PASSWORD` and `OWUI_ADMIN_NAME`.
 
+### End-to-end tests
+
+The e2e suite runs [chainsaw](https://kyverno.github.io/chainsaw/) tests from `test/e2e` against the provider built from the working tree, installed by Crossplane in a kind cluster, for each Open WebUI version of the supported matrix (`E2E_OWUI_PREVIOUS` and `E2E_OWUI_LATEST` in `hack/e2e/lib.sh`). CI runs it as a matrix job, one version per job.
+
+```bash
+mise run e2e                  # make build, cluster, provider, every version, then delete the cluster
+mise run e2e 0.12.4           # one version
+```
+
+To iterate, keep the cluster and run the steps separately:
+
+```bash
+mise run e2e:up               # kind cluster, local registry, Crossplane (helm); safe to run again
+make build && mise run e2e:deploy               # install or upgrade the provider from the last build
+mise run e2e:test 0.12.4 --include-test-regex providerconfig   # extra flags go to chainsaw test
+mise run e2e:down             # delete the cluster and the registry
+```
+
+A full run deletes the cluster at the end, even one created earlier by `e2e:up`; `E2E_KEEP_CLUSTER=true mise run e2e` keeps it.
+
+How the pieces fit, in `hack/e2e`:
+
+- The provider package is pushed to a registry container on the kind network. Crossplane pulls it from the registry's IP over plain HTTP, and containerd pulls the runtime image embedded in it through a `hosts.toml` written on each node. The tag is derived from the package content, so a rebuild rolls out a new revision.
+- `e2e:test` starts a fresh Open WebUI instance with `hack/openwebui/up.sh` on the kind network, exposes it in the cluster as `http://open-webui.open-webui.svc:8080` (a Service with a manual EndpointSlice), runs chainsaw, and removes the instance on exit.
+
+Writing a test for a new kind:
+
+- Add a directory under `test/e2e` with a `chainsaw-test.yaml`. Chainsaw runs each test in its own namespace, so a test first creates the API key Secret and a `ProviderConfig` there, as `test/e2e/providerconfig` does, then its managed resources.
+- The tests read the instance from `$values`: `url` (in-cluster, for provider configs), `apiUrl` (from the devcontainer, for direct API calls in `script` steps), `apiKey`, `version` and `profile` (e.g. `0.12`).
+- The tests run one at a time, because they share the instance. On failure, `test/e2e/.chainsaw.yaml` prints the events of the test namespace and the provider's logs.
+
 ### Podman on macOS
 
 - The bind-mounted workspace keeps the host UID (e.g. 501). `.devcontainer/on-create.sh` gives the `vscode` user that UID so it can write to the workspace; it does nothing where the UIDs already match.

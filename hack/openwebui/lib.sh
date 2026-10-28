@@ -29,7 +29,9 @@ owui_port() {
   echo $((30000 + minor * 100 + patch))
 }
 
-# owui_url prints the base URL of the instance for version $1.
+# owui_url prints the base URL of the instance for version $1. It names 127.0.0.1, not
+# localhost: on an IPv6-enabled network such as kind's, the port published on ::1 resets
+# connections, and localhost resolves to ::1 first.
 owui_url() {
-  echo "http://localhost:$(owui_port "$1")"
+  echo "http://127.0.0.1:$(owui_port "$1")"
 }

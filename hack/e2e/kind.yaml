@@ -1,0 +1,8 @@
+# The e2e cluster. containerd reads per-registry hosts.toml files from certs.d, where
+# hack/e2e/up.sh declares the local registry as plain HTTP.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+containerdConfigPatches:
+  - |-
+    [plugins."io.containerd.cri.v1.images".registry]
+      config_path = "/etc/containerd/certs.d"

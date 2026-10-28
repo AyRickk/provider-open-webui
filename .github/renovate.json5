@@ -15,8 +15,9 @@
     {
       // A version, optionally followed by `@sha256:<digest>`, on the line after a
       // `# renovate: datasource=... depName=...` comment, assigned with `:` or `=` or given as
-      // a YAML list item. Used for the mise CLI, the Renovate image that validates this file,
-      // and the Open WebUI images of the contract and e2e matrices.
+      // a YAML list item, with an optional `registryUrl=` for Helm charts. Used for the mise
+      // CLI, the Renovate image that validates this file, the Open WebUI images of the contract
+      // and e2e matrices, and the e2e harness (registry image, Crossplane chart).
       customType: 'regex',
       managerFilePatterns: [
         '/^\\.github/workflows/.+\\.ya?ml$/',
@@ -25,7 +26,7 @@
         '/^test/.+\\.(ya?ml|sh)$/',
       ],
       matchStrings: [
-        '#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(\\s+versioning=(?<versioning>\\S+))?\\s*\\n[^\\n]*?[:=-]\\s*["\']?(?<currentValue>[^"\'@\\s]+)(@(?<currentDigest>sha256:[0-9a-f]+))?["\']?',
+        '#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(\\s+versioning=(?<versioning>\\S+))?(\\s+registryUrl=(?<registryUrl>\\S+))?\\s*\\n[^\\n]*?[:=-]\\s*["\']?(?<currentValue>[^"\'@\\s]+)(@(?<currentDigest>sha256:[0-9a-f]+))?["\']?',
       ],
       versioningTemplate: '{{#if versioning}}{{{versioning}}}{{else}}semver-coerced{{/if}}',
     },
@@ -49,6 +50,14 @@
     },
     {
       matchDepNames: ['ghcr.io/open-webui/open-webui'],
+      matchUpdateTypes: ['major', 'minor'],
+      dependencyDashboardApproval: true,
+    },
+    {
+      // Spec #3 tests Crossplane v2.4.x: a new minor changes the tested version, so it waits
+      // for approval too.
+      matchDatasources: ['helm'],
+      matchDepNames: ['crossplane'],
       matchUpdateTypes: ['major', 'minor'],
       dependencyDashboardApproval: true,
     },

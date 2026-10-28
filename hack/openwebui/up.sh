@@ -38,7 +38,7 @@ done <<<"${OWUI_EXTRA_ENV:-}"
 # operationId from a Python set, whose order otherwise changes on every start.
 # ENABLE_OLLAMA_API=false skips probing a non-existent Ollama backend at startup.
 docker run --detach --name "$name" \
-  --publish "$(owui_port "$version"):8080" \
+  --publish "127.0.0.1:$(owui_port "$version"):8080" \
   --env ENV=dev \
   --env PYTHONHASHSEED=0 \
   --env WEBUI_SECRET_KEY="$OWUI_SECRET_KEY" \

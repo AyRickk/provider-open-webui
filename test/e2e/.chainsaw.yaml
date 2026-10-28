@@ -1,0 +1,24 @@
+# Chainsaw configuration of the e2e suite, run by hack/e2e/test.sh.
+apiVersion: chainsaw.kyverno.io/v1alpha2
+kind: Configuration
+metadata:
+  name: e2e
+spec:
+  timeouts:
+    # Spec #3: a resource is Ready within 2 minutes of its apply.
+    assert: 2m
+    cleanup: 2m
+    delete: 2m
+    error: 2m
+  execution:
+    # The tests share one Open WebUI instance.
+    parallel: 1
+    failFast: false
+  error:
+    # On failure, what the provider saw.
+    catch:
+      - events: {}
+      - podLogs:
+          namespace: crossplane-system
+          selector: pkg.crossplane.io/provider=provider-openwebui
+          tail: 200
