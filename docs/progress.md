@@ -4,7 +4,7 @@ This document is **rewritten, never appended to**. It describes the current stat
 
 ## Current phase
 
-**Phase 1: foundation.** Phase 0 is closed: [ADR-0001](adr/0001-phase-0-api-consolidation.md) is accepted, with the maintainer's [decisions](adr/0001-phase-0-api-consolidation.md#decisions). Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation). No resource kind yet: `Group` opens phase 2. The three test harnesses of spec #3 are in place: the tracer bullet #28 (e2e, S3) runs the provider in kind under Crossplane, and the contract harness #29 (S1) runs the client layer against real instances, on both supported versions.
+**Phase 1: foundation.** Phase 0 is closed: [ADR-0001](adr/0001-phase-0-api-consolidation.md) is accepted, with the maintainer's [decisions](adr/0001-phase-0-api-consolidation.md#decisions). Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation). Every phase 1 ticket is done; no resource kind exists yet, and `Group` opens phase 2. The three test harnesses of spec #3 are in place: the tracer bullet #28 (e2e, S3) runs the provider in kind under Crossplane, and the contract harness #29 (S1) runs the client layer against real instances, on both supported versions.
 
 Done so far:
 
@@ -42,29 +42,27 @@ Done so far:
   - a recording mode, `mise run contract:record [version...]`: a recorder in front of the instance writes the exchanges in the capture format, and `hack/capture/write.sh`, now shared with `owui:capture`, turns them into fixtures. `credentials` is recorded this way, byte-identical to the former capture; its bash scenario is gone;
   - `mise run contract [version...]`, and the CI job `contract`, one matrix entry per version.
 - The contrib-ready repository files (#23): `LICENSE` (Apache-2.0), `DCO`, `CODE_OF_CONDUCT.md` (CNCF pointer), `OWNERS.md`, `SECURITY.md` (private vulnerability reporting, cosign verification of releases), the issue and PR templates with the DCO checkbox, and `CONTRIBUTING.md`, which holds the coding, testing, commit and PR conventions every ticket follows. `GOVERNANCE`, `MAINTAINERS` and `ADOPTERS` wait for a contrib proposal.
+- The ADRs for the deviations from the original brief (#30), indexed in [`docs/adr/README.md`](adr/README.md): GitHub Actions and ghcr (0002), required immutable identifiers (0003), no `Group.members` (0004), adoption that fails without the annotation (0005), RBAC scope (0006), chainsaw instead of uptest (0007), the CRD reference with `crd-ref-docs` (0008). ADRs 0005 and 0006 are **proposed**: they await the maintainer's decision on their open questions and on the choices they make beyond spec #3.
 - The supported matrix is defined once, as `OWUI_MATRIX_<major>_<minor>` in `hack/openwebui/lib.sh`, read through `owui_matrix` by the contract and e2e runs and by a `matrix` CI job that feeds both matrix jobs. Adding a version is adding one annotated variable (README, "Supported Open WebUI matrix").
 
 ## Open phase 1 tickets
 
-GitHub's issue dependencies are the source of truth for blockers; this table is a snapshot.
-
-| Ticket | Title | Blocked by |
-| --- | --- | --- |
-| #30 | docs(adr): ADRs for the deviations from the original brief | none |
+None. GitHub's issue dependencies are the source of truth for blockers.
 
 Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with the release.
 
 ## Frontier
 
-**#30** (ADRs for the deviations), docs, unblocked: the last phase 1 ticket. Phase 2 (`Group`) can start once its tickets are opened under #3.
+Empty: no open sub-issue of #3. Phase 2 (`Group`, then `Model`) starts once its tickets are opened under #3, after the maintainer settles ADRs 0005 and 0006, which the `Group` ticket builds on (adoption, ownership, local references).
 
 ## Open questions
 
 - GitHub private vulnerability reporting, which `SECURITY.md` names as the only reporting channel, is off on the repository. The maintainer turns it on under Settings, Code security.
 - The spec names the file `OWNERS`; the repository uses `OWNERS.md`, the template's name.
 - The coverage gate covers `internal/client/...` and `internal/controller/<pkg>`. Spec #3 also gates the normalization package: when it lands outside `internal/client`, add it to `hack/ci/test-coverage.sh` and to `CONTRIBUTING.md`.
-- A namespaced `ProviderConfig` lets a tenant point the provider at any URL the provider can reach. The provider sends two fixed GETs there, and up to 512 redacted characters of an error body reach that tenant's status and events. This follows spec #3 (stories 41 and 51). The URL pattern refuses credentials, a query and a fragment. Whether to go further (a host allowlist, refusing link-local and loopback addresses, generic messages) is the maintainer's call, best recorded in #30's RBAC and tenancy ADR.
-- With the Secret cache on (the template default), the provider lists and watches Secrets cluster-wide. Crossplane's provider role grants this, but it is broader than spec #3's "Secrets (get)". #30's RBAC ADR should record it, or the cache should be scoped.
+- [ADR-0006](adr/0006-rbac-scope.md#open-questions): whether to restrict namespaced `ProviderConfig` URLs further, and whether to turn the cluster-wide Secret cache off by default. Crossplane grants every provider all verbs on Secrets and ConfigMaps cluster-wide, broader than spec #3's story 61.
+- [ADR-0005](adr/0005-adoption-requires-the-annotation.md#open-questions): whether `Group`, `Prompt` and `Knowledge` should recover from a crash during create on their own.
+- [ADR-0004](adr/0004-no-group-members.md) and the limitations doc: the "Group membership" limitation section and its issue are still to be written, with the other limitation issues.
 - Provider configs have no `Synced` condition, so an unknown minor shows there as `Ready=False`. Managed resources get `Synced=False` from the connector's error, with the same message. `Connect` reports an allowed unsupported version through `Connection.Unsupported`; only the provider config emits the `Warning` event, so resource controllers need not emit one.
 - 0.11.4 answers a function update with the same `400 "[ERROR: Error updating function]"` for a missing function and for invalid code, so the 0.11 profile maps it to no sentinel. The `Function` ticket must decide existence with a get, as ADR-0001 already requires, and surface the detail as is.
 - The profiles are tested directly, against the fixtures, because the resource `Client` interface (seam S1) does not exist yet. Spec #3 wants profiles tested only through S1, so these tests move behind it when the first resource lands.
