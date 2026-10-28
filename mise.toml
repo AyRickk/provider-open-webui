@@ -35,3 +35,23 @@ run = "hack/capture/capture.sh"
 [tasks."owui:openapi-diff"]
 description = "Diff the provider's routes between two OpenAPI snapshots: mise run owui:openapi-diff [from] [to]"
 run = "hack/openwebui/openapi-diff.sh"
+
+[tasks.e2e]
+description = "Build the provider and run the e2e suite on a fresh kind cluster: mise run e2e [version...]"
+run = "hack/e2e/run.sh"
+
+[tasks."e2e:up"]
+description = "Create the e2e cluster (kind, registry, Crossplane), or bring it up to date"
+run = "hack/e2e/up.sh"
+
+[tasks."e2e:deploy"]
+description = "Install the package of the last make build into the e2e cluster"
+run = "hack/e2e/deploy.sh"
+
+[tasks."e2e:test"]
+description = "Run the e2e suite against one Open WebUI version: mise run e2e:test <version> [chainsaw flags]"
+run = "hack/e2e/test.sh"
+
+[tasks."e2e:down"]
+description = "Delete the e2e cluster and its registry"
+run = "hack/e2e/down.sh"

@@ -112,3 +112,31 @@ jobs:
               --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 \
               "${BUILD_REGISTRY}/provider-openwebui-${arch}"
           done
+
+  e2e:
+    name: E2E (Open WebUI ${{ matrix.version }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        # The supported matrix of spec #3, as in hack/e2e/lib.sh.
+        version:
+          # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
+          - 0.11.4
+          # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
+          - 0.12.4
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: true
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          version: 2026.10.8
+          install_args: go golangci-lint gomplate kind kubectl helm crossplane aqua:kyverno/chainsaw jq
+      - name: E2E suite
+        env:
+          OWUI_VERSION: ${{ matrix.version }}
+        run: hack/e2e/run.sh "$OWUI_VERSION"

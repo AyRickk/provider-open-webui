@@ -1,0 +1,43 @@
+# A ProviderConfig pointing at the instance under test becomes Ready, with the version the
+# instance reports and the profile of its minor.
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: providerconfig
+spec:
+  steps:
+    - name: apply
+      try:
+        - apply:
+            resource:
+              apiVersion: v1
+              kind: Secret
+              metadata:
+                name: openwebui-api-key
+              type: Opaque
+              stringData:
+                token: ($values.apiKey)
+        - apply:
+            resource:
+              apiVersion: openwebui.m.crossplane.io/v1alpha1
+              kind: ProviderConfig
+              metadata:
+                name: openwebui
+              spec:
+                url: ($values.url)
+                apiKeySecretRef:
+                  name: openwebui-api-key
+                  key: token
+    - name: ready
+      try:
+        - assert:
+            resource:
+              apiVersion: openwebui.m.crossplane.io/v1alpha1
+              kind: ProviderConfig
+              metadata:
+                name: openwebui
+              status:
+                version: ($values.version)
+                profile: ($values.profile)
+                (conditions[?type == 'Ready']):
+                  - status: 'True'

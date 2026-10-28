@@ -4,7 +4,7 @@ This document is **rewritten, never appended to**. It describes the current stat
 
 ## Current phase
 
-**Phase 1: foundation.** Phase 0 is closed: [ADR-0001](adr/0001-phase-0-api-consolidation.md) is accepted, with the maintainer's [decisions](adr/0001-phase-0-api-consolidation.md#decisions). Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation). No resource kind yet: `Group` opens phase 2. The tracer bullet is #28: the provider in kind, with a `ProviderConfig` healthy and showing the detected version.
+**Phase 1: foundation.** Phase 0 is closed: [ADR-0001](adr/0001-phase-0-api-consolidation.md) is accepted, with the maintainer's [decisions](adr/0001-phase-0-api-consolidation.md#decisions). Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation). No resource kind yet: `Group` opens phase 2. The tracer bullet, #28, is done: the provider runs in kind under Crossplane, and a `ProviderConfig` becomes `Ready` with the detected version and profile, on both supported versions.
 
 Done so far:
 
@@ -30,6 +30,13 @@ Done so far:
   - `.github/workflows/scorecard.yml` runs OpenSSF Scorecard.
   - `.github/renovate.json5` watches Go modules, `mise.toml`, actions, Dockerfiles, and versions annotated with `# renovate: datasource=... depName=...`. The contract and e2e matrices annotate each Open WebUI version this way with `depName=ghcr.io/open-webui/open-webui`. Patch bumps are grouped, and a new minor waits for approval on the dependency dashboard.
 
+- The e2e harness (#28), seam S3, in `hack/e2e` and `test/e2e` (see the README, "End-to-end tests"):
+  - kind with Crossplane 2.4.3 (Helm), and a registry container on the kind network that serves the provider package to Crossplane and its runtime image to containerd;
+  - a fresh Open WebUI per version from `hack/openwebui/up.sh`, reached in the cluster at `http://open-webui.open-webui.svc:8080`;
+  - chainsaw tests reading the instance from `$values` (`url`, `apiUrl`, `apiKey`, `version`, `profile`); the first one, `test/e2e/providerconfig`, asserts a `ProviderConfig` is `Ready` with the version and profile;
+  - `mise run e2e [version...]` for the whole run, `e2e:up`, `e2e:deploy`, `e2e:test` and `e2e:down` to iterate, and the CI job `e2e`, one matrix entry per version.
+  - The Open WebUI scripts now use `127.0.0.1`: on kind's IPv6-enabled network, the port published on `::1` resets connections, and `localhost` resolves to `::1` first.
+
 ## Open phase 1 tickets
 
 GitHub's issue dependencies are the source of truth for blockers; this table is a snapshot.
@@ -38,14 +45,13 @@ GitHub's issue dependencies are the source of truth for blockers; this table is 
 | --- | --- | --- |
 | #23 | docs: contrib-ready repository files | none |
 | #30 | docs(adr): ADRs for the deviations from the original brief | none |
-| #28 | test(e2e): kind + Crossplane + Open WebUI harness | none |
 | #29 | test(contract): contract test harness against real instances | none |
 
 Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with the release.
 
 ## Frontier
 
-**#28** (e2e harness) first: it is the tracer bullet of phase 1. #29 (contract harness) follows, and #23 and #30 (docs) have no blocker either.
+**#29** (contract harness) first: with #28 done, it is the last harness phase 2 needs. #23 and #30 (docs) have no blocker either.
 
 ## Open questions
 
@@ -58,4 +64,8 @@ Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with t
 - The Renovate GitHub app must be installed on the repository by the maintainer for the configuration to take effect. Dependabot security updates are still on, so the two can open overlapping PRs. The maintainer can turn Dependabot off once Renovate runs.
 - `npm:renovate` cannot go in `mise.toml`: mise's npm trust policy refuses a transitive dependency (`@yarnpkg/libzip@3.2.2`) whose provenance attestation was dropped. CI runs the validator from the Renovate image, pinned by digest. Revisit when upstream republishes with provenance.
 - Trivy fails the build on any HIGH or CRITICAL CVE with a fix, so a CVE published upstream can turn an unrelated PR red until the dependency is bumped. This is the release requirement of spec #3, applied to every PR.
+- The e2e suite runs on amd64 in CI and on arm64 in the devcontainer on Apple silicon; the image of each arch is built for the host only.
+- The `crossplane` CLI in `mise.toml` (2.5.0) only builds and pushes the package, while the cluster runs Crossplane 2.4.3, the version spec #3 tests. A Renovate rule makes a new Crossplane chart minor wait for approval.
+- `hack/openwebui/up.sh` pulls `v<version>-slim`, while the matrices annotate the bare version for Renovate (`docker` versioning). Whether Renovate's tag lookup follows the `v…-slim` family should be checked on its first Open WebUI PR.
+- On a 3.7 GiB Podman VM, kind, Crossplane and one Open WebUI fit; starting a second Open WebUI next to them froze the VM.
 - `hack/helpers/addtype.sh` is committed without the executable bit, and it needs `GOMPLATE` set, so `make provider.addtype` fails as documented in the README. Running `GOMPLATE=$(command -v gomplate) bash ./hack/helpers/addtype.sh` with the same variables works.
