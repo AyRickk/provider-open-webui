@@ -27,22 +27,14 @@ import (
 // forbidden. It records the fixtures of test/fixtures/openwebui/v<version>/credentials/.
 func TestCredentials(t *testing.T) {
 	inst := instanceFromEnv(t, instanceDefault)
-	ctx := context.Background()
 	rec := record(t, inst, "credentials")
 	admin := rec.transport(inst.APIKey)
 
 	rec.begin("check")
 	rec.next("version")
-	v, err := client.DetectVersion(ctx, admin)
-	if err != nil {
-		t.Fatalf("DetectVersion(...): %v", err)
-	}
+	v, p := profileOf(t, admin)
 	if v.String() != inst.Version {
 		t.Fatalf("DetectVersion(...): got %s, want %s", v, inst.Version)
-	}
-	p, unsupported, err := client.SelectProfile(v, false)
-	if err != nil || unsupported {
-		t.Fatalf("SelectProfile(%s, false): unsupported %t, error %v: want a supported profile", v, unsupported, err)
 	}
 	if p.Minor() != v.MinorString() {
 		t.Errorf("SelectProfile(%s, false): got profile %s, want %s", v, p.Minor(), v.MinorString())

@@ -11,7 +11,8 @@ OWUI_ADMIN_NAME="${OWUI_ADMIN_NAME:-Provider Admin}"
 # The supported matrix of spec #3: one OWUI_MATRIX_<major>_<minor> per supported minor, holding
 # the patch release tested. This is the only place it is defined: the contract and e2e runs and
 # their CI jobs read it through owui_matrix. Adding a version is adding one such variable with
-# its Renovate annotation; Renovate bumps the patches.
+# its Renovate annotation; Renovate bumps the patches. A new minor that Renovate proposes for an
+# existing variable is not approved: it gets its own variable instead.
 # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
 OWUI_MATRIX_0_11="0.11.4"
 # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui

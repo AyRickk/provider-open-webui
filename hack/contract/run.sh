@@ -8,6 +8,7 @@
 # fixtures of their resources under test/fixtures/openwebui/v<version>/ (hack/capture/write.sh),
 # once every test of that version passed. Recording again regenerates byte-identical fixtures.
 set -Eeuo pipefail
+shopt -s inherit_errexit
 cd "$(dirname "$0")/../.."
 # shellcheck source=hack/openwebui/lib.sh
 source hack/openwebui/lib.sh
@@ -36,26 +37,27 @@ cleanup() {
 trap cleanup EXIT
 
 # contract_run <version> <instance kind> [record dir] starts an instance, runs the tests
-# against it and removes it.
+# against it and removes it. It checks each step itself: called in a condition, it runs
+# without errexit.
 contract_run() {
-  local version="$1" kind="$2" record_dir="${3:-}" env status=0
+  local version="$1" kind="$2" record_dir="${3:-}" env url key status=0
   env="$work/$version-$kind.env"
   current="$version"
   if [[ "$kind" == restricted ]]; then
-    OWUI_EXTRA_ENV="$(owui_restricted_env)" hack/openwebui/up.sh "$version" >"$env"
+    OWUI_EXTRA_ENV="$(owui_restricted_env)" hack/openwebui/up.sh "$version" >"$env" || return
   else
-    hack/openwebui/up.sh "$version" >"$env"
+    hack/openwebui/up.sh "$version" >"$env" || return
   fi
-  OWUI_URL="$(sed -n 's/^OWUI_URL=//p' "$env")" \
-    OWUI_API_KEY="$(sed -n 's/^OWUI_API_KEY=//p' "$env")" \
-    OWUI_VERSION="$version" CONTRACT_INSTANCE="$kind" CONTRACT_RECORD_DIR="$record_dir" \
+  url="$(sed -n 's/^OWUI_URL=//p' "$env")"
+  key="$(sed -n 's/^OWUI_API_KEY=//p' "$env")"
+  OWUI_URL="$url" OWUI_API_KEY="$key" OWUI_VERSION="$version" \
+    CONTRACT_INSTANCE="$kind" CONTRACT_RECORD_DIR="$record_dir" \
     go test -tags contract -count=1 -v ./test/contract/... || status=$?
   if [[ -n "$record_dir" ]]; then
     # The secrets of the instance, for write.sh's leak check.
-    sed -n 's/^OWUI_API_KEY=//p' "$env" >"$record_dir/instance.secrets"
-    printf '%s\n' "$OWUI_ADMIN_PASSWORD" "$OWUI_SECRET_KEY" >>"$record_dir/instance.secrets"
+    printf '%s\n' "$key" "$OWUI_ADMIN_PASSWORD" "$OWUI_SECRET_KEY" >"$record_dir/instance.secrets" || return
   fi
-  hack/openwebui/down.sh "$version" >/dev/null
+  hack/openwebui/down.sh "$version" >/dev/null || return
   current=""
   return "$status"
 }

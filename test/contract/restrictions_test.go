@@ -14,7 +14,6 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
-	"github.com/AyRickk/provider-openwebui/internal/client"
 	"github.com/AyRickk/provider-openwebui/internal/client/transport"
 )
 
@@ -30,14 +29,7 @@ func TestEndpointRestrictions(t *testing.T) {
 	d := newTransport(t, inst.URL, inst.APIKey)
 	restricted := inst.Kind == instanceRestricted
 
-	v, err := client.DetectVersion(ctx, d)
-	if err != nil {
-		t.Fatalf("DetectVersion(...): %v", err)
-	}
-	p, _, err := client.SelectProfile(v, false)
-	if err != nil {
-		t.Fatalf("SelectProfile(%s, false): %v", v, err)
-	}
+	_, p := profileOf(t, d)
 	if err := p.CheckCredentials(ctx, d); err != nil {
 		t.Errorf("CheckCredentials(...): %v", err)
 	}

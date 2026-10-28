@@ -42,7 +42,7 @@ The versions the contract and e2e tests run against, one patch per supported min
 OWUI_MATRIX_0_13="0.13.0"
 ```
 
-A new minor also needs its API profile in `internal/client`, and the fixtures of every resource, recorded with `mise run contract:record 0.13.0` and `mise run owui:capture <resource> 0.13.0`.
+Renovate holds a new minor for approval on the dependency dashboard; it would bump an existing variable, so add the new one by hand instead of approving it. A new minor also needs its API profile in `internal/client`, and the fixtures of every resource, recorded with `mise run contract:record 0.13.0` and `mise run owui:capture <resource> 0.13.0`.
 
 ### Contract tests
 
@@ -58,8 +58,8 @@ The recording mode replaces, under `test/fixtures/openwebui/v<version>/`, the fi
 
 Writing a contract test:
 
-- Read the instance with `instanceFromEnv(t)`, passing `instanceDefault` or `instanceRestricted` to skip on the other kind.
-- To record the fixtures of a resource, create its recorder with `record(t, inst, "<resource>")`, send through `rec.transport(key)`, and name each exchange with `rec.begin("<scenario>")` and `rec.next("<step>")`. The resource's fixtures then belong to the contract: its capture scenario, if any, is removed. `credentials` is recorded this way; the other resources still come from `hack/capture/scenarios` until their contract lands.
+- Read the instance with `instanceFromEnv(t)`, passing `instanceDefault` or `instanceRestricted` to skip on the other kind. A resource contract runs on the restricted instance too, so that every route it needs is shown to pass the allow-list.
+- To record the fixtures of a resource, create its recorder with `record(t, inst, "<resource>")`, send through `rec.transport(key)`, and name each exchange with `rec.begin("<scenario>")` and `rec.next("<step>")`. The resource's fixtures then belong to the contract: its capture scenario, if any, is removed. `credentials` is recorded this way; the other resources still come from `hack/capture/scenarios` until their contract lands. `endpoint-restrictions` and `endpoint-restrictions-control` stay with their capture scenarios until every resource has a contract: they record the allowed write of every resource, and destructive routes (`models/sync`, `models/delete/all`) a contract test does not send. `TestEndpointRestrictions` checks the cross-cutting part on every run.
 
 ### End-to-end tests
 
