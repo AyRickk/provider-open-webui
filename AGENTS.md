@@ -10,7 +10,7 @@
 - **Issue tracker**: GitHub Issues via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 - **Triage labels**: `docs/agents/triage-labels.md`.
 - **Domain docs**: `docs/agents/domain.md`, which points to `docs/adr/` and `GLOSSARY.md` (once it exists).
-- **Conventions**: `CONTRIBUTING.md` (once it exists).
+- **Conventions**: `CONTRIBUTING.md`: coding, testing, commit and PR conventions.
 
 ## Guardrails
 
