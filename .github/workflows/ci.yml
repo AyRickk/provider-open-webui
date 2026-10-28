@@ -113,19 +113,53 @@ jobs:
               "${BUILD_REGISTRY}/provider-openwebui-${arch}"
           done
 
+  matrix:
+    name: Open WebUI matrix
+    runs-on: ubuntu-24.04
+    outputs:
+      versions: ${{ steps.matrix.outputs.versions }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Read the supported matrix
+        id: matrix
+        # The supported matrix of spec #3 is defined once, by owui_matrix in hack/openwebui/lib.sh.
+        run: |
+          source hack/openwebui/lib.sh
+          echo "versions=$(owui_matrix | jq -Rcn '[inputs]')" >>"$GITHUB_OUTPUT"
+
+  contract:
+    name: Contract (Open WebUI ${{ matrix.version }})
+    needs: matrix
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ fromJSON(needs.matrix.outputs.versions) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          version: 2026.10.8
+          install_args: go jq
+      - name: Contract tests
+        env:
+          OWUI_VERSION: ${{ matrix.version }}
+        run: hack/contract/run.sh "$OWUI_VERSION"
+
   e2e:
     name: E2E (Open WebUI ${{ matrix.version }})
+    needs: matrix
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        # The supported matrix of spec #3, as in hack/e2e/lib.sh.
-        version:
-          # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
-          - 0.11.4
-          # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
-          - 0.12.4
+        version: ${{ fromJSON(needs.matrix.outputs.versions) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

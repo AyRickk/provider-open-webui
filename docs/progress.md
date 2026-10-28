@@ -4,7 +4,7 @@ This document is **rewritten, never appended to**. It describes the current stat
 
 ## Current phase
 
-**Phase 1: foundation.** Phase 0 is closed: [ADR-0001](adr/0001-phase-0-api-consolidation.md) is accepted, with the maintainer's [decisions](adr/0001-phase-0-api-consolidation.md#decisions). Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation). No resource kind yet: `Group` opens phase 2. The tracer bullet, #28, is done: the provider runs in kind under Crossplane, and a `ProviderConfig` becomes `Ready` with the detected version and profile, on both supported versions.
+**Phase 1: foundation.** Phase 0 is closed: [ADR-0001](adr/0001-phase-0-api-consolidation.md) is accepted, with the maintainer's [decisions](adr/0001-phase-0-api-consolidation.md#decisions). Phase 1 builds what every resource needs, per spec #3 and ADR-0001's [phase 1 consequences](adr/0001-phase-0-api-consolidation.md#phase-1-foundation). No resource kind yet: `Group` opens phase 2. The three test harnesses of spec #3 are in place: the tracer bullet #28 (e2e, S3) runs the provider in kind under Crossplane, and the contract harness #29 (S1) runs the client layer against real instances, on both supported versions.
 
 Done so far:
 
@@ -28,7 +28,7 @@ Done so far:
     - a multi-arch build of the image and the xpkg, scanned by trivy (HIGH and CRITICAL with a fix), without publishing.
   - The coverage table per package goes to the job summary. The gate is 80% on `internal/client/...` and on every `internal/controller/<pkg>`, but not on the controller root, which only wires the controllers together.
   - `.github/workflows/scorecard.yml` runs OpenSSF Scorecard.
-  - `.github/renovate.json5` watches Go modules, `mise.toml`, actions, Dockerfiles, and versions annotated with `# renovate: datasource=... depName=...`. The contract and e2e matrices annotate each Open WebUI version this way with `depName=ghcr.io/open-webui/open-webui`. Patch bumps are grouped, and a new minor waits for approval on the dependency dashboard.
+  - `.github/renovate.json5` watches Go modules, `mise.toml`, actions, Dockerfiles, and versions annotated with `# renovate: datasource=... depName=...`. The supported matrix in `hack/openwebui/lib.sh` annotates each Open WebUI version this way with `depName=ghcr.io/open-webui/open-webui`. Patch bumps are grouped, and a new minor waits for approval on the dependency dashboard.
 
 - The e2e harness (#28), seam S3, in `hack/e2e` and `test/e2e` (see the README, "End-to-end tests"):
   - kind with Crossplane 2.4.3 (Helm), and a registry container on the kind network that serves the provider package to Crossplane and its runtime image to containerd;
@@ -36,6 +36,12 @@ Done so far:
   - chainsaw tests reading the instance from `$values` (`url`, `apiUrl`, `apiKey`, `version`, `profile`); the first one, `test/e2e/providerconfig`, asserts a `ProviderConfig` is `Ready` with the version and profile;
   - `mise run e2e [version...]` for the whole run, `e2e:up`, `e2e:deploy`, `e2e:test` and `e2e:down` to iterate, and the CI job `e2e`, one matrix entry per version.
   - The Open WebUI scripts now use `127.0.0.1`: on kind's IPv6-enabled network, the port published on `::1` resets connections, and `localhost` resolves to `::1` first.
+- The contract harness (#29), seam S1, in `test/contract` and `hack/contract` (see the README, "Contract tests"):
+  - Go tests of `internal/client` behind the `contract` build tag, run by `hack/contract/run.sh` against a fresh default instance, then a fresh instance whose API keys are restricted to the allow-list, per version;
+  - first contracts: version detection and the credential check (`TestCredentials`), and the allow-list of ADR-0001 (`TestEndpointRestrictions`);
+  - a recording mode, `mise run contract:record [version...]`: a recorder in front of the instance writes the exchanges in the capture format, and `hack/capture/write.sh`, now shared with `owui:capture`, turns them into fixtures. `credentials` is recorded this way, byte-identical to the former capture; its bash scenario is gone;
+  - `mise run contract [version...]`, and the CI job `contract`, one matrix entry per version.
+- The supported matrix is defined once, as `OWUI_MATRIX_<major>_<minor>` in `hack/openwebui/lib.sh`, read through `owui_matrix` by the contract and e2e runs and by a `matrix` CI job that feeds both matrix jobs. Adding a version is adding one annotated variable (README, "Supported Open WebUI matrix").
 
 ## Open phase 1 tickets
 
@@ -45,13 +51,12 @@ GitHub's issue dependencies are the source of truth for blockers; this table is 
 | --- | --- | --- |
 | #23 | docs: contrib-ready repository files | none |
 | #30 | docs(adr): ADRs for the deviations from the original brief | none |
-| #29 | test(contract): contract test harness against real instances | none |
 
 Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with the release.
 
 ## Frontier
 
-**#29** (contract harness) first: with #28 done, it is the last harness phase 2 needs. #23 and #30 (docs) have no blocker either.
+**#23** (contrib-ready repository files) and **#30** (ADRs for the deviations), both docs, both unblocked. #23 first: it brings `CONTRIBUTING.md`, which every later ticket reads. Phase 2 (`Group`) can start once its tickets are opened under #3.
 
 ## Open questions
 
@@ -60,12 +65,15 @@ Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with t
 - Provider configs have no `Synced` condition, so an unknown minor shows there as `Ready=False`. Managed resources get `Synced=False` from the connector's error, with the same message. `Connect` reports an allowed unsupported version through `Connection.Unsupported`; only the provider config emits the `Warning` event, so resource controllers need not emit one.
 - 0.11.4 answers a function update with the same `400 "[ERROR: Error updating function]"` for a missing function and for invalid code, so the 0.11 profile maps it to no sentinel. The `Function` ticket must decide existence with a get, as ADR-0001 already requires, and surface the detail as is.
 - The profiles are tested directly, against the fixtures, because the resource `Client` interface (seam S1) does not exist yet. Spec #3 wants profiles tested only through S1, so these tests move behind it when the first resource lands.
+- Each resource's contract should record its fixtures and replace its capture scenario. `endpoint-restrictions` and `endpoint-restrictions-control` stay captured until every resource has a contract, and each resource contract should also run on the restricted instance.
+- Renovate holds a new Open WebUI minor for approval, but it would bump an existing `OWUI_MATRIX_*` variable: a new minor is added by hand as its own variable. A per-minor `allowedVersions` rule would make this automatic.
 - The connector runs the credential check on every connection, including each managed resource's reconcile: one extra GET per reconcile. If the request counter shows it matters, cache the check alongside the version.
 - The Renovate GitHub app must be installed on the repository by the maintainer for the configuration to take effect. Dependabot security updates are still on, so the two can open overlapping PRs. The maintainer can turn Dependabot off once Renovate runs.
 - `npm:renovate` cannot go in `mise.toml`: mise's npm trust policy refuses a transitive dependency (`@yarnpkg/libzip@3.2.2`) whose provenance attestation was dropped. CI runs the validator from the Renovate image, pinned by digest. Revisit when upstream republishes with provenance.
 - Trivy fails the build on any HIGH or CRITICAL CVE with a fix, so a CVE published upstream can turn an unrelated PR red until the dependency is bumped. This is the release requirement of spec #3, applied to every PR.
 - The e2e suite runs on amd64 in CI and on arm64 in the devcontainer on Apple silicon; the image of each arch is built for the host only.
 - The `crossplane` CLI in `mise.toml` (2.5.0) only builds and pushes the package, while the cluster runs Crossplane 2.4.3, the version spec #3 tests. A Renovate rule makes a new Crossplane chart minor wait for approval.
-- `hack/openwebui/up.sh` pulls `v<version>-slim`, while the matrices annotate the bare version for Renovate (`docker` versioning). Whether Renovate's tag lookup follows the `v…-slim` family should be checked on its first Open WebUI PR.
+- `hack/openwebui/up.sh` pulls `v<version>-slim`, while the matrix annotates the bare version for Renovate (`docker` versioning). Whether Renovate's tag lookup follows the `v…-slim` family should be checked on its first Open WebUI PR.
 - On a 3.7 GiB Podman VM, kind, Crossplane and one Open WebUI fit; starting a second Open WebUI next to them froze the VM.
 - `hack/helpers/addtype.sh` is committed without the executable bit, and it needs `GOMPLATE` set, so `make provider.addtype` fails as documented in the README. Running `GOMPLATE=$(command -v gomplate) bash ./hack/helpers/addtype.sh` with the same variables works.
+- `shellcheck` is not installed in the devcontainer or CI, so the shell scripts are not linted.

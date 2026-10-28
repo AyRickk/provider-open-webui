@@ -8,10 +8,12 @@ set -Eeuo pipefail
 cd "$(dirname "$0")/../.."
 # shellcheck source=hack/e2e/lib.sh
 source hack/e2e/lib.sh
+# shellcheck source=hack/openwebui/lib.sh
+source hack/openwebui/lib.sh
 
 versions=("$@")
 if [[ ${#versions[@]} -eq 0 ]]; then
-  versions=("$E2E_OWUI_PREVIOUS" "$E2E_OWUI_LATEST")
+  mapfile -t versions < <(owui_matrix)
 fi
 
 if [[ "${E2E_KEEP_CLUSTER:-false}" != true ]]; then

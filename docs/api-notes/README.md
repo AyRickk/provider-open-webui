@@ -53,7 +53,7 @@ Admin endpoints accept the key on both versions (observed with `GET /api/v1/grou
 
 ### Credential check
 
-The provider checks its credentials with `GET /api/v1/users/default/permissions` ([ADR-0001](../adr/0001-phase-0-api-consolidation.md#cross-cutting)). Its answers, captured by `mise run owui:capture credentials <version>`, are the same on both versions:
+The provider checks its credentials with `GET /api/v1/users/default/permissions` ([ADR-0001](../adr/0001-phase-0-api-consolidation.md#cross-cutting)). Its answers, recorded by the contract test `TestCredentials` (`mise run contract:record <version>`), are the same on both versions:
 
 | Key | Answer | Fixture |
 | --- | --- | --- |

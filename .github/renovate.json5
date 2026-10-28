@@ -9,15 +9,15 @@
   // The default managers cover go.mod, mise.toml, the actions and the Dockerfiles. Git
   // submodules are off by default, so the build submodule moves only by deliberate updates.
   postUpdateOptions: ['gomodTidy'],
-  // The preset ignores test directories, where the contract and e2e matrices may live.
+  // The preset ignores test directories, which hold the e2e suite.
   ignorePaths: ['**/node_modules/**', '**/vendor/**', 'test/fixtures/**'],
   customManagers: [
     {
       // A version, optionally followed by `@sha256:<digest>`, on the line after a
       // `# renovate: datasource=... depName=...` comment, assigned with `:` or `=` or given as
       // a YAML list item, with an optional `registryUrl=` for Helm charts. Used for the mise
-      // CLI, the Renovate image that validates this file, the Open WebUI images of the contract
-      // and e2e matrices, and the e2e harness (registry image, Crossplane chart).
+      // CLI, the Renovate image that validates this file, the Open WebUI versions of the supported
+      // matrix (hack/openwebui/lib.sh), and the e2e harness (registry image, Crossplane chart).
       customType: 'regex',
       managerFilePatterns: [
         '/^\\.github/workflows/.+\\.ya?ml$/',

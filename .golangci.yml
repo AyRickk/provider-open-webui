@@ -1,4 +1,8 @@
 version: "2"
+run:
+  # The contract tests of test/contract build only with this tag.
+  build-tags:
+    - contract
 linters:
   enable:
     - asasalint
