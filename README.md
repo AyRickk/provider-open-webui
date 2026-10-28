@@ -33,9 +33,37 @@ mise run owui:down 0.12.4      # removes the container and its data
 
 Each version gets a fixed port (`0.12.4` → `31204`) so several versions can run side by side. The admin credentials are disposable defaults from `hack/openwebui/lib.sh`, overridable through `OWUI_ADMIN_EMAIL`, `OWUI_ADMIN_PASSWORD` and `OWUI_ADMIN_NAME`.
 
+### Supported Open WebUI matrix
+
+The versions the contract and e2e tests run against, one patch per supported minor, are defined once, as the `OWUI_MATRIX_<major>_<minor>` variables of `hack/openwebui/lib.sh`. `mise run contract`, `mise run e2e` and the CI jobs `contract` and `e2e` read them through `owui_matrix`, and Renovate bumps their patches. To add a version, add one variable with its Renovate annotation:
+
+```bash
+# renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
+OWUI_MATRIX_0_13="0.13.0"
+```
+
+A new minor also needs its API profile in `internal/client`, and the fixtures of every resource, recorded with `mise run contract:record 0.13.0` and `mise run owui:capture <resource> 0.13.0`.
+
+### Contract tests
+
+The contract tests, in `test/contract`, are Go tests of the client layer (`internal/client`) against a real Open WebUI instance. They build only with the `contract` tag. For each version, `hack/contract/run.sh` starts a fresh instance with `hack/openwebui/up.sh`, runs them, removes it, then does the same with an instance whose API keys are restricted to [the allow-list](docs/api-notes/api-key-allowed-endpoints.txt). CI runs them as a matrix job, one version per job.
+
+```bash
+mise run contract                   # every version of the matrix
+mise run contract 0.12.4            # one version
+mise run contract:record 0.12.4     # the same, then regenerate the fixtures the tests record
+```
+
+The recording mode replaces, under `test/fixtures/openwebui/v<version>/`, the fixtures of each resource whose contract records, once every test of that version passed. A recorder (`record` in `test/contract/harness_test.go`) sits between the client and the instance, and writes each exchange under the scenario and step the test names, in the format of the capture scenarios. `hack/capture/write.sh`, shared with `mise run owui:capture`, normalizes and redacts them, and refuses to write a fixture holding a secret. Recording again regenerates byte-identical fixtures, so `git diff` after a recording shows only what changed on the server.
+
+Writing a contract test:
+
+- Read the instance with `instanceFromEnv(t)`, passing `instanceDefault` or `instanceRestricted` to skip on the other kind.
+- To record the fixtures of a resource, create its recorder with `record(t, inst, "<resource>")`, send through `rec.transport(key)`, and name each exchange with `rec.begin("<scenario>")` and `rec.next("<step>")`. The resource's fixtures then belong to the contract: its capture scenario, if any, is removed. `credentials` is recorded this way; the other resources still come from `hack/capture/scenarios` until their contract lands.
+
 ### End-to-end tests
 
-The e2e suite runs [chainsaw](https://kyverno.github.io/chainsaw/) tests from `test/e2e` against the provider built from the working tree, installed by Crossplane in a kind cluster, for each Open WebUI version of the supported matrix (`E2E_OWUI_PREVIOUS` and `E2E_OWUI_LATEST` in `hack/e2e/lib.sh`). CI runs it as a matrix job, one version per job.
+The e2e suite runs [chainsaw](https://kyverno.github.io/chainsaw/) tests from `test/e2e` against the provider built from the working tree, installed by Crossplane in a kind cluster, for each Open WebUI version of the [supported matrix](#supported-open-webui-matrix). CI runs it as a matrix job, one version per job.
 
 ```bash
 mise run e2e                  # make build, cluster, provider, every version, then delete the cluster

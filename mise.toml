@@ -55,3 +55,11 @@ run = "hack/e2e/test.sh"
 [tasks."e2e:down"]
 description = "Delete the e2e cluster and its registry"
 run = "hack/e2e/down.sh"
+
+[tasks.contract]
+description = "Run the contract tests against fresh Open WebUI instances: mise run contract [version...]"
+run = "hack/contract/run.sh"
+
+[tasks."contract:record"]
+description = "Run the contract tests and regenerate their fixtures: mise run contract:record [version...]"
+run = "hack/contract/run.sh --record"

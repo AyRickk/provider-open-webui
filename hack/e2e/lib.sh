@@ -26,12 +26,6 @@ E2E_CROSSPLANE_NAMESPACE=crossplane-system
 
 E2E_PROVIDER=provider-openwebui
 
-# The supported Open WebUI matrix of spec #3, as in the e2e job of .github/workflows/ci.yml.
-# renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
-E2E_OWUI_PREVIOUS="0.11.4"
-# renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
-E2E_OWUI_LATEST="0.12.4"
-
 # The in-cluster Service in front of the Open WebUI container under test.
 E2E_OWUI_NAMESPACE=open-webui
 E2E_OWUI_SERVICE=open-webui
