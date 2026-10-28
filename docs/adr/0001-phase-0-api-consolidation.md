@@ -14,7 +14,7 @@ Spec #3 states that "API facts are not assumed: phase 0 establishes the endpoint
 - [Marker storage](#marker-storage), verified by `test/fixtures/openwebui/v*/marker/`.
 - [Limitations](../limitations.md), with the Knowledge Base Sync (oikb) evaluation.
 
-This ADR confirms or adjusts each part of spec #3 against those facts. It does not cover the other ADRs spec #3 asks for (GitHub Actions and ghcr, required identifiers, no `Group.members`, adoption without the annotation, RBAC scope, chainsaw, `crd-ref-docs`); they come with phase 1.
+This ADR confirms or adjusts each part of spec #3 against those facts. It does not cover the other ADRs spec #3 asks for (GitHub Actions and ghcr, required identifiers, no `Group.members`, adoption without the annotation, RBAC scope, chainsaw, `crd-ref-docs`); they are ADRs 0002 to 0008, listed in the [index](README.md).
 
 ## Decision
 

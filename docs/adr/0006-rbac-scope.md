@@ -1,0 +1,46 @@
+# ADR-0006: RBAC scope
+
+- **Status:** proposed: the grants follow spec #3 (Further Notes, Security), adjusted to Crossplane's observed RBAC; the Secret cache, the provider config URLs and the [open questions](#open-questions) await the maintainer's decision
+- **Date:** 2026-10-28
+- **Scope:** the Kubernetes permissions of the provider, and what tenants can do with namespaced provider configs.
+
+## Context
+
+The original brief asked for RBAC limited to the objects the provider uses. Spec #3 (story 61, Security) narrows that to Crossplane's standard per-type grants: its own CRDs, Secrets (get), ConfigMaps requested through the package's permission requests, events and leases, with "the inability to scope access to referenced objects" documented.
+
+The provider does not write its own RBAC: Crossplane's RBAC manager renders it from the package. In Crossplane 2.4.3, the version spec #3 tests ([`internal/controller/rbac/provider/roles/roles.go`](https://github.com/crossplane/crossplane/blob/v2.4.3/internal/controller/rbac/provider/roles/roles.go) in the Crossplane repository), the `system` ClusterRole bound to the provider's service account grants:
+
+- the provider's CRDs and their `status`: `get`, `list`, `watch`, `create`, `update`, `patch`; `update` on their `finalizers`;
+- **every verb on Secrets, ConfigMaps, events and leases, cluster-wide**, to every provider. A package cannot narrow this rule;
+- `get`, `list`, `watch` on CRDs, for the `safe-start` capability in `package/crossplane.yaml`.
+
+So the grants are broader than story 61's "Secrets (get)", and ConfigMaps need no permission request. Kubernetes RBAC cannot scope a grant to the objects a resource references, so no package could narrow it to referenced Secrets and ConfigMaps either.
+
+What the provider uses:
+
+- Secrets: the API key and CA of a provider config, and valve values (stories 15, 41, 44). With the template default `--enable-secret-cache=true` (`ENABLE_SECRET_CACHE`), they are served from an informer, which lists and watches every Secret in the cluster and keeps them in memory.
+- ConfigMaps: `contentFrom` code of tools and functions (story 14), read on each poll.
+- Events and leases: the event recorder and leader election.
+
+Tenancy follows Crossplane v2 (story 41). A namespaced `ProviderConfig` reads its Secrets in its own namespace, and a namespaced managed resource references objects in its own namespace. A `ClusterProviderConfig` names its Secret's namespace, and managed resources default to the one named `default` (story 42).
+
+A namespaced `ProviderConfig` also lets a tenant point the provider at any URL the provider can reach. The provider sends `GET /api/version` and the credential check there, and up to 512 redacted characters of an error body reach that tenant's status and events (stories 41, 51). The URL pattern refuses credentials, a query and a fragment.
+
+## Decision
+
+- **The provider's RBAC is Crossplane's standard rendering**, with no permission request: ConfigMaps are already granted. The package does not add rules.
+- **Isolation between tenants is the provider's**, not RBAC's: a `ProviderConfig` reads only Secrets of its namespace, and a managed resource reads only Secrets and ConfigMaps of its namespace. Namespaced kinds reference them with local selectors, which have no namespace field (`LocalSecretKeySelector` in `apis/v1alpha1/types.go`); only the cluster-scoped `ClusterProviderConfig` names a namespace.
+- **Who may use which Open WebUI instance is governed by RBAC on the provider's kinds**: a tenant allowed to create managed resources can use any `ClusterProviderConfig`, `default` included. Clusters where tenants must not share the instance's admin key give them their own `ProviderConfig`, and no `default` `ClusterProviderConfig`.
+- **The Secret cache keeps the template default** (on). Operators who do not want a cluster-wide Secret informer set `ENABLE_SECRET_CACHE=false` through a `DeploymentRuntimeConfig`; Secrets are then read with direct gets.
+- **Namespaced `ProviderConfig` URLs are not restricted further in v1.** The stated outbound requests and the redacted error body are the accepted exposure; operators restrict where the provider can connect with a `NetworkPolicy` on its pod, and who may create provider configs with RBAC.
+
+## Consequences
+
+- The README's security section and the CRD reference state the effective grants, the per-object limitation, the Secret cache and its flag, and the tenancy rules above (story 61's "documented" requirement).
+- Every Secret and ConfigMap reference added by a resource ticket is a local selector on namespaced kinds, and is read in the resource's namespace.
+- A provider compromise exposes every Secret and ConfigMap of the cluster, as for any Crossplane provider. The hardened pod (story 60) limits how it can be compromised, not what it can read.
+
+## Open questions
+
+- Whether to restrict namespaced `ProviderConfig` URLs further: a host allowlist, refusing link-local and loopback addresses, or generic error messages in a tenant's status.
+- Whether to turn the Secret cache off by default: one direct get per Secret per reconcile, against a cluster-wide informer.
