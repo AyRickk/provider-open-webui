@@ -41,6 +41,7 @@ Done so far:
   - first contracts: version detection and the credential check (`TestCredentials`), and the allow-list of ADR-0001 (`TestEndpointRestrictions`);
   - a recording mode, `mise run contract:record [version...]`: a recorder in front of the instance writes the exchanges in the capture format, and `hack/capture/write.sh`, now shared with `owui:capture`, turns them into fixtures. `credentials` is recorded this way, byte-identical to the former capture; its bash scenario is gone;
   - `mise run contract [version...]`, and the CI job `contract`, one matrix entry per version.
+- The contrib-ready repository files (#23): `LICENSE` (Apache-2.0), `DCO`, `CODE_OF_CONDUCT.md` (CNCF pointer), `OWNERS.md`, `SECURITY.md` (private vulnerability reporting, cosign verification of releases), the issue and PR templates with the DCO checkbox, and `CONTRIBUTING.md`, which holds the coding, testing, commit and PR conventions every ticket follows. `GOVERNANCE`, `MAINTAINERS` and `ADOPTERS` wait for a contrib proposal.
 - The supported matrix is defined once, as `OWUI_MATRIX_<major>_<minor>` in `hack/openwebui/lib.sh`, read through `owui_matrix` by the contract and e2e runs and by a `matrix` CI job that feeds both matrix jobs. Adding a version is adding one annotated variable (README, "Supported Open WebUI matrix").
 
 ## Open phase 1 tickets
@@ -49,17 +50,19 @@ GitHub's issue dependencies are the source of truth for blockers; this table is 
 
 | Ticket | Title | Blocked by |
 | --- | --- | --- |
-| #23 | docs: contrib-ready repository files | none |
 | #30 | docs(adr): ADRs for the deviations from the original brief | none |
 
 Signed publishing to ghcr (cosign, SBOM, maintainer approval) is phase 4, with the release.
 
 ## Frontier
 
-**#23** (contrib-ready repository files) and **#30** (ADRs for the deviations), both docs, both unblocked. #23 first: it brings `CONTRIBUTING.md`, which every later ticket reads. Phase 2 (`Group`) can start once its tickets are opened under #3.
+**#30** (ADRs for the deviations), docs, unblocked: the last phase 1 ticket. Phase 2 (`Group`) can start once its tickets are opened under #3.
 
 ## Open questions
 
+- GitHub private vulnerability reporting, which `SECURITY.md` names as the only reporting channel, is off on the repository. The maintainer turns it on under Settings, Code security.
+- The spec names the file `OWNERS`; the repository uses `OWNERS.md`, the template's name.
+- The coverage gate covers `internal/client/...` and `internal/controller/<pkg>`. Spec #3 also gates the normalization package: when it lands outside `internal/client`, add it to `hack/ci/test-coverage.sh` and to `CONTRIBUTING.md`.
 - A namespaced `ProviderConfig` lets a tenant point the provider at any URL the provider can reach. The provider sends two fixed GETs there, and up to 512 redacted characters of an error body reach that tenant's status and events. This follows spec #3 (stories 41 and 51). The URL pattern refuses credentials, a query and a fragment. Whether to go further (a host allowlist, refusing link-local and loopback addresses, generic messages) is the maintainer's call, best recorded in #30's RBAC and tenancy ADR.
 - With the Secret cache on (the template default), the provider lists and watches Secrets cluster-wide. Crossplane's provider role grants this, but it is broader than spec #3's "Secrets (get)". #30's RBAC ADR should record it, or the cache should be scoped.
 - Provider configs have no `Synced` condition, so an unknown minor shows there as `Ready=False`. Managed resources get `Synced=False` from the connector's error, with the same message. `Connect` reports an allowed unsupported version through `Connection.Unsupported`; only the provider config emits the `Warning` event, so resource controllers need not emit one.

@@ -96,3 +96,11 @@ Writing a test for a new kind:
 
 - The bind-mounted workspace keeps the host UID (e.g. 501). `.devcontainer/on-create.sh` gives the `vscode` user that UID so it can write to the workspace; it does nothing where the UIDs already match.
 - `devcontainer up` sometimes stops progressing right after `Not setting dockerd DNS manually.` (devcontainer CLI 0.87.0, Podman 5.8.2), with no child process running. Interrupt it and run the same command again: the second run reuses the started container and completes.
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the contribution process and the coding and testing conventions, and [`SECURITY.md`](SECURITY.md) to report a vulnerability. Every commit is signed off under the [DCO](DCO).
+
+## License
+
+provider-openwebui is licensed under the [Apache License 2.0](LICENSE).
