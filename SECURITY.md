@@ -16,7 +16,7 @@ A vulnerability in Open WebUI itself belongs to the [Open WebUI project](https:/
 
 ## Verifying a release
 
-Release images and packages are published to `ghcr.io/ayrickk/provider-openwebui`, signed with [cosign](https://docs.sigstore.dev/cosign/) keyless by the release workflow of this repository, with an SPDX SBOM attached as a signed attestation. Verify both before installing, replacing `vX.Y.Z` with the release:
+Releases will be published to `ghcr.io/ayrickk/provider-openwebui`, signed with [cosign](https://docs.sigstore.dev/cosign/) keyless by a release workflow of this repository, with an SPDX SBOM attached as a signed attestation. That workflow lands with `v0.1.0`; until then nothing is published. Verify both the signature and the SBOM before installing, replacing `vX.Y.Z` with the release:
 
 ```bash
 cosign verify ghcr.io/ayrickk/provider-openwebui:vX.Y.Z \

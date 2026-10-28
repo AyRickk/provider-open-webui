@@ -25,20 +25,20 @@ The [README](README.md#development-environment) covers building, throwaway Open 
 
 1. Branch from an up-to-date `main`, as `<type>/<issue>-<slug>`, where `<type>` is the Conventional Commits type of the change (e.g. `feat/12-group`).
 2. Write the test first, at one of the seams below, then the code.
-3. Run `make reviewable` (generated code and CRDs, `go mod tidy`, lint, unit tests). Run the contract tests (`mise run contract`) when you touch the client layer, and the e2e suite (`mise run e2e`) when you touch a controller, an API type or an example.
+3. Run `make reviewable` (generated code and CRDs, `go mod tidy`, lint, unit tests) inside the devcontainer. Run the contract tests (`mise run contract`) when you touch the client layer, and the e2e suite (`mise run e2e`) when you touch a controller, an API type or an example.
 4. Commit, signed off (see below), and open a pull request.
 
 ### Commits
 
 - **DCO.** Every commit carries a `Signed-off-by` line matching its author, certifying the [Developer Certificate of Origin](DCO). Sign off with your own identity, the one configured in git: `git commit -s` adds the line from `user.name` and `user.email`. To sign off commits already made on your branch, run `git rebase --signoff origin/main`. A pull request is not merged until every commit is signed off by its own author.
 - **Conventional Commits.** Messages follow [Conventional Commits](https://www.conventionalcommits.org/): `<type>(<scope>): <description>`, with types such as `feat`, `fix`, `docs`, `test`, `ci`, `build`, `refactor` and `chore`, and scopes naming the area (`client`, `apis`, `controller`, `e2e`, `contract`, ...). The description is lowercase, imperative and has no trailing period.
-- **No AI attribution.** Following Crossplane's AI policy, commits and pull requests carry no AI attribution trailers or lines (`Co-Authored-By` an AI tool, "Generated with ..."). You are the author of what you submit, and your sign-off certifies it.
+- **No AI attribution.** Following Crossplane's [AI policy](https://github.com/crossplane/crossplane/blob/main/AI_POLICY.md), commits and pull requests carry no AI attribution trailers or lines (`Co-Authored-By` an AI tool, "Generated with ..."). You are the author of what you submit, and your sign-off certifies it.
 
 ### Pull requests
 
 - The title follows Conventional Commits, usually the issue title.
 - The body says `Closes #<issue>`, describes the change and how it was tested, and ticks the DCO checkbox of the [template](.github/PULL_REQUEST_TEMPLATE.md).
-- CI must be green: lint, generated code up to date, unit tests with the coverage gate, contract and e2e matrices, govulncheck, image scan and build.
+- CI must be green: lint, generated code up to date, Renovate configuration, unit tests with the coverage gate, contract and e2e matrices, govulncheck, image scan and build.
 - A maintainer from [`OWNERS.md`](OWNERS.md) reviews and merges.
 
 ## Coding conventions
@@ -60,7 +60,7 @@ The project is licensed under [Apache-2.0](LICENSE). Do not copy code from proje
 ### Tests
 
 - Unit tests use only the standard library and [`go-cmp`](https://github.com/google/go-cmp). Testify, Ginkgo and Gomega are not used.
-- Tests are table-driven: a `map[string]struct{ reason string; args args; want want }`, one case per entry, where `reason` says in a sentence what the case shows. Failures print a `-want, +got` diff after the reason. Errors are compared with `cmpopts.EquateErrors()`.
+- Tests are table-driven: a `map[string]struct{...}` with one case per entry, typically `reason`, `args` and `want` fields, where `reason` says in a sentence what the case shows. Failures print the reason, then a `-want, +got` diff. Errors are compared with `cmpopts.EquateErrors()`; a helper that also checks the message is fine where the message matters.
 
   ```go
   cases := map[string]struct {
@@ -92,7 +92,7 @@ The project is licensed under [Apache-2.0](LICENSE). Do not copy code from proje
   - **S2**, each kind's external client (`Observe`, `Create`, `Update`, `Delete`), with an in-memory fake `Client` seeded from the fixtures;
   - **S3**, the cluster: chainsaw tests on kind (`test/e2e`).
 - Tests are deterministic. Fixtures come from real instances, recorded with `mise run contract:record` or captured with `mise run owui:capture`; never hand-write an API payload.
-- The coverage gate is 80% on `internal/client/...` and on every controller package.
+- The coverage gate is 80% on `internal/client/...` and on every `internal/controller/<pkg>`; the controller root, which only wires the controllers together, is exempt.
 
 ### Errors
 
@@ -105,7 +105,7 @@ The project is licensed under [Apache-2.0](LICENSE). Do not copy code from proje
 ### Logging and events
 
 - Loggers and event recorders are created in `main` and injected through the controller options. Never use a package-level logger or recorder.
-- Log mostly at debug level, from `Reconcile` rather than deep in helpers, with the error under the `error` key: `log.Debug("Cannot observe the external resource", "error", err)`.
+- Log mostly at debug level, with the error under the `error` key: `log.Debug("Cannot observe the external resource", "error", err)`. Controllers log from `Reconcile` rather than deep in helpers. The one exception is the client transport, which logs each request and retry at debug level with its method, endpoint and code, never its headers or body.
 - Emit an event only when something changes: `CreatedExternalResource`, `UpdatedExternalResource` (with a summary of the diff), `DeletedExternalResource`, or an error. A steady-state reconcile emits nothing and writes nothing.
 
 ### Conditions and status

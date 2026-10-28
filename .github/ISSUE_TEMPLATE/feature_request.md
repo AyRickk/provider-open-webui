@@ -6,8 +6,9 @@ labels: enhancement, needs-triage
 <!--
 Thank you for helping to improve provider-openwebui!
 
-Please be sure to search for open issues before raising a new one, and check
-docs/limitations.md for what is out of scope.
+Please be sure to search for open issues before raising a new one, and check the
+limitations (https://github.com/AyRickk/provider-openwebui/blob/main/docs/limitations.md)
+for what is out of scope.
 -->
 
 ### What problem are you facing?
