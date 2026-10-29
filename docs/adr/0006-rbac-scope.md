@@ -1,7 +1,7 @@
 # ADR-0006: RBAC scope
 
-- **Status:** proposed: the grants follow spec #3 (Further Notes, Security), adjusted to Crossplane's observed RBAC; the Secret cache, the provider config URLs and the [open questions](#open-questions) await the maintainer's decision
-- **Date:** 2026-10-28
+- **Status:** accepted on 2026-10-29 by the maintainer: the grants follow spec #3 (Further Notes, Security), adjusted to Crossplane's observed RBAC; the rest follows the practice of the major Crossplane providers ([Precedents](#precedents))
+- **Date:** 2026-10-28, revised 2026-10-29
 - **Scope:** the Kubernetes permissions of the provider, and what tenants can do with namespaced provider configs.
 
 ## Context
@@ -29,10 +29,10 @@ A namespaced `ProviderConfig` also lets a tenant point the provider at any URL t
 ## Decision
 
 - **The provider's RBAC is Crossplane's standard rendering**, with no permission request: ConfigMaps are already granted. The package does not add rules.
-- **Isolation between tenants is the provider's**, not RBAC's: a `ProviderConfig` reads only Secrets of its namespace, and a managed resource reads only Secrets and ConfigMaps of its namespace. Namespaced kinds reference them with local selectors, which have no namespace field (`LocalSecretKeySelector` in `apis/v1alpha1/types.go`); only the cluster-scoped `ClusterProviderConfig` names a namespace.
+- **Isolation between tenants is the provider's**, not RBAC's: a `ProviderConfig` reads only Secrets of its namespace, and a managed resource reads only Secrets and ConfigMaps of its namespace. Namespaced kinds reference them with local selectors, which have no namespace field (`LocalSecretKeySelector` in `apis/v1alpha1/types.go`); only the cluster-scoped `ClusterProviderConfig` names a namespace. crossplane-runtime's `ExtractSecret` reads whatever namespace a reference names, so a namespace field on a namespaced kind would let a tenant read another namespace's Secret.
 - **Who may use which Open WebUI instance is governed by RBAC on the provider's kinds**: a tenant allowed to create managed resources can use any `ClusterProviderConfig`, `default` included. Clusters where tenants must not share the instance's admin key give them their own `ProviderConfig`, and no `default` `ClusterProviderConfig`.
 - **The Secret cache keeps the template default** (on). Operators who do not want a cluster-wide Secret informer set `ENABLE_SECRET_CACHE=false` through a `DeploymentRuntimeConfig`; Secrets are then read with direct gets.
-- **Namespaced `ProviderConfig` URLs are not restricted further in v1.** The stated outbound requests and the redacted error body are the accepted exposure; operators restrict where the provider can connect with a `NetworkPolicy` on its pod, and who may create provider configs with RBAC.
+- **Namespaced `ProviderConfig` URLs are not restricted further in v1**: no host allowlist, no loopback or link-local guard. The stated outbound requests and the redacted error body are the accepted exposure; operators restrict where the provider can connect with a `NetworkPolicy` on its pod, and who may create provider configs with RBAC. An allowlist, if one is ever needed, would be an opt-in provider flag, never a default.
 
 ## Consequences
 
@@ -40,7 +40,11 @@ A namespaced `ProviderConfig` also lets a tenant point the provider at any URL t
 - Every Secret and ConfigMap reference added by a resource ticket is a local selector on namespaced kinds, and is read in the resource's namespace.
 - A provider compromise exposes every Secret and ConfigMap of the cluster, as for any Crossplane provider. The hardened pod (story 60) limits how it can be compromised, not what it can read.
 
-## Open questions
+## Precedents
 
-- Whether to restrict namespaced `ProviderConfig` URLs further: a host allowlist, refusing link-local and loopback addresses, or generic error messages in a tenant's status.
-- Whether to turn the Secret cache off by default: one direct get per Secret per reconcile, against a cluster-wide informer.
+Surveyed on 2026-10-29 in the source of crossplane-contrib's native providers (kubernetes, helm, http, sql, argocd, gitlab), the Upjet providers and `crossplane/provider-template`:
+
+- No provider package declares permission requests; they rely on Crossplane's system role, as decided above.
+- Every provider keeps the Secret cache on by default, or has no flag and always caches.
+- None restricts its endpoint URLs or guards against loopback or link-local targets; gitlab's `baseURL`, argocd's `serverAddr` and provider-http's request URLs are free-form.
+- The large v2 providers pin a namespaced provider config's Secret to its own namespace (upjet-aws, helm, gitlab), as the local selectors here do; the template and provider-http do not. Crossplane v2's core types use a local reference for a namespaced resource's connection Secret too.

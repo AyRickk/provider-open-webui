@@ -28,4 +28,5 @@ What weighs on the choice:
 - The release workflow (phase 4) uses the GitHub OIDC token (`id-token: write`) for cosign, and a protected environment for the maintainer's approval. `SECURITY.md` documents how to verify a release against the workflow identity.
 - The packages on ghcr are private when first pushed: the maintainer makes them public once, in the package settings.
 - Users install the provider by its full reference, `ghcr.io/ayrickk/provider-openwebui:<version>`. It is not listed on the Upbound Marketplace, whose generated documentation is therefore unavailable (see [ADR-0008](0008-crd-reference-with-crd-ref-docs.md)).
-- A move to `crossplane-contrib` keeps the workflows; only the registry organization and the signing identity change.
+- A move to `crossplane-contrib` would publish through its shared `provider-workflows` to `ghcr.io/crossplane-contrib`, installed as `xpkg.crossplane.io/crossplane-contrib/...` and mirrored to `xpkg.upbound.io`. Those workflows do not sign, so signing and the SBOM would stay an extra job.
+- Contrib providers neither sign nor attest an SBOM: this provider goes beyond them. Crossplane can verify the signature and the SPDX attestation at install with an `ImageConfig`; `SECURITY.md` gets a ready one when the release lands.
